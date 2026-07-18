@@ -17,7 +17,7 @@ Every ADR file must appear in this table with a status.
 | [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |
 | 0008 | URL migration and redirects from the old site | Planned |
-| 0009 | Security by design | Planned |
+| [0009](0009-security-by-design.md) | Security by design | Proposed |
 
 Status values: `Proposed` · `Accepted` · `Superseded` · `Planned` (ticketed, not yet written).
 
