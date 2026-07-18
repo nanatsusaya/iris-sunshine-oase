@@ -54,7 +54,14 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   netcup so the studio's `MX` and `SPF` records are never touched; the preview lives at
   `preview.iris-sunshine-oase.de`; `noindex` is the indexing gate and `robots.txt` must **not** block
   the crawl that delivers it. State: **designed** — nothing deployed.
-- ▶ ADRs 0003, 0005, 0007 and 0008 outstanding.
+- ▶ [ADR 0003](adr/0003-content-model.md) — content model (#41) — **Proposed** (2026-07-19): Astro
+  content collections at build time, YAML with comments, money as integer cents, a price as a
+  discriminated union that expresses all six of the old site's special cases, opening hours as intervals
+  with a validity period, and a **confirmation gate** so an unverified price is *unable* to render rather
+  than merely unlikely to. Four of Astro's behaviours were measured against the scaffold rather than
+  assumed — including the finding that a duplicate id only *warns* and the build still exits 0, which is
+  why id integrity becomes a blocking check.
+- ▶ ADRs 0005, 0007 and 0008 outstanding.
 - ✅ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Accepted**
   (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
   display sizes, a 34rem reading measure, mobile-first with two breakpoints, inline-SVG icons and
@@ -150,15 +157,25 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**Self-host the two fonts, then build the homepage** (Phase 2, #4).
+**Get ADR 0003 answered and Accepted** (#41) — then the homepage.
 
-The token layer and its checks landed first, deliberately: a check written after the CSS it governs is
-a check written around it. Both remaining steps are now unblocked.
+**The order changed on 2026-07-19, and the reason is worth reading.** This file previously said the
+homepage came next. It does not: the homepage as drawn needs opening hours and four price teasers, and
+neither has an authority. Building it first would have meant typing an opening time into a template —
+the exact defect this project exists to remove, on day one of the implementation. ADR 0003 is what
+unblocks it, and it was the missing decision all along.
 
-- **Fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses, `woff2`,
-  self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs its provenance
-  recorded like any other asset. Until this lands the page renders in system fallbacks.
-- **The homepage** from the draft's turn 6 — mobile-first, built out of the tokens.
+Then, in order:
+
+1. **The homepage** from the draft's turn 6 — mobile-first, built out of the tokens (#40) and the
+   content model.
+2. **Self-host the two fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses,
+   `woff2`, self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs its
+   provenance recorded like any other asset. Until this lands the page renders in system fallbacks —
+   which is also the `font-display: swap` state, so it has to look acceptable regardless.
+
+Phase 3's content itself stays blocked on the owner either way: the prices are undated and unconfirmed
+and the opening hours have two conflicting 2024 sets (#41).
 
 **Two owner actions still gate the preview URL** and neither blocks the work above:
 
