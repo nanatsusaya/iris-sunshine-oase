@@ -1,0 +1,32 @@
+# --- Altbestand: komplett ausgeschlossen ---------------------------------
+# Der Ordner Archive/ enthaelt das Backup des alten WordPress-Auftritts:
+# rund 750 MB Bildmaterial mit ungeklaerten Nutzungsrechten sowie den
+# vollstaendigen Datenbank-Export mit personenbezogenen Daten Dritter.
+#
+# Beides gehoert nicht in ein oeffentliches Repository. Der Ausschluss ist
+# bewusst pauschal gehalten: eine Regel statt einer Einzelfallpruefung je Datei.
+#
+# Die Texte des Altauftritts sind nach docs/inhalte/ extrahiert und dort
+# versioniert - erzeugt mit tools/extract-wp-content.mjs.
+# Das Bildmaterial wird ausserhalb des Repositorys archiviert.
+Archive/
+
+# --- Betriebssystem ------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# --- Editor / IDE --------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- Node / Astro --------------------------------------------------------
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example

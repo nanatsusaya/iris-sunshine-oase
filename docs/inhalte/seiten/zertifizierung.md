@@ -1,0 +1,35 @@
+<!-- Automatisch erzeugt von tools/extract-wp-content.mjs. Nicht von Hand bearbeiten. -->
+
+# Zertifizierung
+
+| | |
+|---|---|
+| Pfad | `/zertifizierung` |
+| Status | publish |
+| WordPress-ID | 1557 |
+| Unterseite von | Über uns |
+| Aufbau | Elementor |
+
+---
+
+**Diese Seite befindet sich seit Januar 2018 im Aufbau.**
+
+Für weitere Informationen stehen wir Ihnen gern zur Verfügung und freuen uns auf Ihre Anfragen: [Kontakt](/kontakt).
+
+### Lorem ipsum dolor
+
+Ein Solarienbetrieb kann sich nur von einer Zertifizierungsstelle zertifizieren lassen, die vom BfS akkreditiert worden ist.
+
+Das Zertifizierungsverfahren umfasst die Überprüfung des Sonnenstudios auf Einhaltung der Zertifizierungskriterien des BfS. Ausschließlich zertifizierte Solarienbetriebe sind berechtigt, das Signum „Geprüftes Sonnenstudio – Zertifiziert nach den Kriterien des Bundesamtes für Strahlenschutz“ zu verwenden. Im Jahre 2008 wurden wir vom Bundesamt für Strahlenschutz für 3 Jahre zertifiziert. Leider wird diese Zertifizierung nicht mehr angeboten. Dennoch haben wir diese Ansprüche im Sinne der Gesundheit unserer Kunden aufrecht erhalten. Überzeugen Sie sich selbst bei einem Besuch.
+
+#### Duis autem vel
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+
+#### Nam liber tempor
+
+Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.

@@ -1,0 +1,36 @@
+<!-- Automatisch erzeugt von tools/extract-wp-content.mjs. Nicht von Hand bearbeiten. -->
+
+# Honig
+
+| | |
+|---|---|
+| Pfad | `/honig` |
+| Status | publish |
+| WordPress-ID | 2249 |
+| Unterseite von | Moments |
+| Aufbau | Elementor |
+| Sprungmarken | `#honig-massage`, `#lorem` |
+
+---
+
+**Diese Seite befindet sich derzeit im Aufbau.**
+
+Für weitere Informationen stehen wir Ihnen gern zur Verfügung und freuen uns auf Ihre Anfragen: [Kontakt](/kontakt).
+
+### Honig Massage
+
+#### Was ist eine Honigmassage?
+
+Schon bei den alten Ägyptern war Honig als ein beliebtes Heilmittel bekannt. Es beschleunigte die Wundheilung und linderte Schmerzen.
+
+Die Honigmassage selbst stammt aus Tibet und Russland. Sie wird da seit Jahrzehnten schon als Heilmassage und therapeutisch zur Entgiftung eingesetzt. Der Honig selbst wird schon über Jahrhunderte in der Volksmedizin angewendet.
+
+Honig galt auch bei den orientalischen Frauen als Schönheitsmittel. Die Haut wurde zart und sanft und der Teint wurde rein gehalten.
+
+Obwohl die Honigmassage eine entgiftende Wirkung besitzt, zählt man sie zu den Wellness- und Entspannungsmassagen. Die Massage löst und befreit den Körper von Schlacken- und Giftstoffen. Honig hat eine antibakterielle Wirkung.
+
+Mit der Kraft des Honigs wird der Körper auf natürliche Weise entgiftet.
+
+Die Honigmassage ist eine alternative Heilmethode und findet ihren Einsatz auch in der Bindegewebsmassage. Eine Honigmassage wirkt tief in das Gewebe hinein. Sie ist eine Zupfmassagetechnik. Durch die Zupftechnik werden Verklebungen der Haut gelöst und die Durchblutung wird dadurch kräftig angeregt. Alte, abgestorbene Zellen lösen sich, Salze und Schlacken werden über die Haut ausgeschieden. Energieblockaden werden aufgelöst und der gesamte Organismus wird gestärkt.
+
+Bei der entgiftenden Honigmassage kommt nur die Zupftechnik zum Einsatz, es werden keine üblichen Massagegriffe angewendet. Unsere Honigmassage beschränkt sich die Honigmassage auf den Rücken.

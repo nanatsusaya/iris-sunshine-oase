@@ -1,0 +1,59 @@
+<!-- Automatisch erzeugt von tools/extract-wp-content.mjs. Nicht von Hand bearbeiten. -->
+
+# Über uns
+
+| | |
+|---|---|
+| Pfad | `/ueber-uns` |
+| Status | publish |
+| WordPress-ID | 283 |
+| Aufbau | Elementor |
+| Sprungmarken | `#unser-team`, `#unser-tream`, `#unser-leitbild`, `#unsere-philosophie`, `#wie-wir-arbeiten`, `#unsere-leitlinien`, `#soziales-engagement`, `#zusaetzliche-leistungen`, `#kinder-betreuung`, `#kabinenaustattung` |
+
+---
+
+Im Februar 2013 haben wir dieses gemütliche Sonnenstudio übernommen. Seither sind wir bestrebt unseren Kunden nur **besten Service** und beste Hygiene zu bieten. Hier erhalten unsere Kunden neben der fachlich- kompetenten Beratung auch dieses gewisse Wohlfühlambiente.
+
+Nutzen Sie die Gelegenheit bei einer Tasse Kaffee oder einem kühlen Getränk für ein persönliches Gespräch mit unserem freundlichen Personal.
+
+Gerne beraten wir Sie und erstellen mit Ihnen Ihren individuellen **Besonnungsplan** oder empfehlen Ihnen eine auf Sie passende Solarkosmetik. Nehmen Sie sich Zeit für eine umfassende Hauttypenanalyse und genießen Sie den Aufenthalt auf unseren technisch und hygiensch einwandfreien Top-Solarien. Mehr zu unseren Geräten finden sie [hier](/ueber-uns/sonnenstudio).
+
+Seit November 2016 haben wir unser Angebot für Sie nochmals erweitert. Sie können sich nun auch in unserem Kosmetikstudio *Moments* mit verschiedenen **Naturkosmetik** Behandlungen oder **Wellness-Massagen** verwöhnen lassen. Mit dieser Art der Kosmetik bieten wir Ihnen eine außergewöhnliche und einzigartige Kosmetik in der Region. Natur pur. Lesen Sie [hier](/ueber-uns/kosmetikstudio) weiter um mehr Details über unser einzigartiges Angebot zu erfahren.
+
+### Unser Team
+
+####
+
+Hauptaugenmerk von Inhaberin Iris ist Teamwork mit dem Ziel, unseren Kunden immer beste Beratung und besten Service zukommen zu lassen. Wir sind ein Team, das alle kennen und bei dem jeder Einzelner seine eigenen Erfahrungen und Stärken einbringen kann.
+
+### Unser Leitbild
+
+#### Unsere Philosophie
+
+Kein Leben ohne Sonne, Licht ist Leben!
+
+Wir wollen den Menschen, die uns besuchen, einen Moment der Entspannung und des Wohlfühlens bieten. Ein kleines bisschen bezahlbaren Luxus in unserer schnelllebigen Zeit, die trotzdem den Anspruch jedes Einzelnen an Attraktivität und Wohlbefinden stellt.
+
+#### Wie wir arbeiten
+
+Eine flache Hierarchie und ein herzliches Miteinander. Immer den Gast im Auge. Ihr Anspruch ist unser Antrieb. Ihre Wünsche sind unser Bestreben.
+
+Die technische Ausstattung in unseren Räumlichkeiten und unser Wissen befindet sich auf dem neuesten Stand.
+
+#### Unsere Leitlinien
+
+Unsere Kunden stehen bei uns im Mittelpunkt. Wir sind stets bestrebt, Ihnen nur den besten Service und die beste Qualität zu bieten. Dabei erfüllen wir alle gesetzlichen Anforderungen.
+
+#### Soziales Engagement
+
+Unser Engagement im eigenen Ort ist für uns selbstverständlich. Ob als Sponsor bei verschiedenen Vereinen oder bei der Herxheimer Gutscheintaler-Aktion. Wir sind dabei!
+
+### Zusätzliche Leistungen
+
+#### Kinder Betreuung
+
+Kinder sind uns immer willkommen. Sie sind unsere Zukunft. Sollten Sie einen Besuch bei uns planen, bringen Sie Ihre kleinen und großen Kinder gern mit. Wir nehmen uns für die Zeit für sie.
+
+#### Kabinenaustattung
+
+Selbstverständlich halten wir in unseren Kabinen frische Handtücher, Reinigungskosmetik zum Abschminken, Deo für Sie & Ihn, sowie stets frisch desinfizierte Augenschutzbrillen bereit.

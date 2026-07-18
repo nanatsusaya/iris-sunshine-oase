@@ -1,0 +1,75 @@
+<!-- Automatisch erzeugt von tools/extract-wp-content.mjs. Nicht von Hand bearbeiten. -->
+
+# Verwendete Bilddateien
+
+Zuordnung Bilddatei → Seite, aus dem Export ermittelt. Die Dateien selbst liegen im ausgelagerten Archiv (siehe [Medien-Inventar](../analyse/06-medien-inventar.md)) und sind **nicht** Teil dieses Repositorys.
+
+> **Bildrechte sind nicht dokumentiert.** Vor Wiederverwendung klären — siehe Mängel M-15.
+
+Insgesamt 504 Medien in der alten Mediathek, davon 63 nachweislich auf Seiten oder in Beiträgen eingebunden.
+
+| Datei | Verwendet auf |
+|---|---|
+| `5_years_anniversary.jpg` | 5 Jahre Jubiläum mit Gewinnspiel |
+| `500x333.jpg` | Spielewiese |
+| `Africa5.jpg` | Leistungen & Preise |
+| `Asia2.jpg` | Leistungen & Preise |
+| `BalticSea11.jpg` | Leistungen & Preise |
+| `Certificate.png` | Moments |
+| `Child1-Big.jpg` | Spielewiese |
+| `Couple7.jpg` | Leistungen & Preise |
+| `Egypt2.jpg` | Leistungen & Preise |
+| `Group3.jpg` | Über uns |
+| `Group5.jpg` | Iris‘ Sunshine Oase, Über uns |
+| `Herxheim1.jpg` | Über uns |
+| `Honey-1.png` | Honig |
+| `Honey-3-big.png` | Iris‘ Sunshine Oase, Leistungen & Preise |
+| `Honey-3.png` | Massage |
+| `Kosmetik19.jpg` | Moments, Leistungen & Preise, Kosmetik |
+| `Kosmetik21.jpg` | Iris‘ Sunshine Oase, Moments |
+| `Kosmetik24-Big.jpg` | Iris‘ Sunshine Oase, Leistungen & Preise |
+| `Kosmetik24.jpg` | Leistungen & Preise, Kosmetik |
+| `Kosmetik25.jpg` | Massage, Ton Erden |
+| `Kosmetik26.jpg` | Moments |
+| `Kosmetik27.jpg` | Leistungen & Preise, Kosmetik |
+| `Kosmetik4.jpg` | Leistungen & Preise, Kosmetik |
+| `Landscape1-Big.jpg` | Spielewiese |
+| `Massage1.jpg` | Iris‘ Sunshine Oase, Moments |
+| `Massage3.jpg` | Leistungen & Preise, Massage |
+| `Massage4.jpg` | Iris‘ Sunshine Oase |
+| `Massage6.jpg` | Leistungen & Preise |
+| `Mittelmeer1.jpg` | Leistungen & Preise |
+| `Other1.jpg` | Leistungen & Preise, Massage |
+| `Solarbank1-mega-sun-5600.jpg` | Iris‘ Sunshine Oase, Sunshine |
+| `Solarbank2-soltron-planet-x-50.jpg` | Sunshine |
+| `Solarbank3-mega-sun-7000.jpg` | Iris‘ Sunshine Oase, Sunshine |
+| `Solarbank4-ergoline-500.jpg` | Iris‘ Sunshine Oase, Sunshine |
+| `Solarbank5-soltron-planet-x-60-turbo.jpg` | Sunshine |
+| `StillLife8.jpg` | Leistungen & Preise |
+| `Studio10.jpg` | Iris‘ Sunshine Oase |
+| `Studio12.jpg` | Iris‘ Sunshine Oase |
+| `Studio14.jpg` | Iris‘ Sunshine Oase, Über uns |
+| `Studio16-Sonnenbank.jpg` | Iris‘ Sunshine Oase |
+| `Studio2.jpg` | Iris‘ Sunshine Oase |
+| `Studio4.jpg` | Iris‘ Sunshine Oase |
+| `Studio6.jpg` | Iris‘ Sunshine Oase |
+| `Sun06-Big.jpg` | Leistungen & Preise |
+| `Sun11-Big.jpg` | Iris‘ Sunshine Oase |
+| `Sun23.jpg` | Über uns |
+| `Sun27.jpg` | Über uns |
+| `Sun48.jpg` | Leistungen & Preise |
+| `Sun50.jpg` | Iris‘ Sunshine Oase |
+| `Sun51.jpg` | Leistungen & Preise |
+| `Sun52.jpg` | Iris‘ Sunshine Oase |
+| `Unternehmerhelden.png` | Iris‘ Sunshine Oase |
+| `Wellness-Pair1.jpg` | Leistungen & Preise |
+| `Wellness1.jpg` | Leistungen & Preise, Spielewiese |
+| `Woman-44-Long.jpg` | Iris‘ Sunshine Oase, Leistungen & Preise |
+| `Woman-45-Big.jpg` | Iris‘ Sunshine Oase |
+| `Woman12.jpg` | Iris‘ Sunshine Oase |
+| `Woman13.jpg` | Leistungen & Preise |
+| `Woman19.jpg` | Leistungen & Preise, Kosmetik |
+| `Woman3.jpg` | Iris‘ Sunshine Oase |
+| `Woman35.jpg` | Über uns |
+| `Woman38.jpg` | Iris‘ Sunshine Oase, Leistungen & Preise |
+| `Woman43.jpg` | Leistungen & Preise, Kosmetik |
