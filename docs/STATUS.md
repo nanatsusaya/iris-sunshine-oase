@@ -18,7 +18,18 @@ So that "decided" is never read as "built", every capability sits at one of:
 
 ## Where we stand
 
-**Phase 0 — analysis and foundation:** ▶ in progress.
+Each phase is tracked as an epic; this section is the summary, the epic is the detail.
+
+| Phase | Epic | State |
+|---|---|---|
+| 0 — Analysis & foundation | [#2](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2) | ▶ in progress |
+| 1 — Decisions (ADRs 0002–0008) | [#3](https://github.com/nanatsusaya/iris-sunshine-oase/issues/3) | planned |
+| 2 — Scaffold & first preview | [#4](https://github.com/nanatsusaya/iris-sunshine-oase/issues/4) | planned |
+| 3 — Content | [#5](https://github.com/nanatsusaya/iris-sunshine-oase/issues/5) | planned |
+| 4 — Defects, accessibility, SEO | [#6](https://github.com/nanatsusaya/iris-sunshine-oase/issues/6) | planned |
+| 5 — Go-live | [#7](https://github.com/nanatsusaya/iris-sunshine-oase/issues/7) | planned |
+
+**Phase 0 — analysis and foundation** (#2)**:** ▶ in progress.
 
 - ✅ The old WordPress site is analysed and documented (`docs/analyse/`): stack and data situation,
   content inventory, the full price list, the design system, a media inventory, and 28 defects as work
@@ -31,18 +42,18 @@ So that "decided" is never read as "built", every capability sits at one of:
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, labels, CI.
 
-**Phase 1 — decisions:** planned. ADRs 0002–0008, one PR each (see the
+**Phase 1 — decisions** (#3)**:** planned. ADRs 0002–0008, one PR each (see the
 [ADR index](adr/README.md) for the set and its rationale).
 
-**Phase 2 — scaffold and first preview:** planned. The Astro scaffold plus the GitHub Pages
+**Phase 2 — scaffold and first preview** (#4)**:** planned. The Astro scaffold plus the GitHub Pages
 deployment, so drafts are reviewable in a browser early. Gated on ADR 0002 and ADR 0006.
 
-**Phase 3 — content:** planned. The 14 pages, prices and opening hours as structured data.
+**Phase 3 — content** (#5)**:** planned. The 14 pages, prices and opening hours as structured data.
 
-**Phase 4 — defects, accessibility, SEO:** planned. `M-01`…`M-28` as tickets, plus the checks that
+**Phase 4 — defects, accessibility, SEO** (#6)**:** planned. `M-01`…`M-28` as tickets, plus the checks that
 keep them from recurring.
 
-**Phase 5 — go-live:** planned. Domain cutover from netcup, redirects for the 32 old URLs, removal of
+**Phase 5 — go-live** (#7)**:** planned. Domain cutover from netcup, redirects for the 32 old URLs, removal of
 the `noindex` gate. Every step here is owner-approved.
 
 ## Decisions taken (not yet ADRs)
@@ -69,4 +80,4 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-Finish Phase 0 (process foundation), then open ADR 0002 (tech stack) as the first decision PR.
+Finish Phase 0 (#2) — translate `docs/` to English — then open ADR 0002 (tech stack) as the first decision PR under Phase 1 (#3).
