@@ -12,7 +12,7 @@ Every ADR file must appear in this table with a status.
 | [0001](0001-record-architecture-decisions.md) | Record architecture decisions | Accepted |
 | [0002](0002-tech-stack-and-tooling.md) | Tech stack and tooling | Accepted |
 | 0003 | Content model — structured data and where authority lives | Planned |
-| 0004 | Styling and design tokens | Planned |
+| [0004](0004-styling-and-design-tokens.md) | Styling and design tokens | Accepted |
 | 0005 | Internationalisation — German default, English secondary | Planned |
 | [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |

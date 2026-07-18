@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A rebuild of **iris-sunshine-oase.de** — the website of *Iris' Sunshine Oase*, a tanning and cosmetics
+A rebuild of **iris-sunshine-oase.de** — the website of *Iris’ Sunshine Oase*, a tanning and cosmetics
 studio in Herxheim bei Landau (Pfalz, Germany). The site is a real business's public presence: an
 existing WordPress installation from 2017, still online and still receiving customers, to be replaced
 by a statically generated site.

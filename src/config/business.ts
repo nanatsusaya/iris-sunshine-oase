@@ -40,5 +40,11 @@ function readFact(label: string): string {
   );
 }
 
-/** "Kosmetik- & Sonnenstudio Iris' Sunshine Oase" — the trading name, as registered. */
+/**
+ * The studio's trading name, as registered.
+ *
+ * Deliberately not quoted in this comment. A doc comment that repeats the value is a third copy that
+ * nobody updates — and the apostrophe in this particular string changed on 2026-07-19 (ADR 0004 R5),
+ * which is precisely how such a copy goes stale without anyone noticing.
+ */
 export const TRADING_NAME = readFact('Trading name');

@@ -55,10 +55,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   `preview.iris-sunshine-oase.de`; `noindex` is the indexing gate and `robots.txt` must **not** block
   the crawl that delivers it. State: **designed** — nothing deployed.
 - ▶ ADRs 0003, 0005, 0007 and 0008 outstanding.
-- ⏸ **ADR 0004** (styling and design tokens) waits on input from outside this repository: the owner is
-  drafting a visual design for the new site (2026-07-18, in progress). Design tokens invented before
-  that design exists would be replaced by it, so 0004 is deliberately *not* the next ADR despite its
-  low number. The other ADRs do not depend on how the site looks.
+- ✅ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Accepted**
+  (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
+  display sizes, a 34rem reading measure, mobile-first with two breakpoints, inline-SVG icons and
+  wordmark, and self-hosted fonts. Derived by measurement from the owner's Claude Design draft, which
+  already carried a stable 14-token layer and preserves `#FFC000` — the only colour the old site
+  documented exactly. Three inherited defects close structurally: `M-09` becomes unexpressible under
+  mobile-first, and spacing and maximum width get a system. State: **designed** — no CSS yet.
 - ✅ [ADR 0009](adr/0009-security-by-design.md) — security by design (#28) — **Accepted** (2026-07-18):
   an addition to the reserved eight, taken **before** the scaffold because it decides workflow
   permissions, dependency policy and the no-external-resources invariant — all cheaper to build in than
@@ -139,29 +142,28 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**ADR 0004 — styling and design tokens**, from the owner's design draft.
+**Implement the token layer, then the homepage** (Phase 2, #4).
 
-The draft exists (Claude Design, „Iris Sunshine Oase Redesign", 2026-07-19) and carries its own token
-layer of 14 CSS custom properties, stable across every iteration. Turns 6–10 are the canonical set;
-turn 5 is labelled *„Finale Version"* and is **not** — turn 6 supersedes it with the WCAG rework.
+ADR 0004 is `Accepted`, so the styling decisions exist and the holding page can be replaced. The order
+that follows from the ADR: the tokens and the three checks of §10 first (no raw colour, no off-scale
+spacing, contrast holds), because a check written after the CSS it governs is a check written around it;
+then the homepage from the draft's turn 6.
 
-Five findings from reading it need an owner decision and belong in ADR 0004 as open questions:
+**Two owner actions still gate the preview URL** and neither blocks the work above:
 
-1. It loads **Google Fonts**, which ADR 0009 §6 forbids. All four families are self-hostable — Mulish,
-   Cormorant Garamond and Kaushan Script under OFL, Yellowtail under Apache 2.0 (verified against the
-   `google/fonts` repository).
-2. `--muted` (`#6B5D57`) and `--blue-ink` (`#4E63A0`) clear AA on cards but **not directly on the page
-   gradient**, where they fall to 4.10 and 3.77 against a 4.5 requirement.
-3. `--orange` (`#FFC000`) is never a legible text colour (1.07–1.60) — surface only, and that should be
-   written down.
-4. `--orange-ink` is used once and **never defined**; it survives on a literal fallback.
-5. Icons are **emoji** (☎ 📍 ✉ ✔), which render inconsistently and read badly to a screen reader.
+1. Verify the apex domain with GitHub (ADR 0009 §5, R3) — *Settings → Pages → Add a domain*, then the
+   `TXT` record at netcup.
+2. Add the `preview` `CNAME` at netcup → `nanatsusaya.github.io` (ADR 0006 §2), then enable Pages with
+   *Source: GitHub Actions* and re-enable the `push` trigger in `.github/workflows/deploy.yml`.
 
-The design references exactly one image — the sun — and no photographs at all, so the provenance
-question is far smaller than feared. Whether photography is planned, and where the sun came from, are
-open questions for the owner.
+**Two things the owner owes the repository**, both now on the critical path for content rather than for
+the build:
 
-**Then:** the two owner actions that unblock the preview URL (domain verification, the `preview`
-`CNAME`), the remaining Phase 2 tickets, and the homepage itself.
+- **The sun as a vector.** R4 records it as the owner's own work, which clears the provenance gate, but
+  the draft ships a PNG. §4 puts an inline-SVG wordmark beside it and the old site's `Logo-Sun.svg` was a
+  PNG in an SVG wrapper — repeating that would be the same defect twice.
+- **Photographs and their provenance.** R3 confirms photographs are coming. None of the old site's may be
+  reused: those rights are undocumented (`docs/analyse/06-medien-inventar.md`). Each new one needs who
+  took it, when, and confirmation that the studio holds the rights.
 
 Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.

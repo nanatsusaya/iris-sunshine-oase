@@ -23,7 +23,7 @@ So the test for adding anything below is not "is it true?" but "is this the only
 
 | Fact | Value | Source |
 |---|---|---|
-| Trading name | Kosmetik- & Sonnenstudio Iris' Sunshine Oase | `inhalte/seiten/impressum.md` |
+| Trading name | Kosmetik- & Sonnenstudio Iris’ Sunshine Oase | `inhalte/seiten/impressum.md`; apostrophe **owner, 2026-07-19** — see below |
 | Proprietor | Iris Zellner | `inhalte/seiten/impressum.md` |
 | Street | Offenbacher Str. 2 | `inhalte/seiten/impressum.md` |
 | Postcode and town | 76863 Herxheim bei Landau (Pfalz) | `inhalte/seiten/impressum.md` |
@@ -42,6 +42,21 @@ is a redaction artefact and **not** a value to be copied.
 The blanket cleaning was right — the export held 2,216 contact-form submissions with third parties'
 addresses, and a rule with an exception is a rule that gets applied wrongly under time pressure. The
 studio's own address was collateral, and it comes from the owner instead.
+
+### Why the trading name's apostrophe has a second source
+
+The words come from the extract; the **apostrophe** does not. The old site spelled the name both ways —
+`docs/analyse/04-design-system.md` recorded a straight `'` in the header and a typographic `’` in the
+hero — and the owner's design draft reproduced exactly that inconsistency, 39 times one way and 18 the
+other.
+
+The owner settled it on **2026-07-19** ([ADR 0004](adr/0004-styling-and-design-tokens.md) R5): the
+typographic `’`, everywhere. So this row is the extract's wording with one deliberate typographic
+correction, and that is why its source cell names two authorities rather than one.
+
+`tools/check-docs.mjs` asserts it, because a brand name spelled two ways is precisely the kind of small
+inconsistency that reappears the moment nobody is looking — it already did, twice, across nine years and
+one complete redesign.
 
 ### Why these details may be published here
 
