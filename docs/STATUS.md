@@ -79,12 +79,18 @@ Recorded here so they are not lost before the owning ADR is written:
 | Repository artefacts in English; conversation in German | 2026-07-18 | — (`CLAUDE.md`) |
 | Site content German by default, English as an additional locale | 2026-07-18 | 0005 |
 | Early drafts visible via GitHub Pages, `main` → one preview URL | 2026-07-18 | 0006 |
+| Domain stays registered at netcup; DNS points at the host | 2026-07-18 | 0006 |
+| Cloudflare Pages hosts the public site; GitHub Pages stays the preview | 2026-07-18 | 0006 |
+| No contact form — telephone and e-mail only | 2026-07-18 | 0007 |
 | `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analyse/06`) |
 
 ## Open questions for the owner
 
-- **Hosting after go-live** — netcup is under review. GitHub Pages is currently the *preview*
-  decision, not necessarily the final host. Belongs in ADR 0006.
+- **The studio's e-mail address** — needed as soon as the contact form is dropped, because e-mail then
+  carries what the form used to. It is **not in this repository**: the PII cleaning of the WordPress
+  export replaced it with `studio@example.invalid`, so both `docs/inhalte/seiten/kontakt.md` and
+  `impressum.md` show the placeholder. It must come from the owner and must not be reconstructed from
+  anywhere else — a wrong address on a contact page silently loses enquiries.
 - **Image material** — no image can be used until its provenance is documented. Whether to re-shoot
   the studio or re-license stock is an owner call with cost implications.
 - **Content scope** — `docs/analyse/02-inhaltsinventar.md` rates each old page as keep, rework or
