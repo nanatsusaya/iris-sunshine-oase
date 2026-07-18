@@ -28,6 +28,20 @@ and the scaffold ships. Until then, **do not assert a tech stack in code or docs
 Astro (owner's decision), everything around it — package manager, styling approach, test tooling — is
 still open and belongs in an ADR, not in a passing commit.
 
+## Session skills
+
+Four skills in `.claude/skills/` make the recurring session rituals repeatable, so
+that starting, continuing and closing a session is a procedure rather than an improvisation. They are
+adapted from the sibling project *grimora*; the names are German because the owner types them, while
+their contents are English like every other artefact.
+
+| Skill | When |
+|---|---|
+| `moin` | Session bring-up. Orients from the living docs and **ends with a question, never an action**. |
+| `weiterimtext` | Mid-session, after the owner merged a PR: close the unit out, re-verify the world, start the next task only if it is decision-free. |
+| `feierabend` | Session wind-down. Tidy git, finish or park work honestly, bring the living docs current. |
+| `adr-author` | Writing or reworking an ADR. Encodes ADR 0001's workflow and the house style. |
+
 ## Architecture (read the ADRs before changing structure)
 
 Every significant decision is recorded in [`docs/adr/`](docs/adr/README.md) and is **normative**.
@@ -140,6 +154,13 @@ silently misinforms every future session.
 The documentation is **self-supporting by design**: an agent working a ticket has this repository and
 nothing else — no conversation history, no access to `Archive/`, no memory of how a thing came to be.
 Everything needed to do the work correctly must be written down here.
+
+**[`docs/meta/agent-collaboration-log.md`](docs/meta/agent-collaboration-log.md)** carries the other
+half of that: not *what* was decided, but why the way we work looks the way it does — owner corrections
+and their rationale, workflow experiments, and the mistakes that produced a rule. Write an entry only
+for a genuinely methodological moment, never for routine task execution; the test is whether an agent
+with no memory of that session would decide worse without it. Like every other change it goes through
+a PR — it may ride along with the `STATUS.md` sync, since both are the same concern.
 
 ## Tickets (issues) — Definition of Ready / Done
 

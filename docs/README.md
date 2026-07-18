@@ -16,6 +16,7 @@ two files compete to answer the same thing.
 | [`../CLAUDE.md`](../CLAUDE.md) | How is work done here? | rarely |
 | [`adr/`](adr/README.md) | What was decided, and why? | append-only |
 | [`STATUS.md`](STATUS.md) | Where do we stand? | often |
+| [`meta/agent-collaboration-log.md`](meta/agent-collaboration-log.md) | Why does the way we work look like this? | occasionally |
 | GitHub issues | What is to be done? | continuously |
 
 ### [`adr/`](adr/README.md) — decisions
@@ -23,6 +24,12 @@ two files compete to answer the same thing.
 Architecture Decision Records, numbered and normative. An `Accepted` ADR is binding and
 immutable except with logged owner authorisation. **`Accepted` means decided, not built** —
 implementation progress lives in [`STATUS.md`](STATUS.md).
+
+### [`meta/`](meta/agent-collaboration-log.md) — how we work, and why
+
+The ADRs record *what* was decided. The collaboration log records *why the way we work looks the way it
+does*: owner corrections and their rationale, workflow experiments, and the mistakes that produced a
+rule. A rule whose origin is lost gets quietly dropped by the next session that finds it inconvenient.
 
 ### [`analyse/`](analyse/README.md) — survey of the old site
 
