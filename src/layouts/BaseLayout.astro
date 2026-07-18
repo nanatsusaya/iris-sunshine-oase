@@ -1,6 +1,11 @@
 ---
 import { TRADING_NAME } from '../config/business';
 import { IS_LIVE, SITE_URL } from '../config/site';
+// The token layer (ADR 0004). Imported here rather than per page, because it is the one thing every
+// page needs and the layout is the one file every page goes through. `tools/check-tokens.mjs`
+// asserts this import exists — a token file nothing loads passes every other check and styles
+// nothing.
+import '../styles/tokens.css';
 
 interface Props {
   /** Page title, without the site name — the layout appends that. */
@@ -67,32 +72,59 @@ const canonical = new URL(Astro.url.pathname, SITE_URL).href;
 
 <style>
   /*
-    Deliberately almost empty. Colours, typography, spacing and breakpoints belong to ADR 0004,
-    which is still `Planned` — the owner's design draft exists but its decisions are not recorded
-    yet, and settling them here would decide an open ADR in code (`CLAUDE.md`). What is here is only
-    enough to keep the holding page legible.
+    The site-wide defaults, and nothing more. Component styling belongs to the components; what is
+    here is the handful of things that must be true on every page before any of them is written.
+    Every value comes from `src/styles/tokens.css` (ADR 0004 §2) — `tools/check-tokens.mjs` rejects a
+    raw one, so this file cannot quietly become a second palette.
   */
   :global(html) {
     /*
-      Legibility, not palette. A page that declares no colours inherits the browser's dark theme and
-      renders dark-on-dark — which is what the first browser check of this scaffold actually showed.
-      `color-scheme` alone fixed the text but left both root elements transparent, so the result
-      still depended on a browser default being what we hoped; these two declarations make it
-      explicit instead.
-
-      Black on white is the absence of a design, not a choice of one. Every real value — the warm
-      gradient, the bordeaux, the type scale — belongs to ADR 0004 and is deliberately not decided
-      here.
+      `color-scheme` is not cosmetic here. A page that declares no colours inherits the browser's
+      dark theme and renders dark-on-dark, which is what the first browser check of this scaffold
+      actually showed. The palette below is a light one, so the browser is told so explicitly rather
+      than left to infer it from a background it may not have painted yet.
     */
     color-scheme: light;
-    background: #fff;
-    color: #111;
-    font-family: system-ui, sans-serif;
-    line-height: 1.6;
+
+    /*
+      The gradient is the page itself, not a band at the top of it (ADR 0004 §2). `fixed` keeps it
+      one continuous surface down a long page instead of restarting the ramp per screenful — and it
+      is what makes the five stops the contrast check measures against the *actual* backgrounds.
+    */
+    background: var(--page-background) fixed;
+    color: var(--colour-text);
+    font-family: var(--font-body);
+    font-weight: var(--weight-body);
+    line-height: var(--leading-body);
+
+    /*
+      Deliberately no `font-size` here. Setting one would re-anchor every `rem` on the site and
+      silently discard the text size a reader chose in their own browser — the mitigation ADR 0004 R2
+      relies on, given that body copy is 15px at weight 300. The size goes on `body`, where it styles
+      text without moving the unit. Asserted by `tools/check-tokens.mjs`.
+    */
   }
 
   :global(body) {
     margin: 0;
-    padding: 2rem 1.25rem;
+    padding: var(--space-7) var(--gutter);
+    font-size: var(--text-base);
+    min-height: 100vh;
+  }
+
+  :global(h1),
+  :global(h2),
+  :global(h3) {
+    font-family: var(--font-heading);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-tight);
+    color: var(--colour-brand);
+    /* Headings use the fluid top steps of the scale, so a long one reflows rather than running to
+       the edge — the old site's hero title kept its size whatever its length. */
+    text-wrap: balance;
+  }
+
+  :global(a) {
+    color: var(--colour-brand);
   }
 </style>

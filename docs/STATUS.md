@@ -76,7 +76,15 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   Biome blocking, `@astrojs/sitemap` in the live state only. State: **draft** — one holding page, no
   design.
 - ✅ **The full check chain** replaces the documentation-only step: audit → typecheck → lint → build →
-  docs → external-resource check.
+  docs → tokens → external-resource check.
+- ✅ **The token layer** (2026-07-19): `src/styles/tokens.css` carries every colour, size, space and
+  ratio ADR 0004 decided, and `tools/check-tokens.mjs` asserts the rules around them — no raw colour,
+  no off-scale spacing, contrast holds, `--colour-accent` is never text, and `@media` uses only the two
+  sanctioned breakpoints with no `max-width`. State: **draft** — the tokens exist and the holding page
+  uses them; the designed homepage does not exist yet.
+  - **The fonts are not self-hosted yet.** `--font-heading` and `--font-body` name Cormorant Garamond
+    and Mulish and fall through to a system serif and sans, so the page is correct but not yet as
+    drawn. The font files are their own change, because each one enters under the provenance rule.
 - ✅ **The indexing gate**, as one build-time flag defaulting to `preview` (ADR 0006 §5). Verified in
   both directions locally: `preview` emits `noindex` and no sitemap; `live` emits neither the tag nor
   a `Disallow`, and does emit the sitemap.
@@ -142,12 +150,15 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**Implement the token layer, then the homepage** (Phase 2, #4).
+**Self-host the two fonts, then build the homepage** (Phase 2, #4).
 
-ADR 0004 is `Accepted`, so the styling decisions exist and the holding page can be replaced. The order
-that follows from the ADR: the tokens and the three checks of §10 first (no raw colour, no off-scale
-spacing, contrast holds), because a check written after the CSS it governs is a check written around it;
-then the homepage from the draft's turn 6.
+The token layer and its checks landed first, deliberately: a check written after the CSS it governs is
+a check written around it. Both remaining steps are now unblocked.
+
+- **Fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses, `woff2`,
+  self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs its provenance
+  recorded like any other asset. Until this lands the page renders in system fallbacks.
+- **The homepage** from the draft's turn 6 — mobile-first, built out of the tokens.
 
 **Two owner actions still gate the preview URL** and neither blocks the work above:
 

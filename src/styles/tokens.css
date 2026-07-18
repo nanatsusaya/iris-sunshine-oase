@@ -1,0 +1,190 @@
+/*
+ * Design tokens — the single value layer for the whole site (ADR 0004).
+ *
+ * **This file is the only place a raw colour or a raw spacing value may appear.** Everywhere else
+ * uses `var(--…)`, and `tools/check-tokens.mjs` asserts it rather than leaving it to review. That is
+ * not pedantry: the old site kept the same price in three places and they drifted apart, and a
+ * hard-coded `#6E1015` in one component is the same defect wearing different clothes.
+ *
+ * One tier, not two (ADR 0004 §2). There is no primitive palette underneath these names. A
+ * raw-palette → semantic-alias split earns its indirection when several brands or themes share a
+ * codebase; here it would be one extra hop for one theme on fourteen pages.
+ *
+ * The names are semantic. The draft's own names are recorded in ADR 0004 §2's mapping table, which
+ * is how a future session reads `Startseite.dc.html` against this file without re-deriving which
+ * token became which.
+ */
+
+:root {
+  /* ---------------------------------------------------------------------
+   * Colour (ADR 0004 §2, §3)
+   *
+   * `--colour-accent` is a **surface colour and never text**: #FFC000 scores 1.64 against white and
+   * 1.07–1.60 against every background in this palette, so it cannot carry text at any size. It is
+   * written down because "the brand colour" is exactly what a later session reaches for when setting
+   * a heading — and asserted by check 4, because a rule nobody re-reads is not a rule.
+   * ------------------------------------------------------------------ */
+
+  --colour-brand: #6e1015; /* bordeaux — headings and marks; 7.80 at the worst gradient stop */
+  --colour-text: #5c4944; /* body copy; 5.47 */
+  --colour-text-muted: #645651; /* secondary copy; 4.56 — darkened for AA, ADR 0004 R1 */
+  --colour-accent: #ffc000; /* surface only, never text */
+  --colour-accent-cool: #c2d1ed; /* surface */
+  --colour-accent-cool-text: #45578d; /* on --colour-accent-cool; 4.54 — darkened for AA, R1 */
+
+  /* Translucent white panels that sit on the page gradient. Their effective colour therefore
+   * depends on where they sit, which is why the contrast check composites them over every gradient
+   * stop instead of measuring them against a representative one — the mistake ADR 0004 R1 records. */
+  --surface-card: rgb(255 255 255 / 0.72);
+  --surface-card-strong: rgb(255 255 255 / 0.86);
+  --surface-card-border: rgb(255 255 255 / 0.85);
+
+  --colour-rule: rgb(110 40 30 / 0.16); /* hairlines */
+  --shadow-colour: rgb(120 60 30 / 0.32);
+  --glow-warm: rgb(255 196 0 / 0.45);
+  --glow-cool: rgb(194 209 237 / 0.6);
+
+  /* The page's own background, promoted from the old site's hero gradient.
+   *
+   * `docs/analyse/04-design-system.md` records this colour pair — #c2d1f0 → #ffc000 — as the single
+   * colour the old site documented exactly, read out of its Custom CSS. The palette above is its
+   * direct descendant, so nine years of recognition survive the rebuild.
+   *
+   * The old site used the gradient only where a photograph was missing, so it read as a broken
+   * image; the analysis asked for "either an image everywhere or a deliberately designed surface
+   * everywhere". This is the second option: same colours, opposite intent.
+   *
+   * The five stops are what the contrast check reads. Changing one changes what every text token has
+   * to clear, which is the whole reason that check exists. */
+  --page-background: linear-gradient(
+    158deg,
+    #ffd24a,
+    #fbe3ac 22%,
+    #ede8e2 50%,
+    #d8deee 78%,
+    #c2d1ed
+  );
+
+  /* ---------------------------------------------------------------------
+   * Typography (ADR 0004 §4)
+   *
+   * Two families, not the draft's four. Kaushan Script and Yellowtail existed there only to set the
+   * two words of the wordmark, which becomes an inline SVG instead — shipping two webfont families
+   * for one fixed string is a poor trade, and drawing a logo as a logo also makes it render
+   * identically everywhere rather than depending on two fonts loading.
+   *
+   * **The webfont files are not in this repository yet.** Cormorant Garamond and Mulish are OFL and
+   * will be self-hosted (ADR 0009 §6 forbids fetching them from Google), each entering under the
+   * provenance rule in `CLAUDE.md`. Until that lands, these stacks fall through to a system serif and
+   * sans, so the page renders correctly but not yet as drawn. Naming a family that is not installed
+   * costs nothing and triggers no network request.
+   * ------------------------------------------------------------------ */
+
+  --font-heading: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Every size is in `rem`, and `html { font-size }` is never overridden. This is load-bearing
+   * rather than stylistic. `--text-base` is 0.9375rem, not 15px: a reader who has raised their
+   * browser's default text size to 20px gets 18.75px body copy and a proportionally larger page,
+   * while a reader on defaults sees the design exactly as drawn. Setting a pixel root font size
+   * would produce the same picture and silently defeat that preference — the single most common way
+   * a site becomes unusable for someone who needs larger text, and identical in review. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 0.9375rem; /* the draft's 15px, kept — ADR 0004 R2 */
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.625rem;
+  --text-3xl: 2rem;
+
+  /* `clamp()` on the top two steps replaces the mockups' separate desktop and mobile headline sizes
+   * without a breakpoint, and it fixes a named old-site defect in passing: there, the hero title did
+   * not scale with its length, so long titles ran up to the edge at the same size. */
+  --text-4xl: clamp(2.125rem, 1.6rem + 2.2vw, 2.75rem);
+  --text-5xl: clamp(2.75rem, 1.8rem + 4vw, 4.125rem);
+
+  --leading-tight: 1.15; /* headings */
+  --leading-body: 1.6; /* running text */
+  --leading-flat: 1; /* single-line labels */
+
+  /* Body copy keeps the draft's weight 300 (ADR 0004 R2). Weight 400 is for long-form or dense
+   * passages rather than as a global default. Recorded honestly in the ADR as an accepted residual:
+   * WCAG measures the contrast of a colour pair, not the stroke weight that carries it, so clearing
+   * 4.5 is the floor here and not a claim of comfortable reading. */
+  --weight-body: 300;
+  --weight-body-dense: 400;
+  --weight-heading: 500;
+
+  /* ---------------------------------------------------------------------
+   * Spacing (ADR 0004 §5) — base 4px, nine steps.
+   *
+   * The old site produced spacing with Elementor spacer widgets: a full-width empty section between
+   * practically every block. The analysis said plainly that this "belongs in a spacing system in
+   * CSS". This is that system.
+   *
+   * The draft's near-continuous values round onto it — a 13px gap becomes 12 and a 15px gap becomes
+   * 16. **That the scale is not exhaustive is the point.** The constraint is the feature: the next
+   * page cannot invent a 17px gap.
+   * ------------------------------------------------------------------ */
+
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.5rem; /* 24px */
+  --space-6: 2rem; /* 32px */
+  --space-7: 3rem; /* 48px */
+  --space-8: 4rem; /* 64px */
+  --space-9: 6rem; /* 96px */
+
+  /* ---------------------------------------------------------------------
+   * Layout (ADR 0004 §6)
+   *
+   * The analysis lists "fluid without a maximum width" among the old site's defects, with the remedy
+   * already stated: limit to a reading width of about 65–75 characters.
+   * ------------------------------------------------------------------ */
+
+  --measure: 34rem; /* ≈68 characters at --text-base — prose */
+  --container: 60rem; /* the widest layout band */
+  --gutter: var(--space-5); /* 24px side margin, as the old site had */
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.5rem;
+  --radius-pill: 999px;
+
+  /* ---------------------------------------------------------------------
+   * Image frames (ADR 0004 §9)
+   *
+   * The draft contains no photographs; the site will have them (R3). Every image box declares one of
+   * these, so a slow-loading or missing photograph cannot reflow the page around it. The old site's
+   * "generous photo heroes" were among its few good ideas — this is what keeps them from also being
+   * its layout instability.
+   * ------------------------------------------------------------------ */
+
+  --ratio-hero: 16 / 9;
+  --ratio-card: 4 / 3;
+  --ratio-portrait: 3 / 4;
+}
+
+/*
+ * Breakpoints (ADR 0004 §7) are deliberately **not** custom properties.
+ *
+ *   --bp-wide  48rem (768px) — single-column stacks become multi-column
+ *   --bp-full  64rem (1024px) — the container reaches --container and stops growing
+ *
+ * A custom property cannot be used inside a media query — `@media (min-width: var(--bp-wide))` is
+ * simply invalid and is silently ignored by every browser. Declaring them here anyway would create a
+ * token that looks usable, fails without an error, and takes a layout down with it. So the two
+ * values are written once, here, and `tools/check-tokens.mjs` asserts that every `@media` in the
+ * repository uses one of them.
+ *
+ * Two breakpoints, not five, because fourteen brochure pages have two layouts: stacked and
+ * side-by-side. A third is added in the pull request that demonstrably needs one, never reserved in
+ * advance.
+ *
+ * **Mobile-first is a rule, not a habit**, and it is how `M-09` — the old site's two-column layout
+ * that never wrapped on mobile — becomes unexpressible rather than merely discouraged: the
+ * unprefixed case *is* the mobile case, so a two-column grid can only exist inside a `min-width`
+ * query. `max-width` queries are therefore rejected by the same check.
+ */
