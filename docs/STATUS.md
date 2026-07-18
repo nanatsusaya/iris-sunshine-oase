@@ -59,7 +59,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   drafting a visual design for the new site (2026-07-18, in progress). Design tokens invented before
   that design exists would be replaced by it, so 0004 is deliberately *not* the next ADR despite its
   low number. The other ADRs do not depend on how the site looks.
-- 🔜 **ADR 0009 — security by design** (#27) is proposed as an addition to the reserved set. It is not
+- 🔜 **ADR 0009 — security by design** (#28) is proposed as an addition to the reserved set. It is not
   in the original eight, and it is deliberately taken **before** the scaffold: it decides workflow
   permissions, dependency policy and the no-external-resources invariant, all of which are cheaper to
   build in than to retrofit.
@@ -101,7 +101,7 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**ADR 0009 — security by design (#27), then the Phase 2 scaffold.**
+**ADR 0009 — security by design (#28), then the Phase 2 scaffold.**
 
 Phase 2 is unblocked and could start now. It is taken second on purpose. The scaffold is where the
 build workflow, its token permissions, the dependency set and the site's external-resource policy come
