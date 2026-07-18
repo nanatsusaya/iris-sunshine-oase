@@ -18,8 +18,10 @@ a skipped step or a failing check is stated plainly, never glossed over.
 
 - **Start no new work.** If a new task surfaces, note it (ticket, backlog, next step) — do not begin it.
 - **Do not merge PRs** — the owner merges every PR. List them and report their state.
-- **Do not commit to `main`.** The single documented exception is an ADR `Proposed → Accepted` status
-  flip (ADR 0001). Everything else — including the living docs — goes on a branch through a PR.
+- **Do not commit to `main`. There is no exception** — including the ADR `Proposed → Accepted` status
+  flip, whose former exception was withdrawn on 2026-07-18 (ADR 0001 *Amendments*). `main` is
+  branch-protected against administrators too, so a direct push is refused rather than merely
+  discouraged. Everything — including the living docs — goes on a branch through a PR.
 - **Owner conversation is German**; repository artefacts stay English (`CLAUDE.md`).
 
 ## 1. Git & branch hygiene

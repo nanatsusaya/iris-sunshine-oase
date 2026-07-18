@@ -260,3 +260,35 @@ slip is the same failure wearing different clothes: a countable fact, one comman
 memory. The rule that follows is not "be careful with numbers" but a structural one — **if a claim is
 checkable by a command, the command runs before the claim is written**, and that holds hardest in the
 documents that are meant to be binding.
+
+## 2026-07-19 — A rule changed in two places and stayed wrong in three
+
+**Trigger:** Invoking the `adr-author` skill to write ADR 0004. Its step 6 still instructed:
+
+> Sync `main`, then flip **`Proposed → Accepted`** in both the ADR header and the index, as a direct
+> follow-up commit on `main`. This is the one workflow-sanctioned non-PR commit (ADR 0001).
+
+That exception had been withdrawn the previous day, and `main` is now branch-protected against
+administrators, so following the skill would simply have failed.
+
+**Action / method:** A grep for the old wording found it in **three** places — the `adr-author`,
+`feierabend` and `weiterimtext` skills — all corrected, and all three are session rituals an agent
+reads *before* doing anything else. The amendment PR had updated `CLAUDE.md` and ADR 0001 and stopped
+there, because those were the documents in view. Rather than only fixing the copies, `check-docs.mjs`
+gained a sixth check: a small table of **withdrawn rules**, asserted by pattern across every Markdown
+file, with blockquoted lines exempt so that ADR 0001's *Amendments* section can keep quoting the old
+wording verbatim. The check was verified in both directions — it passes on the corrected repository
+and fails on a deliberately reintroduced sentence.
+
+**Impact:** The three skills now match the rule they teach. A future withdrawal gets one row in the
+table instead of a search nobody remembers to run.
+
+**Lessons learned:** This project's central thesis — a fact duplicated away from its authority
+degrades into an assertion — was written about prices, and it applies just as exactly to process
+rules. The failure was not carelessness in the amendment PR; it was that "where else does this rule
+live?" is a question no one thinks to ask, because the copies are invisible from inside the document
+being changed. The durable answer is not more diligence but the same move the project already makes
+everywhere else: when a rule is reversed, leave behind a check that fails if any copy still teaches
+the old one. Note also which documents were missed — not the ADRs, but the **procedural** files. Those
+are read by an agent that is about to act, which makes them the most expensive place for a stale rule
+to survive and the least likely place to be looked at when the rule changes.

@@ -96,9 +96,14 @@ not silently lost.
 
 ## 6. After the owner merges
 
-- Sync `main`, then flip **`Proposed → Accepted`** in both the ADR header and the index, as a direct
-  follow-up commit on `main`. This is the one workflow-sanctioned non-PR commit (ADR 0001). Delete the
-  branch.
+- Sync `main`, delete the merged branch, then open a **second pull request** that folds the owner's
+  answers in (step 5) and flips **`Proposed → Accepted`** in both the ADR header and the index.
+
+  > **There is no direct-commit exception.** ADR 0001 used to sanction the status flip as the single
+  > permitted commit to `main`; that exception was **withdrawn on 2026-07-18** (owner-authorised, ADR
+  > 0001 *Amendments*, arising from ADR 0009 §4). `main` is branch-protected and enforces this against
+  > administrators too, so a direct push is simply refused. Fold the flip into the same PR as the
+  > resolved questions — that keeps the workflow at two steps rather than three.
 - Update `docs/STATUS.md` if this changes the roadmap or the phase state — and keep the wording honest:
   an `Accepted` ADR moves a capability to **designed**, never to **built**.
 
