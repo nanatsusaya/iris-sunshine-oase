@@ -1,6 +1,6 @@
 # ADR 0002 — Tech stack and tooling
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-07-18
 - **Depends on:** [ADR 0001](0001-record-architecture-decisions.md) for the workflow this ADR follows
 
