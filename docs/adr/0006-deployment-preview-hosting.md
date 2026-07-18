@@ -1,6 +1,6 @@
 # ADR 0006 — Deployment, preview and hosting
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-07-18
 - **Depends on:** [ADR 0002](0002-tech-stack-and-tooling.md) §1 (static output, nothing to run on a
   server) and §6 (which hands the sitemap's interaction with the indexing gate to this ADR)

@@ -14,7 +14,7 @@ Every ADR file must appear in this table with a status.
 | 0003 | Content model — structured data and where authority lives | Planned |
 | 0004 | Styling and design tokens | Planned |
 | 0005 | Internationalisation — German default, English secondary | Planned |
-| [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Proposed |
+| [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |
 | 0008 | URL migration and redirects from the old site | Planned |
 
