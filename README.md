@@ -39,6 +39,7 @@ everything else.
 | [`docs/STATUS.md`](docs/STATUS.md) | Where the rebuild currently stands |
 | [`docs/analyse/`](docs/analyse/README.md) | What the old site is, and its 28 documented defects |
 | [`docs/inhalte/`](docs/inhalte/README.md) | Every text of the old site, extracted verbatim |
+| [`docs/meta/`](docs/meta/agent-collaboration-log.md) | Why the way we work looks the way it does |
 
 Two things are deliberately *not* here. The **archive** of the old site — roughly 600 MB of image
 material with undocumented usage rights, plus a database export containing third parties' personal
