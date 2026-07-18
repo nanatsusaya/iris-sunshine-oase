@@ -53,8 +53,10 @@ the git data.**
   decomposed with the owner first**, or is simply ambiguous.
 - **The owner merges every PR.** This skill never merges. It acts *after* a merge the owner already did —
   step 1 verifies that; if the PR is not actually merged, it stops.
-- **Never commit to `main`.** Every change, including the doc-sync in step 3, goes on a branch through a
-  PR. The single documented exception is an ADR `Proposed → Accepted` status flip (ADR 0001).
+- **Never commit to `main`, without exception.** Every change, including the doc-sync in step 3, goes on
+  a branch through a PR. The ADR `Proposed → Accepted` status flip used to be exempt; that exception was
+  withdrawn on 2026-07-18 (ADR 0001 *Amendments*) and `main` is now branch-protected against
+  administrators too, so a direct push is refused.
 - **Owner conversation is German**; repository artefacts stay English (`CLAUDE.md`).
 
 ## 1. Verify the precondition — did the unit actually close?
