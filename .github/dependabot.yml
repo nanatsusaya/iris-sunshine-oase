@@ -1,0 +1,19 @@
+version: 2
+
+updates:
+  # The CI workflow pins actions to commit SHAs, which is what makes a moved tag harmless — but a
+  # pinned SHA also never picks up a security fix on its own. Dependabot is what keeps the pins
+  # current; without it, pinning trades one risk for another.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: chore
+      include: scope
+    labels:
+      - 'type:chore'
+      - 'area:infra'
+
+  # No JavaScript ecosystem entry yet: there is no manifest to update until the scaffold lands
+  # (ADR 0002). Add one in the same change that introduces package.json.

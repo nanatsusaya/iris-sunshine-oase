@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      # Actions are pinned to a full commit SHA (supply-chain hardening — a moved tag cannot
+      # silently change what runs); the trailing comment tracks the human-readable version.
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          # Pinned to a major line, not `latest` — a new Node release cannot break the pipeline
+          # unbidden. Bump deliberately.
+          node-version: '22'
+
+      # The only check that exists while this repository is documentation-only. The build,
+      # lint and test steps land with the scaffold, once ADR 0002 has settled the tech stack —
+      # deliberately not asserted here ahead of that decision.
+      - name: Documentation conformance
+        run: node tools/check-docs.mjs
