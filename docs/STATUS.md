@@ -55,10 +55,12 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   `preview.iris-sunshine-oase.de`; `noindex` is the indexing gate and `robots.txt` must **not** block
   the crawl that delivers it. State: **designed** — nothing deployed.
 - ▶ ADRs 0003, 0005, 0007 and 0008 outstanding.
-- ⏸ **ADR 0004** (styling and design tokens) waits on input from outside this repository: the owner is
-  drafting a visual design for the new site (2026-07-18, in progress). Design tokens invented before
-  that design exists would be replaced by it, so 0004 is deliberately *not* the next ADR despite its
-  low number. The other ADRs do not depend on how the site looks.
+- 🔜 **ADR 0004** (styling and design tokens) — **Proposed** (2026-07-19, #35). The input it was parked
+  on has arrived: the owner's Claude Design draft, read and measured on 2026-07-19. It supplies a
+  14-token layer already stable across all ten iterations, and preserves `#FFC000` — the only colour the
+  old site documented exactly. It supplies **no** breakpoints, spacing scale or type scale, which is what
+  the ADR adds. Five open questions await the owner, two of them genuine trade-offs: a WCAG shortfall on
+  the page gradient, and whether 15 px body text at weight 300 stays.
 - ✅ [ADR 0009](adr/0009-security-by-design.md) — security by design (#28) — **Accepted** (2026-07-18):
   an addition to the reserved eight, taken **before** the scaffold because it decides workflow
   permissions, dependency policy and the no-external-resources invariant — all cheaper to build in than
@@ -139,29 +141,26 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**ADR 0004 — styling and design tokens**, from the owner's design draft.
+**Answer ADR 0004's five open questions**, then accept it and implement the homepage.
 
-The draft exists (Claude Design, „Iris Sunshine Oase Redesign", 2026-07-19) and carries its own token
-layer of 14 CSS custom properties, stable across every iteration. Turns 6–10 are the canonical set;
-turn 5 is labelled *„Finale Version"* and is **not** — turn 6 supersedes it with the WCAG rework.
+[ADR 0004](adr/0004-styling-and-design-tokens.md) is `Proposed` (#35). Most of the design's system was
+recoverable by measurement: the palette, the two typefaces that matter, and a set of tokens the draft had
+already stabilised. What it did **not** contain — breakpoints, a spacing scale, a type scale, a maximum
+reading width — the ADR supplies, and three of those close defects the old site is on record for
+(`M-09`, and two from `docs/analyse/04-design-system.md`).
 
-Five findings from reading it need an owner decision and belong in ADR 0004 as open questions:
+Five questions genuinely need the owner. Two are trade-offs rather than confirmations:
 
-1. It loads **Google Fonts**, which ADR 0009 §6 forbids. All four families are self-hostable — Mulish,
-   Cormorant Garamond and Kaushan Script under OFL, Yellowtail under Apache 2.0 (verified against the
-   `google/fonts` repository).
-2. `--muted` (`#6B5D57`) and `--blue-ink` (`#4E63A0`) clear AA on cards but **not directly on the page
-   gradient**, where they fall to 4.10 and 3.77 against a 4.5 requirement.
-3. `--orange` (`#FFC000`) is never a legible text colour (1.07–1.60) — surface only, and that should be
-   written down.
-4. `--orange-ink` is used once and **never defined**; it survives on a literal fallback.
-5. Icons are **emoji** (☎ 📍 ✉ ✔), which render inconsistently and read badly to a screen reader.
+- **O1** — two colour tokens miss WCAG AA on the page gradient. Concrete replacements are proposed.
+- **O2** — 15 px body text at weight 300 is the draft's stated character *and* small-and-light at once.
+  An accessibility default and the design's intent pull apart here; the ADR does not decide it.
+- **O3/O4** — are photographs planned, and where did the sun come from? The draft uses exactly one image
+  and no photographs, so the provenance problem may be almost entirely absent.
+- **O5** — the draft spells the brand name with both apostrophes, 39 × `'` and 18 × `’`, which is the old
+  site's own inconsistency reproduced.
 
-The design references exactly one image — the sun — and no photographs at all, so the provenance
-question is far smaller than feared. Whether photography is planned, and where the sun came from, are
-open questions for the owner.
-
-**Then:** the two owner actions that unblock the preview URL (domain verification, the `preview`
-`CNAME`), the remaining Phase 2 tickets, and the homepage itself.
+**Then:** accept 0004, and the two owner actions that unblock the preview URL — verify the apex domain
+with GitHub, add the `preview` `CNAME` — followed by the homepage itself and the remaining Phase 2
+tickets.
 
 Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.
