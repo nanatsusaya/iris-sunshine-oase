@@ -17,6 +17,7 @@ Every ADR file must appear in this table with a status.
 | [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |
 | 0008 | URL migration and redirects from the old site | Planned |
+| 0009 | Security by design | Planned |
 
 Status values: `Proposed` · `Accepted` · `Superseded` · `Planned` (ticketed, not yet written).
 
@@ -45,3 +46,17 @@ wrong there or is irreversible once chosen:
 
 Anything beyond this list should be questioned before it is written. A site of 14 pages does not need
 a large decision log; it needs a *correct* one.
+
+## 0009, and why it was added to a closed list
+
+The list above was meant to be complete, so an addition has to earn itself. **0009 — security by
+design** was added on the owner's instruction (2026-07-18) and survives that test on the criteria in
+ADR 0001: it is outward-facing, it has legal consequences, and it decides constraints that a later
+change would otherwise reverse without noticing.
+
+What it is *not* is a port of the equivalent ADR from the sibling project *grimora*. That one models a
+multi-tenant service with accounts, a plugin sandbox and an event log; almost none of its content
+applies to a static site with no server, no login and no user data. The threats here are different and
+mostly sit **around** the site rather than in it: the npm supply chain, the CI workflow's privileges,
+the DNS records the site's identity rests on, and a maintenance pipeline in which an AI agent acts on
+publicly filed issues. Same rigour, different subject.

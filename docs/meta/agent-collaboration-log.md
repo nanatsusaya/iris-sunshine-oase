@@ -183,3 +183,48 @@ Americanisms before being trusted.
 mid-task does not survive contact with the next session — the same inattention that produced the drift
 will reproduce it. Where a convention can be asserted by a check, a note is the weaker option. This is
 the same principle the ADRs call a fitness function, applied to prose.
+
+## 2026-07-18 — Reasoning from a plausible model instead of measuring
+
+**Trigger:** The owner asked for a hosting recommendation and said he was unsure how domains and
+hosting relate. The answer given was that the domain could stay at netcup while the site ran on
+Cloudflare Pages, and that a cutover would therefore be a DNS-record edit, reversible in minutes.
+
+**Action / method:** That recommendation was accepted, and a ticket was written around it. While
+drafting the ADR, Cloudflare's own documentation was read and contradicted it: an **apex** domain must
+be a Cloudflare *zone*, which means moving nameservers, not records. A single DNS query then showed why
+that mattered — the zone carries two `MX` records and an `SPF` entry. The recommendation would have put
+the studio's working e-mail inside the blast radius of a website change. The same query showed the
+zone's default TTL is 86 400 seconds, so "reversible in minutes" was false for *any* option unless the
+TTL is lowered first. The error was disclosed to the owner before the ADR was written, and the ADR
+records the rejected assumption rather than quietly adopting the new one.
+
+**Impact:** Hosting moved to GitHub Pages, which serves an apex from ordinary `A` records at any DNS
+provider. Two records move at cutover; `MX` and `SPF` are never touched.
+
+**Lessons learned:** The mistake was not a wrong fact — it was answering a question about *this*
+domain from a general model of how domains work, when the domain was one query away. "The domain stays
+registered at netcup" and "DNS stays at netcup" are different sentences, and nothing in the general
+model surfaces the difference; only the actual zone does. Where a recommendation depends on the state of
+something real and reachable, read the real thing first. The corollary held too: the measurement that
+falsified the recommendation also improved the option that replaced it.
+
+## 2026-07-18 — Two safeguards that cancel
+
+**Trigger:** Writing ADR 0006's indexing gate. `CLAUDE.md` and the Phase 2 epic both required the
+preview to carry `robots.txt` `Disallow: /` **and** a `noindex` meta tag.
+
+**Action / method:** Google's documentation says a page blocked by `robots.txt` is never crawled, so
+its `noindex` is never read — and the URL can still be indexed by name if anything links to it. The two
+rules together are **weaker** than `noindex` alone. Rather than fix it silently, it was raised as an
+open question, because the rule protects a live business's search ranking; the owner authorised the
+correction, and `CLAUDE.md` now states the mechanism *and* the inversion: adding a `Disallow` is not a
+safety improvement, it defeats the gate.
+
+**Impact:** The preview's protection now rests on a mechanism verified to work rather than on two that
+cancel.
+
+**Lessons learned:** Defence in depth is an assumption, not a law — layers can interfere. A doubled
+safeguard reads as extra care, which is exactly why nobody re-examines it. And when a rule's correct
+form looks like an omission, the rule has to say so explicitly, or the next reader will helpfully
+restore the bug.
