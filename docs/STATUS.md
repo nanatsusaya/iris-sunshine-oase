@@ -49,17 +49,28 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   (2026-07-18): Astro 7 static with npm, Node 24, TypeScript `strict` with `astro check`, plain CSS
   with custom properties, Biome as a **blocking** check, `@astrojs/sitemap` as the only integration,
   and no unit-test framework until something exists that needs one. State: **designed** — no code yet.
-- ▶ ADRs 0003–0008 outstanding. **ADR 0006** (deployment, preview and hosting) is the one on the
-  critical path: it is the second of Phase 2's two blockers, so nothing can be scaffolded until it is
-  Accepted.
+- ✅ [ADR 0006](adr/0006-deployment-preview-hosting.md) — deployment, preview and hosting — **Accepted**
+  (2026-07-18): GitHub Pages serves both the preview and the live site; domain **and DNS** stay at
+  netcup so the studio's `MX` and `SPF` records are never touched; the preview lives at
+  `preview.iris-sunshine-oase.de`; `noindex` is the indexing gate and `robots.txt` must **not** block
+  the crawl that delivers it. State: **designed** — nothing deployed.
+- ▶ ADRs 0003, 0005, 0007 and 0008 outstanding.
 - ⏸ **ADR 0004** (styling and design tokens) waits on input from outside this repository: the owner is
   drafting a visual design for the new site (2026-07-18, in progress). Design tokens invented before
   that design exists would be replaced by it, so 0004 is deliberately *not* the next ADR despite its
-  low number. The other six do not depend on how the site looks.
+  low number. The other ADRs do not depend on how the site looks.
+- 🔜 **ADR 0009 — security by design** (#28) is proposed as an addition to the reserved set. It is not
+  in the original eight, and it is deliberately taken **before** the scaffold: it decides workflow
+  permissions, dependency policy and the no-external-resources invariant, all of which are cheaper to
+  build in than to retrofit.
 
-**Phase 2 — scaffold and first preview** (#4)**:** planned, **still blocked**. The Astro scaffold plus
-the GitHub Pages deployment, so drafts are reviewable in a browser early. Of its two gates, ADR 0002 is
-now Accepted and **ADR 0006 is not yet written**. The epic says plainly: do not scaffold ahead of them.
+**Phase 2 — scaffold and first preview** (#4)**:** **unblocked** — both gates (ADR 0002 and ADR 0006)
+are Accepted. The Astro scaffold plus the GitHub Pages deployment, so drafts are reviewable in a
+browser early. Nothing is built yet.
+
+> The epic's *Constraints* section still requires `robots.txt` `Disallow: /`. That requirement is
+> **superseded by ADR 0006 §4** and is corrected in the ticket; if the two ever appear to disagree, the
+> ADR wins.
 
 **Phase 3 — content** (#5)**:** planned. The 14 pages, prices and opening hours as structured data.
 
@@ -78,19 +89,11 @@ Recorded here so they are not lost before the owning ADR is written:
 | Maintenance runs through GitHub issues, worked by an AI agent | 2026-07-18 | — (working model, `CLAUDE.md`) |
 | Repository artefacts in English; conversation in German | 2026-07-18 | — (`CLAUDE.md`) |
 | Site content German by default, English as an additional locale | 2026-07-18 | 0005 |
-| Early drafts visible via GitHub Pages, `main` → one preview URL | 2026-07-18 | 0006 |
-| Domain **and DNS** stay at netcup; only the `A`/`CNAME` records move at cutover | 2026-07-18 | 0006 |
-| GitHub Pages hosts both the preview and the live site | 2026-07-18 | 0006 |
 | No contact form — telephone and e-mail only | 2026-07-18 | 0007 |
 | `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analyse/06`) |
 
 ## Open questions for the owner
 
-- **The studio's e-mail address** — needed as soon as the contact form is dropped, because e-mail then
-  carries what the form used to. It is **not in this repository**: the PII cleaning of the WordPress
-  export replaced it with `studio@example.invalid`, so both `docs/inhalte/seiten/kontakt.md` and
-  `impressum.md` show the placeholder. It must come from the owner and must not be reconstructed from
-  anywhere else — a wrong address on a contact page silently loses enquiries.
 - **Image material** — no image can be used until its provenance is documented. Whether to re-shoot
   the studio or re-license stock is an owner call with cost implications.
 - **Content scope** — `docs/analyse/02-inhaltsinventar.md` rates each old page as keep, rework or
@@ -98,9 +101,20 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**ADR 0006 — deployment, preview and hosting.** It is the last thing standing between here and a
-preview URL: Phase 2 (#4) names ADR 0002 and ADR 0006 as its two gates, and only the first is now
-Accepted. Everything Phase 2 promises — the scaffold, the Pages workflow, the `noindex` gate — is
-waiting on it, and none of it depends on the visual design still being drafted.
+**ADR 0009 — security by design (#28), then the Phase 2 scaffold.**
+
+Phase 2 is unblocked and could start now. It is taken second on purpose. The scaffold is where the
+build workflow, its token permissions, the dependency set and the site's external-resource policy come
+into existence, and each of those is a security decision that is cheap to make now and expensive to
+retrofit. Security by design means the decision precedes the scaffold, not that it audits one.
+
+Two findings already argue for it, and neither is theoretical:
+
+- **`main` is not branch-protected.** "Never commit directly to `main`" is currently convention only —
+  nothing enforces it, including against an agent with a wrong idea.
+- ADR 0006 §2 introduces `preview.iris-sunshine-oase.de` as a `CNAME` to GitHub Pages. If that
+  repository is ever renamed, deleted or made private while the record survives, the subdomain becomes
+  claimable by a stranger — on the studio's own domain. The decision is right; it needs the
+  corresponding lifecycle rule written next to it.
 
 Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.
