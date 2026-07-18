@@ -15,5 +15,28 @@ updates:
       - 'type:chore'
       - 'area:infra'
 
-  # No JavaScript ecosystem entry yet: there is no manifest to update until the scaffold lands
-  # (ADR 0002). Add one in the same change that introduces package.json.
+  # The npm tree is the dominant risk in this project (ADR 0009 §2): Astro and Biome bring a large
+  # transitive set whose code executes in CI. Dependabot is also what keeps the SHA-pinned actions
+  # above current — pinning without it would trade one risk for another.
+  #
+  # **A Dependabot pull request is reviewed like any other.** A dependency update that changes what
+  # the built output contains is not routine, and this is a public site for a real business.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
+    labels:
+      - 'type:chore'
+      - 'area:build'
+    groups:
+      # One PR for the routine minor and patch churn, so review attention goes to the updates that
+      # actually change something. Majors stay separate and are read individually.
+      dev-minor-patch:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch

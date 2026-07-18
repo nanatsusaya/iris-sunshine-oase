@@ -1,0 +1,29 @@
+{
+  "name": "iris-sunshine-oase",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "npm run check:types && npm run check:lint && npm run check:docs",
+    "check:types": "astro check",
+    "check:lint": "biome check .",
+    "check:docs": "node tools/check-docs.mjs",
+    "check:external": "node tools/check-external-resources.mjs",
+    "format": "biome check --write ."
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@biomejs/biome": "^2.5.4",
+    "typescript": "~5.9.3"
+  }
+}

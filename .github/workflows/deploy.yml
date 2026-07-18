@@ -1,0 +1,74 @@
+name: Deploy preview
+
+# Every merge to `main` publishes. Per-PR previews were considered and deliberately declined (#4):
+# the owner merges every pull request anyway, so a post-merge preview matches how review actually
+# happens here, at a fraction of the moving parts.
+#
+# Note the change of character that arrives at go-live (ADR 0006 §3): until cutover this publishes
+# to a draft nobody can find; afterwards, merging a pull request publishes to the live site. What
+# protects it is that CI runs the full check chain on every PR and `main` is branch-protected, so a
+# build that fails cannot reach this workflow.
+on:
+  push:
+    branches: [main]
+  # Lets the owner re-publish without an empty commit — useful after changing the custom domain.
+  workflow_dispatch:
+
+# Least privilege per job would be narrower still, but `deploy-pages` needs both of these and
+# `contents: read` is the checkout (ADR 0009 §3). No secrets are involved: GitHub Pages publishes
+# with the workflow's own token, which is why this repository stores none.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; queue rather than cancel, so a merge is never silently not published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install
+        run: npm ci --ignore-scripts
+
+      # SITE_STATE is deliberately not set. It defaults to `preview`, which is the whole point of
+      # ADR 0006 §5: the failure mode of a forgotten flag must be a draft nobody indexes, never a
+      # draft everybody does. Setting it to `live` is a go-live gate — its own pull request, at the
+      # owner's instruction, never a side effect of another change.
+      - name: Build
+        run: npm run build
+
+      # Belt for the one invariant that would otherwise only be caught on the PR: if a third-party
+      # resource ever reaches `main`, it must not reach the published site either.
+      - name: No external resources
+        run: npm run check:external
+
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

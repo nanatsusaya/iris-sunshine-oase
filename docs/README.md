@@ -17,6 +17,7 @@ two files compete to answer the same thing.
 | [`adr/`](adr/README.md) | What was decided, and why? | append-only |
 | [`STATUS.md`](STATUS.md) | Where do we stand? | often |
 | [`business-facts.md`](business-facts.md) | What are the studio's address and contact details? | rarely |
+| [`recurring-tasks.md`](recurring-tasks.md) | What comes due on a calendar rather than on a change? | rarely |
 | [`meta/agent-collaboration-log.md`](meta/agent-collaboration-log.md) | Why does the way we work look like this? | occasionally |
 | GitHub issues | What is to be done? | continuously |
 
@@ -59,7 +60,7 @@ of what the site said, not documentation.
 
 | | |
 |---|---|
-| Technology | Astro, statically generated |
+| Technology | Astro 7, statically generated (scaffolded 2026-07-19) |
 | Content | structured data (prices, opening hours) instead of layout blocks |
 | Maintenance | through GitHub issues, worked by an agent |
 | Languages | German by default, English as an additional locale |

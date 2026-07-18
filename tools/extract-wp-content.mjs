@@ -36,31 +36,53 @@ const items = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
 // ------------------------------------------------------------------- Helpers
 
 function tag(it, name) {
-  let m = it.match(new RegExp('<' + name + '><!\\[CDATA\\[([\\s\\S]*?)\\]\\]></' + name + '>'));
+  let m = it.match(new RegExp(`<${name}><!\\[CDATA\\[([\\s\\S]*?)\\]\\]></${name}>`));
   if (m) return m[1];
-  m = it.match(new RegExp('<' + name + '>([\\s\\S]*?)</' + name + '>'));
+  m = it.match(new RegExp(`<${name}>([\\s\\S]*?)</${name}>`));
   return m ? m[1] : '';
 }
 
 function metaOf(it) {
   const o = {};
-  const re = /<wp:meta_key><!\[CDATA\[([\s\S]*?)\]\]><\/wp:meta_key>\s*<wp:meta_value><!\[CDATA\[([\s\S]*?)\]\]><\/wp:meta_value>/g;
-  let m;
-  while ((m = re.exec(it))) o[m[1]] = m[2];
+  const re =
+    /<wp:meta_key><!\[CDATA\[([\s\S]*?)\]\]><\/wp:meta_key>\s*<wp:meta_value><!\[CDATA\[([\s\S]*?)\]\]><\/wp:meta_value>/g;
+  for (const m of it.matchAll(re)) o[m[1]] = m[2];
   return o;
 }
 
 const ENTITIES = {
-  '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#039;': "'", '&#39;': "'",
-  '&nbsp;': ' ', '&#8211;': '–', '&#8212;': '—', '&#8216;': '‘', '&#8217;': '’',
-  '&#8220;': '„', '&#8221;': '“', '&#8222;': '„', '&#8230;': '…', '&euro;': '€',
-  '&#8364;': '€', '&auml;': 'ä', '&ouml;': 'ö', '&uuml;': 'ü', '&Auml;': 'Ä',
-  '&Ouml;': 'Ö', '&Uuml;': 'Ü', '&szlig;': 'ß', '&#8203;': '',
+  '&amp;': '&',
+  '&lt;': '<',
+  '&gt;': '>',
+  '&quot;': '"',
+  '&#039;': "'",
+  '&#39;': "'",
+  '&nbsp;': ' ',
+  '&#8211;': '–',
+  '&#8212;': '—',
+  '&#8216;': '‘',
+  '&#8217;': '’',
+  '&#8220;': '„',
+  '&#8221;': '“',
+  '&#8222;': '„',
+  '&#8230;': '…',
+  '&euro;': '€',
+  '&#8364;': '€',
+  '&auml;': 'ä',
+  '&ouml;': 'ö',
+  '&uuml;': 'ü',
+  '&Auml;': 'Ä',
+  '&Ouml;': 'Ö',
+  '&Uuml;': 'Ü',
+  '&szlig;': 'ß',
+  '&#8203;': '',
 };
 
 function decode(s) {
   return s
-    .replace(/&#(\d+);/g, (m, d) => (ENTITIES[m] !== undefined ? ENTITIES[m] : String.fromCharCode(+d)))
+    .replace(/&#(\d+);/g, (m, d) =>
+      ENTITIES[m] !== undefined ? ENTITIES[m] : String.fromCharCode(+d),
+    )
     .replace(/&[a-zA-Z]+;/g, (m) => (ENTITIES[m] !== undefined ? ENTITIES[m] : m))
     .replace(/​/g, ''); // strip zero-width spaces (defect M-06)
 }
@@ -70,18 +92,28 @@ function htmlToMd(html) {
   if (!html) return '';
   let s = html;
   s = s.replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<script[\s\S]*?<\/script>/gi, '');
-  s = s.replace(/<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/gi, (m, lvl, t) => `\n\n${'#'.repeat(Math.min(+lvl + 1, 6))} ${t.trim()}\n\n`);
-  s = s.replace(/<(strong|b)[^>]*>([\s\S]*?)<\/\1>/gi, (m, _t, t) => `**${t.trim()}**`);
-  s = s.replace(/<(em|i)[^>]*>([\s\S]*?)<\/\1>/gi, (m, _t, t) => `*${t.trim()}*`);
-  s = s.replace(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (m, href, t) => `[${t.trim()}](${href})`);
-  s = s.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (m, t) => `\n- ${t.trim()}`);
+  s = s.replace(
+    /<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/gi,
+    (_m, lvl, t) => `\n\n${'#'.repeat(Math.min(+lvl + 1, 6))} ${t.trim()}\n\n`,
+  );
+  s = s.replace(/<(strong|b)[^>]*>([\s\S]*?)<\/\1>/gi, (_m, _t, t) => `**${t.trim()}**`);
+  s = s.replace(/<(em|i)[^>]*>([\s\S]*?)<\/\1>/gi, (_m, _t, t) => `*${t.trim()}*`);
+  s = s.replace(
+    /<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi,
+    (_m, href, t) => `[${t.trim()}](${href})`,
+  );
+  s = s.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_m, t) => `\n- ${t.trim()}`);
   s = s.replace(/<\/(ul|ol)>/gi, '\n');
   s = s.replace(/<br\s*\/?>/gi, '\n');
   s = s.replace(/<\/p>/gi, '\n\n');
   s = s.replace(/<\/(div|tr|td|th|table|tbody|thead|section)>/gi, '\n');
   s = s.replace(/<[^>]+>/g, '');
   s = decode(s);
-  s = s.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  s = s
+    .replace(/[ \t]+/g, ' ')
+    .replace(/ *\n */g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
   // A heading needs a blank line before it, or it merges into the preceding paragraph.
   return s.replace(/([^\n])\n(#{1,6} )/g, '$1\n\n$2');
 }
@@ -135,7 +167,8 @@ function elementorToMd(json) {
           break;
         case 'image-carousel': {
           const names = (s.carousel || []).map((c) => path.basename(c.url || '')).filter(Boolean);
-          if (names.length) out.push(`\n> Image gallery: ${names.map((n) => `\`${n}\``).join(', ')}\n`);
+          if (names.length)
+            out.push(`\n> Image gallery: ${names.map((n) => `\`${n}\``).join(', ')}\n`);
           break;
         }
         case 'google_maps':
@@ -159,14 +192,22 @@ function elementorToMd(json) {
   walk(data);
 
   // Separate widgets with a blank line, or a heading sticks to the previous paragraph.
-  const body = out.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+  const body = out
+    .join('\n\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
   return { body, anchors: seenAnchors };
 }
 
 function slugify(s) {
-  return s.toLowerCase()
-    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return s
+    .toLowerCase()
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 /** Minimal parser for PHP-serialised data (the opening-hours plugin stores it that way). */
@@ -174,10 +215,30 @@ function phpUnserialize(str) {
   let i = 0;
   function parse() {
     const type = str[i];
-    if (type === 'N') { i += 2; return null; }
-    if (type === 'b') { i += 2; const v = str[i] === '1'; i += 2; return v; }
-    if (type === 'i') { i += 2; const j = str.indexOf(';', i); const v = parseInt(str.slice(i, j), 10); i = j + 1; return v; }
-    if (type === 'd') { i += 2; const j = str.indexOf(';', i); const v = parseFloat(str.slice(i, j)); i = j + 1; return v; }
+    if (type === 'N') {
+      i += 2;
+      return null;
+    }
+    if (type === 'b') {
+      i += 2;
+      const v = str[i] === '1';
+      i += 2;
+      return v;
+    }
+    if (type === 'i') {
+      i += 2;
+      const j = str.indexOf(';', i);
+      const v = parseInt(str.slice(i, j), 10);
+      i = j + 1;
+      return v;
+    }
+    if (type === 'd') {
+      i += 2;
+      const j = str.indexOf(';', i);
+      const v = parseFloat(str.slice(i, j));
+      i = j + 1;
+      return v;
+    }
     if (type === 's') {
       i += 2;
       const c = str.indexOf(':', i);
@@ -193,13 +254,20 @@ function phpUnserialize(str) {
       const n = parseInt(str.slice(i, c), 10);
       i = c + 2;
       const o = {};
-      for (let k = 0; k < n; k++) { const key = parse(); o[key] = parse(); }
+      for (let k = 0; k < n; k++) {
+        const key = parse();
+        o[key] = parse();
+      }
       i += 1;
       return o;
     }
-    throw new Error('Unknown type at position ' + i + ': ' + type);
+    throw new Error(`Unknown type at position ${i}: ${type}`);
   }
-  try { return parse(); } catch { return null; }
+  try {
+    return parse();
+  } catch {
+    return null;
+  }
 }
 
 // Index 0 is Sunday — the plugin's own convention, kept so the numbers map straight across.
@@ -210,7 +278,8 @@ const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frida
 const byType = {};
 for (const it of items) {
   const t = tag(it, 'wp:post_type');
-  (byType[t] ||= []).push(it);
+  byType[t] ??= [];
+  byType[t].push(it);
 }
 
 fs.mkdirSync(path.join(OUT, 'seiten'), { recursive: true });
@@ -242,14 +311,18 @@ for (const it of pages) {
   let anchors = [];
   if (M._elementor_data) {
     const r = elementorToMd(M._elementor_data);
-    if (r) { body = r.body; anchors = r.anchors; }
-    else body = '_(Elementor data could not be parsed.)_';
+    if (r) {
+      body = r.body;
+      anchors = r.anchors;
+    } else body = '_(Elementor data could not be parsed.)_';
   } else {
     body = htmlToMd(tag(it, 'content:encoded'));
   }
 
-  const parentTitle = parent && parent !== '0'
-    ? decode(tag(pages.find((p) => tag(p, 'wp:post_id') === parent) || '', 'title')) : '';
+  const parentTitle =
+    parent && parent !== '0'
+      ? decode(tag(pages.find((p) => tag(p, 'wp:post_id') === parent) || '', 'title'))
+      : '';
 
   const fileSlug = slug && slug !== '/' ? slugify(slug) : slugify(title);
   const rel = `seiten/${fileSlug}.md`;
@@ -266,20 +339,26 @@ for (const it of pages) {
     `| WordPress ID | ${id} |`,
     parentTitle ? `| Child page of | ${parentTitle} |` : null,
     `| Built with | ${M._elementor_data ? 'Elementor' : 'classic editor'} |`,
-    anchors.length ? `| Anchors | ${anchors.map((a) => '`#' + a + '`').join(', ')} |` : null,
+    anchors.length ? `| Anchors | ${anchors.map((a) => `\`#${a}\``).join(', ')} |` : null,
     '',
     '---',
     '',
-  ].filter((l) => l !== null).join('\n');
+  ]
+    .filter((l) => l !== null)
+    .join('\n');
 
-  write(rel, head + '\n' + body + '\n');
+  write(rel, `${head}\n${body}\n`);
   pageIndex.push({ title, slug, status, rel, parentTitle, len: body.length });
 }
 
 // ------------------------------------------------------------------ 2. Posts
 
-const posts = (byType.post || []).sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b, 'wp:post_date')));
-let postsMd = GENERATED + '\n# Blog posts of the old site\n\n' +
+const posts = (byType.post || []).sort((a, b) =>
+  tag(a, 'wp:post_date').localeCompare(tag(b, 'wp:post_date')),
+);
+let postsMd =
+  GENERATED +
+  '\n# Blog posts of the old site\n\n' +
   'All 19 posts, chronologically. Every one is **out of date** — expired promotions and ' +
   'pandemic-era notices — and the content inventory rates none of them for reuse. ' +
   'Kept here so nothing is lost, not because anything here is wanted.\n\n' +
@@ -289,21 +368,29 @@ for (const it of posts) {
   postsMd += `\n## ${decode(tag(it, 'title'))}\n\n`;
   postsMd += `\`/${tag(it, 'wp:post_name')}\` · ${tag(it, 'wp:post_date').slice(0, 10)}\n\n`;
   const M = metaOf(it);
-  postsMd += (M._elementor_data ? (elementorToMd(M._elementor_data)?.body ?? '') : htmlToMd(tag(it, 'content:encoded'))) + '\n';
+  postsMd += `${
+    M._elementor_data
+      ? (elementorToMd(M._elementor_data)?.body ?? '')
+      : htmlToMd(tag(it, 'content:encoded'))
+  }\n`;
 }
 write('beitraege.md', postsMd);
 
 // --------------------------------------------------------- 3. Opening hours
 
 const sets = byType['op-set'] || [];
-let ozMd = GENERATED + '\n# Opening-hours records\n\n' +
-  'Every seasonal set stored in the old system, decoded from the plugin\'s ' +
+let ozMd =
+  GENERATED +
+  '\n# Opening-hours records\n\n' +
+  "Every seasonal set stored in the old system, decoded from the plugin's " +
   'PHP-serialised data. The most recent set is from 2024.\n\n' +
   '> **Confirm with the owner before reuse.** Two summer sets exist for 2024 with ' +
   'differing times, and the export does not say which was active last. Do not guess ' +
   'which one is current — opening hours are a fact customers act on.\n';
 
-for (const it of sets.sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b, 'wp:post_date')))) {
+for (const it of sets.sort((a, b) =>
+  tag(a, 'wp:post_date').localeCompare(tag(b, 'wp:post_date')),
+)) {
   const M = metaOf(it);
   ozMd += `\n## ${decode(tag(it, 'title'))}\n\n`;
   const desc = M._op_meta_box_set_details_description;
@@ -313,7 +400,8 @@ for (const it of sets.sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b,
     const byDay = {};
     for (const p of Object.values(periods)) {
       if (!p || typeof p !== 'object') continue;
-      (byDay[p.weekday] ||= []).push(`${p.timeStart}–${p.timeEnd}`);
+      byDay[p.weekday] ??= [];
+      byDay[p.weekday].push(`${p.timeStart}–${p.timeEnd}`);
     }
     ozMd += '| Day | Hours |\n|---|---|\n';
     for (let d = 1; d <= 7; d++) {
@@ -325,7 +413,9 @@ for (const it of sets.sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b,
   }
   const hol = phpUnserialize(M._op_set_holidays || '');
   if (hol && Object.keys(hol).length) {
-    const names = Object.values(hol).map((h) => h?.name).filter(Boolean);
+    const names = Object.values(hol)
+      .map((h) => h?.name)
+      .filter(Boolean);
     if (names.length) ozMd += `\nHolidays: ${names.join(', ')}\n`;
   }
 }
@@ -333,7 +423,9 @@ write('oeffnungszeiten.md', ozMd);
 
 // ------------------------------------------------------------------- 4. URLs
 
-let urlMd = GENERATED + '\n# URLs of the old site\n\n' +
+let urlMd =
+  GENERATED +
+  '\n# URLs of the old site\n\n' +
   'Every publicly reachable address, and the basis for the redirects at relaunch. ' +
   'These URLs are indexed today: a nine-year-old local business has accumulated search ' +
   'ranking against them, and existing links point at them. None may silently 404.\n\n' +
@@ -362,7 +454,9 @@ for (const t of ['page', 'post']) {
   for (const it of byType[t] || []) {
     const title = decode(tag(it, 'title'));
     const hay = (metaOf(it)._elementor_data || '') + tag(it, 'content:encoded');
-    for (const m of hay.matchAll(/uploads\\?\/\d{4}\\?\/\d{2}\\?\/([A-Za-z0-9._%-]+\.(?:jpe?g|png|gif|svg))/gi)) {
+    for (const m of hay.matchAll(
+      /uploads\\?\/\d{4}\\?\/\d{2}\\?\/([A-Za-z0-9._%-]+\.(?:jpe?g|png|gif|svg))/gi,
+    )) {
       const f = m[1].replace(/-\d{2,4}x\d{2,4}(?=\.)/, ''); // map a size variant back to its original
       if (!usage.has(f)) usage.set(f, new Set());
       usage.get(f).add(title);
@@ -370,7 +464,9 @@ for (const t of ['page', 'post']) {
   }
 }
 
-let medMd = GENERATED + '\n# Images in use\n\n' +
+let medMd =
+  GENERATED +
+  '\n# Images in use\n\n' +
   'Which image file appeared on which page, determined from the export. The files ' +
   'themselves live in the excluded archive (see the ' +
   '[media inventory](../analyse/06-medien-inventar.md)) and are **not** part of this ' +
@@ -389,7 +485,9 @@ write('medien-verwendung.md', medMd);
 
 // ------------------------------------------------------------------ 6. Index
 
-let idx = GENERATED + '\n# Content of the old site\n\n' +
+let idx =
+  GENERATED +
+  '\n# Content of the old site\n\n' +
   'A complete capture of every text from the old WordPress site, generated from the ' +
   'cleaned export by `tools/extract-wp-content.mjs`.\n\n' +
   'This folder exists because `Archive/` is not part of the repository. It is therefore ' +
@@ -411,7 +509,8 @@ for (const p of pageIndex.sort((a, b) => a.title.localeCompare(b.title))) {
   idx += `| ${p.title}${p.parentTitle ? ` <br><small>under ${p.parentTitle}</small>` : ''} | \`/${p.slug}\` | ${p.status} | [${path.basename(p.rel)}](${p.rel}) |\n`;
 }
 
-idx += '\n## Other captures\n\n' +
+idx +=
+  '\n## Other captures\n\n' +
   '| File | Contents |\n|---|---|\n' +
   '| [beitraege.md](beitraege.md) | All 19 blog posts (expired, not for reuse) |\n' +
   '| [oeffnungszeiten.md](oeffnungszeiten.md) | Every seasonal record, decoded |\n' +
@@ -434,6 +533,8 @@ write('README.md', idx);
 // ----------------------------------------------------------------- Report
 
 console.log(`Written to ${OUT}/:`);
-for (const w of written.sort()) console.log('  ' + w);
-console.log(`\n${written.length} files, ${pageIndex.length} pages, ${posts.length} posts, ` +
-  `${sets.length} opening-hours sets, ${published.length} URLs, ${usage.size} image mappings.`);
+for (const w of written.sort()) console.log(`  ${w}`);
+console.log(
+  `\n${written.length} files, ${pageIndex.length} pages, ${posts.length} posts, ` +
+    `${sets.length} opening-hours sets, ${published.length} URLs, ${usage.size} image mappings.`,
+);
