@@ -40,3 +40,18 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # TypeScript 7 is held back by `@astrojs/check`, whose peer range is
+      # `^5.0.0 || ^6.0.0` — 0.9.9 is its latest release and it has not widened. Dependabot
+      # proposed 7.0.2 in #32 and CI refused the install, which is the check chain working: the
+      # conflict was caught on the PR instead of on `main`.
+      #
+      # **Deliberately `>=7`, not "no majors".** TypeScript 6 *is* inside the peer range, so an
+      # offer to move to it is legitimate and should still arrive. Blocking every major would
+      # suppress a valid upgrade to suppress an invalid one.
+      #
+      # **Revisit trigger:** when `@astrojs/check` widens its peer range to include `^7`. That is a
+      # calendar-free condition nobody would notice, so it is written down as a recurring task
+      # (`docs/recurring-tasks.md`) rather than left in this comment alone.
+      - dependency-name: typescript
+        versions: ['>=7']
