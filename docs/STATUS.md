@@ -79,8 +79,8 @@ Recorded here so they are not lost before the owning ADR is written:
 | Repository artefacts in English; conversation in German | 2026-07-18 | — (`CLAUDE.md`) |
 | Site content German by default, English as an additional locale | 2026-07-18 | 0005 |
 | Early drafts visible via GitHub Pages, `main` → one preview URL | 2026-07-18 | 0006 |
-| Domain stays registered at netcup; DNS points at the host | 2026-07-18 | 0006 |
-| Cloudflare Pages hosts the public site; GitHub Pages stays the preview | 2026-07-18 | 0006 |
+| Domain **and DNS** stay at netcup; only the `A`/`CNAME` records move at cutover | 2026-07-18 | 0006 |
+| GitHub Pages hosts both the preview and the live site | 2026-07-18 | 0006 |
 | No contact form — telephone and e-mail only | 2026-07-18 | 0007 |
 | `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analyse/06`) |
 

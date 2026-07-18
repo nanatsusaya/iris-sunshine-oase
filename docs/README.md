@@ -64,7 +64,7 @@ of what the site said, not documentation.
 | Maintenance | through GitHub issues, worked by an agent |
 | Languages | German by default, English as an additional locale |
 | Preview | GitHub Pages, updated from `main`, `noindex` until go-live |
-| Hosting | Cloudflare Pages; the domain stays registered at netcup (decided 2026-07-18, ADR 0006) |
+| Hosting | GitHub Pages; domain and DNS stay at netcup (decided 2026-07-18, ADR 0006) |
 
 Two guardrails follow from this, and they explain most of the decisions here:
 
