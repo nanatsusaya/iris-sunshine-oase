@@ -21,7 +21,7 @@ two files compete to answer the same thing.
 ### [`adr/`](adr/README.md) — decisions
 
 Architecture Decision Records, numbered and normative. An `Accepted` ADR is binding and
-immutable except with logged owner authorization. **`Accepted` means decided, not built** —
+immutable except with logged owner authorisation. **`Accepted` means decided, not built** —
 implementation progress lives in [`STATUS.md`](STATUS.md).
 
 ### [`analyse/`](analyse/README.md) — survey of the old site

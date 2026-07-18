@@ -40,9 +40,9 @@ noticing that a decision was being made — if yes, it needs an ADR.
 Implementation progress lives in [`docs/STATUS.md`](../STATUS.md). Reading an Accepted ADR as "already
 built" is the most likely misreading and the one that causes work to be skipped.
 
-**Immutability.** An `Accepted` ADR is immutable **except when the owner explicitly authorizes an
+**Immutability.** An `Accepted` ADR is immutable **except when the owner explicitly authorises an
 amendment**, which is recorded in that ADR's *Amendments* section with the date and a note that the
-owner authorized it. Absent that authorization, a later ADR **supersedes** an earlier one rather than
+owner authorised it. Absent that authorisation, a later ADR **supersedes** an earlier one rather than
 editing it. The point is an audit trail: the reasoning that was valid at the time stays readable, even
 once it has been overtaken.
 
@@ -58,7 +58,7 @@ and carries no reviewable content.
   history — the precondition for the agent-maintained workflow this project is built around.
 - Overhead per decision. Accepted deliberately: for a site this small the ADR set should stay in the
   range of a handful, not dozens. An ADR per trivial choice would bury the load-bearing ones.
-- Amendments are possible but gated on explicit owner authorization and are logged, so the audit trail
+- Amendments are possible but gated on explicit owner authorisation and are logged, so the audit trail
   survives.
 - A two-step dance for every decision (propose, then flip to accepted). Slower than deciding in a
   commit; the point is that the decision becomes reviewable *before* code depends on it.

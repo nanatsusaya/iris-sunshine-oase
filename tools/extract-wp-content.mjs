@@ -169,7 +169,7 @@ function slugify(s) {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-/** Minimal parser for PHP-serialized data (the opening-hours plugin stores it that way). */
+/** Minimal parser for PHP-serialised data (the opening-hours plugin stores it that way). */
 function phpUnserialize(str) {
   let i = 0;
   function parse() {
@@ -298,7 +298,7 @@ write('beitraege.md', postsMd);
 const sets = byType['op-set'] || [];
 let ozMd = GENERATED + '\n# Opening-hours records\n\n' +
   'Every seasonal set stored in the old system, decoded from the plugin\'s ' +
-  'PHP-serialized data. The most recent set is from 2024.\n\n' +
+  'PHP-serialised data. The most recent set is from 2024.\n\n' +
   '> **Confirm with the owner before reuse.** Two summer sets exist for 2024 with ' +
   'differing times, and the export does not say which was active last. Do not guess ' +
   'which one is current — opening hours are a fact customers act on.\n';

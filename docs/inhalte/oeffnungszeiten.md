@@ -2,7 +2,7 @@
 
 # Opening-hours records
 
-Every seasonal set stored in the old system, decoded from the plugin's PHP-serialized data. The most recent set is from 2024.
+Every seasonal set stored in the old system, decoded from the plugin's PHP-serialised data. The most recent set is from 2024.
 
 > **Confirm with the owner before reuse.** Two summer sets exist for 2024 with differing times, and the export does not say which was active last. Do not guess which one is current — opening hours are a fact customers act on.
 
