@@ -231,6 +231,38 @@ for (const file of markdownFiles(ROOT)) {
   }
 }
 
+// --- 7: the brand name is spelled one way ----------------------------------
+// The studio's name carries an apostrophe, and it has been written both ways for nine years: the old
+// site used a straight `'` in its header and a typographic `’` in its hero
+// (docs/analyse/04-design-system.md), and the 2026 design draft reproduced the same split, 39 times
+// one way and 18 the other. The owner settled it on 2026-07-19 (ADR 0004 R5) on the typographic form.
+//
+// A brand name spelled two ways reads as carelessness, and it is the kind of difference that survives
+// review because both forms look correct in isolation. So it is asserted rather than remembered.
+//
+// Excluded: docs/inhalte/ and docs/analyse/ are *records of the old site*, where the straight form is
+// the historical fact and correcting it would destroy the evidence. Code spans, fenced blocks and
+// blockquotes are excluded for the same reason everywhere else — they quote rather than assert.
+const STRAIGHT_BRAND = /Iris'\s*Sunshine/;
+
+for (const file of markdownFiles(ROOT)) {
+  const r = rel(file);
+  if (r.startsWith('docs/inhalte/') || r.startsWith('docs/analyse/')) continue;
+
+  const lines = readFileSync(file, 'utf8').split('\n');
+  let fenced = false;
+  for (const [i, line] of lines.entries()) {
+    if (/^\s*```/.test(line)) fenced = !fenced;
+    if (fenced || /^\s*>/.test(line)) continue;
+    if (STRAIGHT_BRAND.test(line.replace(/`[^`\n]*`/g, ''))) {
+      problems.push(
+        `${r}:${i + 1} spells the brand name with a straight apostrophe — ADR 0004 R5 fixes the ` +
+          'typographic form: Iris’ Sunshine Oase.',
+      );
+    }
+  }
+}
+
 // --- report ----------------------------------------------------------------
 if (problems.length) {
   console.error(`Documentation check failed — ${problems.length} problem(s):\n`);

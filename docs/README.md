@@ -1,7 +1,7 @@
 # Documentation
 
 The knowledge base for the rebuild of **iris-sunshine-oase.de** — the website of
-Iris' Sunshine Oase, a tanning and cosmetics studio in Herxheim bei Landau (Pfalz).
+Iris’ Sunshine Oase, a tanning and cosmetics studio in Herxheim bei Landau (Pfalz).
 
 This folder is the project's **single source of truth**. What is not written down here does
 not exist for the purposes of the rebuild.

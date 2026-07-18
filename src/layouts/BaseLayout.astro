@@ -1,4 +1,5 @@
 ---
+import { TRADING_NAME } from '../config/business';
 import { IS_LIVE, SITE_URL } from '../config/site';
 
 interface Props {
@@ -48,7 +49,13 @@ const canonical = new URL(Astro.url.pathname, SITE_URL).href;
       content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src 'none'"
     />
 
-    <title>{title} — Kosmetik- &amp; Sonnenstudio Iris' Sunshine Oase</title>
+    {/*
+      The trading name is read from its authority, never typed here. It was hard-coded in this line
+      until 2026-07-19, which is exactly the defect `src/config/business.ts` exists to prevent — and
+      it was only noticed because ADR 0004 R5 changed the apostrophe and one of the two copies would
+      have silently kept the old one. A duplicated fact does not announce itself; it waits.
+    */}
+    <title>{title} — {TRADING_NAME}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
   </head>

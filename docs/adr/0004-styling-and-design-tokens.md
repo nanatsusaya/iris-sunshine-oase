@@ -1,6 +1,6 @@
 # ADR 0004 — Styling and design tokens
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-07-19
 - **Depends on:** [ADR 0002](0002-tech-stack-and-tooling.md) §4 (plain CSS with custom properties — the
   mechanism, which explicitly hands the *values* to this ADR) and §5 (the precedent that a check blocks
@@ -88,10 +88,10 @@ Names are **semantic, not presentational**, which is the one place the draft's o
 |---|---|---|---|
 | `--colour-brand` | `--ink` | `#6E1015` | bordeaux; used ×359 in the draft |
 | `--colour-text` | `--body` | `#5C4944` | body copy |
-| `--colour-text-muted` | `--muted` | `#6B5D57` | **see O1** |
+| `--colour-text-muted` | `--muted` | `#645651` | darkened for AA — **R1**; draft had `#6B5D57` |
 | `--colour-accent` | `--orange` | `#FFC000` | **surface only, never text — §3** |
 | `--colour-accent-cool` | `--blue` | `#C2D1ED` | surface |
-| `--colour-accent-cool-text` | `--blue-ink` | `#4E63A0` | **see O1** |
+| `--colour-accent-cool-text` | `--blue-ink` | `#45578D` | darkened for AA — **R1**; draft had `#4E63A0` |
 | `--surface-card` | `--card` | `rgb(255 255 255 / .72)` | |
 | `--surface-card-strong` | `--card-2` | `rgb(255 255 255 / .86)` | |
 | `--surface-card-border` | `--card-brd` | `rgb(255 255 255 / .85)` | |
@@ -116,9 +116,16 @@ Three of these are arithmetic, not taste, and they are stated as rules so that n
   because "the brand colour" is exactly what a later session reaches for when setting a heading.
 - **Body text meets WCAG 2.2 AA (4.5:1) against its actual background, not against a representative
   one.** The page background is a five-stop gradient, so a token has five contrasts, and the **worst**
-  governs. `--colour-brand` (7.80) and `--colour-text` (5.47) clear it everywhere. Two tokens do not —
-  see **O1**.
-- **Contrast is asserted, not reviewed.** §9.
+  governs. `--colour-brand` (7.80) and `--colour-text` (5.47) clear it as drawn; `--colour-text-muted`
+  and `--colour-accent-cool-text` were darkened to clear it (**R1**). All four now sit at 4.54 or above
+  against every stop.
+- **Contrast is asserted, not reviewed.** §10.
+
+  A caveat that the arithmetic does not capture, recorded because **R2** keeps body text at 15 px in
+  weight 300: WCAG measures the contrast of a colour pair, not the *stroke weight* that carries it. A
+  light face at a small size reads as lower contrast than its ratio suggests, and no threshold in the
+  specification notices. Clearing 4.5 here is therefore the floor and not a claim of comfortable
+  reading — which is why §4 pins the body size in `rem` rather than pixels.
 
 ### 4. Typography: four families, self-hosted — and the wordmark stops being two of them
 
@@ -149,7 +156,7 @@ fluid only at the top two steps where the draft's own desktop/mobile pair differ
 |---|---|---|
 | `--text-xs` | 0.75rem | 11, 12, 12.5 |
 | `--text-sm` | 0.875rem | 13, 13.5, 14, 14.5 |
-| `--text-base` | 1rem | 15, 15.5, 16 — **see O2** |
+| `--text-base` | **0.9375rem** | 15, 15.5, 16 — the draft's own 15 px, kept (**R2**) |
 | `--text-lg` | 1.125rem | 17, 18, 19 |
 | `--text-xl` | 1.375rem | 20, 21, 22, 23 |
 | `--text-2xl` | 1.625rem | 24, 25, 26, 27 |
@@ -162,6 +169,18 @@ without a breakpoint, and it fixes another named old-site defect in passing: *"T
 scale with the text length — long titles keep the same size and run right up to the edge."*
 
 Line heights collapse to three: `1.15` headings, `1.6` body, `1` for single-line labels.
+
+**Every size is expressed in `rem`, and the root font size is never overridden.** This is load-bearing
+rather than stylistic, and it is the reason R2 costs less than it appears to. `--text-base` is
+`0.9375rem`, not `15px`: a reader who has raised their browser's default text size to 20 px gets
+18.75 px body copy and a proportionally larger page, while a reader on defaults sees the design exactly
+as drawn. Setting `html { font-size: 15px }` would produce the same picture and silently defeat that
+preference — it is the single most common way a site becomes unusable for someone who needs larger
+text, and it looks identical in review.
+
+Body copy keeps the draft's **weight 300** (R2). Weight 400 is used where a passage is long-form or
+dense rather than as a global default, which keeps the design's character while giving the places that
+most need it a little more substance.
 
 ### 5. A spacing scale, because the old site had none
 
@@ -224,7 +243,36 @@ Inline SVG: no icon font (a third-party file and a fetch, which ADR 0009 §6 for
 sheet at this size. Decorative icons get `aria-hidden="true"`; an icon that carries meaning alone gets an
 accessible name.
 
-### 9. What becomes a check rather than a rule
+### 9. Photographs, which the draft does not contain but the site will
+
+The draft has no photographs at all and references one image, the sun. The owner confirmed (**R3**) that
+photographs **will** be added, so the layout has to accommodate what the mockup does not show — and it
+is far cheaper to decide the frame now than to retrofit it around a finished design.
+
+- **Aspect ratios are tokens, not per-image decisions.** `--ratio-hero` 16/9, `--ratio-card` 4/3,
+  `--ratio-portrait` 3/4. Every image box declares one, so a slow-loading or missing photograph does not
+  reflow the page around it. `docs/analyse/04-design-system.md` lists *"generous photo heroes"* among the
+  old site's few good ideas; this is what keeps them from also being its layout instability.
+- **`astro:assets` does the work**, which ADR 0002 §6 already decided: build-time transforms via sharp,
+  `webp`/`avif` output, `width`/`height` emitted so the browser reserves space. No integration to add.
+- **Everything below the fold is `loading="lazy"`; the hero is not.** Lazy-loading the one image a
+  visitor is waiting for delays the thing they came for.
+- **A photograph never carries text that matters.** Text over an image is set in HTML above it, so it
+  stays selectable, translatable and legible when the image fails. The old site's hero title was baked
+  into the layout and did not scale (`docs/analyse/04-design-system.md`); §4's `clamp()` scale is what
+  replaces that, and it only works if the text is text.
+- **Contrast over a photograph is not assertable**, unlike §3's palette, because the background is
+  unknown until the image exists. Text over a photograph therefore sits on a scrim or a solid panel —
+  not on the bare image — so the contrast is against a colour this ADR controls.
+
+**The provenance gate is unchanged and is now live rather than hypothetical.** No image enters this
+repository without documented source, licence and evidence (`CLAUDE.md`). The old site's image rights are
+undocumented and its Pixabay claim is unverifiable after the 2019 licence change
+(`docs/analyse/06-medien-inventar.md`), so **no photograph from the old site may be reused** on the
+strength of having been there before. New photographs need their own record: who took them, when, and
+that the studio holds the rights.
+
+### 10. What becomes a check rather than a rule
 
 ADR 0002 §5's finding — a convention left to discipline drifts within hours — applies to a token system
 more than to most things, because the failure is a single hard-coded hex that nobody notices.
@@ -240,14 +288,15 @@ Three assertions, added with the implementation and blocking like every other ch
    because it is the rule most likely to be broken by a well-meant colour tweak — and it is arithmetic, so
    a machine should do it.
 
-The third also means the numbers in **O1** stop being a one-off measurement and become a standing
+The third also means the numbers in **R1** stop being a one-off measurement and become a standing
 guarantee.
 
-### 10. What this ADR does not decide
+### 11. What this ADR does not decide
 
-- **Which images exist.** §4 and §8 decide how assets arrive, not that any may be added. No image enters
-  without documented source, licence and evidence (`CLAUDE.md`), and the old site's image rights are
-  explicitly undocumented (`docs/analyse/06-medien-inventar.md`). See **O3** and **O4**.
+- **Which images exist.** §4, §8 and §9 decide how images arrive and how the layout holds space for
+  them, not which ones may be added. No image enters without documented source, licence and evidence
+  (`CLAUDE.md`), and the old site's image rights are explicitly undocumented
+  (`docs/analyse/06-medien-inventar.md`). See **R3** and **R4**.
 - **Page structure and content.** Which pages exist, and where prices and opening hours live, is ADR 0003.
   **The draft's price and opening-hours strings are illustration.** They were checked against
   `docs/analyse/03-leistungen-und-preise.md` on 2026-07-19 and all 32 match — but matching today is not a
@@ -288,9 +337,14 @@ content, but a token system does not need to know what text it will style. `Acce
   changes, and a font update is a manual step Dependabot cannot do.
 - **The wordmark as SVG cannot reflow.** For a fixed two-word lockup that is acceptable, but it does mean
   the brand name is an image with an accessible name rather than selectable text.
-- **This ADR touches the owner's aesthetic.** §4's type scale and **O2** in particular push against the
-  draft's deliberately light, fine character. That is a real cost and the reason O2 is a question rather
-  than a decision.
+- **Body copy stays below the common default, knowingly.** 15 px at weight 300 is the draft's character
+  and the owner kept it (**R2**). The mitigation is `rem` sizing, which respects a reader's own browser
+  setting, but the default remains small and light and no arithmetic in WCAG measures the second half of
+  that. It is an accepted residual, and the trigger to revisit is evidence from use rather than a rule
+  added now.
+- **Photographs reopen the image-rights problem** (**R3**). The draft's photograph-free composition had
+  briefly looked as though it might close it; it does not. Every photograph needs its own provenance
+  record, and none of the old site's may be reused.
 
 ## Alternatives considered
 
@@ -308,54 +362,68 @@ content, but a token system does not need to know what text it will style. `Acce
 - **`clamp()` for every step of the type scale** — rejected; fluid type between fixed bounds is useful at
   display sizes and merely unpredictable at body sizes.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-07-19)
 
-- **O1 — Two tokens miss WCAG AA on the page gradient. May they be darkened?** On card surfaces both pass;
-  directly on `--page-background` they do not, at the cool end:
+- **R1 — The two failing tokens are darkened.** `--colour-text-muted` becomes **`#645651`** (was
+  `#6B5D57`) and `--colour-accent-cool-text` becomes **`#45578D`** (was `#4E63A0`). Both are the smallest
+  hue-preserving darkening that clears 4.5:1 at the worst gradient stop, and both land at 4.54. Folded
+  into §2's table and §3.
 
-  | on the gradient | `#FFD24A` | `#FBE3AC` | `#EDE8E2` | `#D8DEEE` | `#C2D1ED` |
-  |---|---|---|---|---|---|
-  | `--colour-text-muted` `#6B5D57` | 4.38 | 5.01 | 5.18 | 4.69 | **4.10** |
-  | `--colour-accent-cool-text` `#4E63A0` | 4.03 | 4.61 | 4.77 | 4.31 | **3.77** |
+  Worth recording that this is the *second* correction to the same token: turn 6 of the draft had already
+  darkened `--muted` from `#8C7A75` to `#6B5D57` for exactly this reason. That fix was real but was
+  measured against a card rather than against the gradient, which is why it stopped 0.4 short. The lesson
+  is in §3 and now in §10's check: a contrast figure is meaningless without naming the background it was
+  measured against.
 
-  AA requires 4.5 for body text. Note that turn 6 *already* darkened `--muted` once for exactly this
-  reason (`#8C7A75` → `#6B5D57`); the correction was real but stopped short on the gradient.
-  **Recommendation:** darken both by the smallest amount that clears 4.5 at the worst stop, preserving
-  hue — `--colour-text-muted` → **`#645651`** and `--colour-accent-cool-text` → **`#45578D`**, both
-  landing at 4.54. The alternative, if the lighter tones matter to you, is to forbid these two as body
-  text outside a card, which is a narrower rule but one more thing to remember.
+- **R2 — Body text stays at 15 px in weight 300.** The owner declined the accessibility default. The
+  draft's stated direction is *„feine, dünne Fließschrift statt kräftigem Fett"* and the lighter setting
+  is the design, not an oversight in it.
 
-- **O2 — Body text at 15 px in weight 300: keep, or raise to 16 px / weight 400?** The draft's own
-  description of its direction is *„Zarte Serifen-Headlines und feine, dünne Fließschrift statt kräftigem
-  Fett"*, so this is central to its character, not incidental. But 15 px at weight 300 is small **and**
-  light at once, and the studio's customers are not uniformly young eyes.
-  **Recommendation:** 16 px at weight 400 for body copy, keeping weight 300 for large text where it reads
-  as elegance rather than as thinness. This is your call, not mine — it is the one place where an
-  accessibility default and the design's stated intent genuinely pull apart, and I would rather ask than
-  quietly thicken your design.
+  **Recorded honestly rather than softened:** this is below the 16 px that browsers default to, and
+  weight 300 reduces perceived contrast in a way WCAG's arithmetic does not measure (§3). It is an
+  accepted residual, not a solved problem.
 
-- **O3 — Are photographs planned?** The draft contains **none** and references exactly one image, the sun.
-  If that is deliberate, it is a load-bearing design decision and it removes almost the entire image-rights
-  problem — which, given that the old site's rights are undocumented and Pixabay changed its terms in
-  2019, would be a genuinely valuable outcome. If photographs are merely absent for now, the layout must
-  reserve space for them and the provenance question returns.
-  **Recommendation:** confirm photograph-free as the design intent if you are content with it.
+  What §4 does in response costs nothing visually and is not a compromise on the decision: the size is
+  expressed as `0.9375rem` rather than `15px`, so a reader who has raised their browser's default text
+  size gets a proportionally larger page while everyone on defaults sees the design exactly as drawn.
+  Weight 400 is used for long-form or dense passages rather than as a global default. If the size ever
+  does prove a problem in use, that is evidence and it reopens this — as a ticket, not as a rule added
+  now against a complaint nobody has made.
 
-- **O4 — Where did the sun come from?** `assets/sun-orange.png`, plus `sun.svg` and two `Logo.png` in the
-  draft's reference folder. Self-drawn, derived from the old logo, or third-party? It is the only image
-  the design needs, and no image enters this repository without documented source, licence and evidence.
-  Worth knowing: `docs/analyse/04-design-system.md` records that the old site's `Logo-Sun.svg` is **not a
-  vector logo** — it is a 500 × 500 px PNG embedded in an SVG container, so it does not scale. If the new
-  sun descends from that file it inherits the same problem, and §4's inline-SVG wordmark wants a real
-  vector beside it.
+- **R3 — Photographs will be added.** This turned an assumption on its head: the draft contains none, and
+  the earlier reading was that a photograph-free design might remove the image-rights problem entirely.
+  It does not. §9 was written for this answer — aspect-ratio tokens so a loading image cannot reflow the
+  page, `astro:assets` for the transforms, lazy-loading below the fold only, and text never baked into an
+  image.
 
-- **O5 — Which apostrophe?** The draft uses both: **39 × the straight `'`** and **18 × the typographic
-  `’`**. `docs/business-facts.md` uses the straight one. This is the old site's defect reproduced —
-  `docs/analyse/04-design-system.md` recorded the same inconsistency there and recommended settling on
-  `Iris’ Sunshine Oase` with a typographic apostrophe.
-  **Recommendation:** the typographic `’`, applied everywhere including `docs/business-facts.md`, and
-  asserted by a check so it cannot drift again. A brand name spelled two ways is a small thing that reads
-  as carelessness.
+  **The provenance gate is therefore live, not hypothetical.** No photograph from the old site may be
+  reused on the strength of having been there: those rights are undocumented and the Pixabay claim is
+  unverifiable after the 2019 licence change (`docs/analyse/06-medien-inventar.md`). New photographs need
+  their own record — who took them, when, and that the studio holds the rights.
+
+- **R4 — The sun is the owner's own work.** Provenance: created by the owner, 2026-07. That is a
+  documentable record and it clears `CLAUDE.md`'s gate for the one image the design needs.
+
+  **One thing still to obtain: the vector source.** The draft ships `assets/sun-orange.png`, a raster.
+  `docs/analyse/04-design-system.md` records that the old site's `Logo-Sun.svg` was **not** a vector
+  either — a 500 × 500 px PNG wrapped in an SVG container, which therefore did not scale. Shipping a
+  raster sun beside §4's inline-SVG wordmark would repeat that exactly. Tracked as a Phase 2 follow-up
+  rather than blocking this ADR.
+
+- **R5 — The typographic apostrophe, `’`, everywhere.** The trading name is **Kosmetik- & Sonnenstudio
+  Iris’ Sunshine Oase**. Applied to `docs/business-facts.md`, whose *Source* cell now names two
+  authorities — the extract for the wording, the owner for the apostrophe — and to `README.md`,
+  `docs/README.md` and `CLAUDE.md`, which all carried the straight form.
+
+  **Asserted by `tools/check-docs.mjs`**, excluding `docs/inhalte/` and `docs/analyse/`, where the
+  straight form is the historical record of what the old site did and correcting it would destroy the
+  evidence.
+
+  Applying it surfaced a defect this ADR did not go looking for: `src/layouts/BaseLayout.astro` had the
+  trading name **typed into the `<title>` element**, despite `src/config/business.ts` existing in the
+  same change specifically to prevent a second copy. Only one of the two would have gained the new
+  apostrophe. It now reads `TRADING_NAME` like everything else. A duplicated fact does not announce
+  itself — it waits for the value to change.
 
 ## References
 

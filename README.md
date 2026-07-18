@@ -1,6 +1,6 @@
 # iris-sunshine-oase.de
 
-Rebuild of the website of **Kosmetik- & Sonnenstudio Iris' Sunshine Oase** — a tanning and cosmetics
+Rebuild of the website of **Kosmetik- & Sonnenstudio Iris’ Sunshine Oase** — a tanning and cosmetics
 studio in Herxheim bei Landau (Pfalz, Germany). The existing site is a WordPress installation from
 2017; this repository replaces it with a statically generated site.
 
