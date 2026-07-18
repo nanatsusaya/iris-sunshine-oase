@@ -68,8 +68,8 @@ an assertion.
   new decision needs a superseding ADR, not an edit.
 - **Per-ADR workflow**: branch `adr/NNNN-slug` from `main` → write the ADR (`Status: Proposed`, add it
   to `docs/adr/README.md`) → open a PR that states the **open questions for the owner** → owner merges
-  → sync `main`, flip `Proposed → Accepted` (ADR file + index) as a direct follow-up commit on `main`,
-  delete the branch.
+  → sync `main`, delete the branch → **a second PR** folds the owner's answers into the ADR as resolved
+  questions and flips `Proposed → Accepted` (ADR file + index).
 - **`Accepted` means the decision is recorded and binding — not that it is built.** Implementation
   progress is tracked in `docs/STATUS.md`, never inferred from an ADR's status.
 - **No image enters this repository without documented provenance.** The old site's image rights are
@@ -94,9 +94,16 @@ an assertion.
 
 ## Delivery workflow & PRs
 
-- **Every change goes on a branch and through a PR — never commit directly to `main`.** The one
-  documented exception is the ADR `Proposed → Accepted` status flip described above. **The owner
-  merges every PR.** After a merge, sync `main`, prune, and delete the merged branch.
+- **Every change goes on a branch and through a PR — never commit directly to `main`.** There is **no
+  exception**; `main` is branch-protected and enforces this against administrators too (ADR 0009 §4),
+  so a direct push will simply be refused. **The owner merges every PR.** After a merge, sync `main`,
+  prune, and delete the merged branch.
+- **Required approving reviews are set to zero on purpose** — the owner authors and merges, and GitHub
+  forbids approving one's own PR, so any non-zero count would deadlock `main` rather than improve it.
+  Review happens because the owner reads the PR. Do not "fix" this setting.
+- **No third-party GitHub Action.** Only GitHub-owned actions (`actions/*`) may run, enforced by
+  repository policy, and every `uses:` must be pinned to a full commit SHA (also enforced). Needing
+  another publisher is an owner decision, not a workflow edit (ADR 0009 §3, R2).
 - **One concern per PR** — split unrelated changes so each stays reviewable in isolation. Don't fold
   refactors, formatting churn or dependency upgrades into unrelated work.
 - **Commits & PRs:** Conventional Commits (`type(scope): summary`, imperative subject, body explains
