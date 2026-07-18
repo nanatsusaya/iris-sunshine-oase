@@ -1,12 +1,12 @@
-# 01 — Ausgangslage
+# 01 — Starting Point
 
-## Das Studio
+## The Studio
 
-Iris' Sunshine Oase, Sonnen- & Kosmetikstudio in Herxheim bei Landau (Pfalz).
-Inhaberin Iris Zellner, übernommen im Februar 2013. Seit November 2016 um das
-Kosmetikstudio „Moments" erweitert (Naturkosmetik, Massagen).
+Iris' Sunshine Oase, tanning and cosmetics studio in Herxheim bei Landau (Pfalz).
+Owner Iris Zellner, taken over in February 2013. Since November 2016 expanded by
+the cosmetics studio „Moments" (natural cosmetics, massages).
 
-Stammdaten für Impressum und Kontakt:
+Master data for Impressum and contact:
 
 ```
 Kosmetik- & Sonnenstudio Iris' Sunshine Oase
@@ -17,110 +17,110 @@ Telefon: +49 (0)7276 50 50 550
 USt-ID:  DE276633210
 ```
 
-Die E-Mail-Adresse steht bewusst nicht in dieser Dokumentation — siehe
-Datenschutzhinweis im [README](README.md).
+The email address is deliberately not in this documentation — see the data
+protection note in the [README](README.md).
 
-## Technischer Stand der Altseite
+## Technical State of the Old Site
 
 | | |
 |---|---|
-| CMS | WordPress **5.8.13** (veraltet, End of Life) |
-| Theme | **Hestia** (ThemeIsle) mit Custom CSS |
+| CMS | WordPress **5.8.13** (outdated, End of Life) |
+| Theme | **Hestia** (ThemeIsle) with Custom CSS |
 | Page Builder | **Elementor 3.4.6** |
 | Hosting | netcup |
-| Sprache | de |
+| Language | de |
 
-### Eingesetzte Plugins
+### Plugins in Use
 
-Erkennbar an den Spuren im Export:
+Recognisable from the traces in the export:
 
-- **Elementor** — Seitenaufbau; 10 gespeicherte Templates in `elementor_library`
-- **Orbit Fox** (ThemeIsle) — liefert `obfx-posts-grid` (Beitragskacheln),
-  `obfx-pricing-table` und `content_form_contact` (Kontaktformular)
-- **Pirate Forms** — älteres Kontaktformular; hat die Einsendungen als
-  Post-Type `pf_contact` in der Datenbank abgelegt
-- **Opening Hours** — Öffnungszeiten als Post-Type `op-set`, Ausgabe über das
-  Widget `widget_op_overview`
-- **Google Analytics** — im Impressum beschrieben, mit einem Einwilligungstext
-  aus der Zeit **vor** der DSGVO
-- **Yoast SEO** und **All in One SEO** — Metadaten beider Plugins sind in den
-  Seiten vorhanden, sie liefen also parallel oder nacheinander
+- **Elementor** — page construction; 10 saved templates in `elementor_library`
+- **Orbit Fox** (ThemeIsle) — supplies `obfx-posts-grid` (post tiles),
+  `obfx-pricing-table` and `content_form_contact` (contact form)
+- **Pirate Forms** — older contact form; stored the submissions as
+  post type `pf_contact` in the database
+- **Opening Hours** — opening hours as post type `op-set`, output via the
+  widget `widget_op_overview`
+- **Google Analytics** — described in the Impressum, with a consent text
+  from the time **before** the GDPR
+- **Yoast SEO** and **All in One SEO** — metadata from both plugins is present
+  in the pages, so they ran in parallel or one after the other
 
 ### Custom CSS
 
-Enthält im Wesentlichen Workarounds, die beim Neubau ersatzlos entfallen:
+Contains essentially workarounds that fall away without replacement in the rebuild:
 
-- selbstgebaute Tabellen über `div.my-table` mit `display: table` — weil der
-  Page Builder keine brauchbaren Tabellen konnte
-- Pseudo-Tags `<upper>` und `<lower>` für Groß-/Kleinschreibung, im Menü für
-  die Schreibweise „proWIN" genutzt
-- Hilfsklassen für absolute Positionierung und Schatten
-- ein Hintergrundverlauf `header-filter-gradient` von `#c2d1f0` nach `#ffc000` —
-  das ist der grau-blau-nach-gelb-Verlauf, der auf drei Seiten als Hero
-  erscheint und dort wie ein fehlendes Bild wirkt
+- self-built tables via `div.my-table` with `display: table` — because the
+  page builder could not do usable tables
+- pseudo tags `<upper>` and `<lower>` for upper/lower case, used in the menu for
+  the spelling „proWIN"
+- helper classes for absolute positioning and shadows
+- a background gradient `header-filter-gradient` from `#c2d1f0` to `#ffc000` —
+  this is the grey-blue-to-yellow gradient that appears as a hero on three
+  pages and there looks like a missing image
 
-## Datenlage im Backup
+## Data Situation in the Backup
 
-Der Ordner `Archive/` enthält drei Bestandteile:
+The folder `Archive/` contains three components:
 
-### 1. WordPress-Export (XML)
+### 1. WordPress Export (XML)
 
-Vollständiger WXR-Export vom 18.07.2026. Nach der Bereinigung enthält er
-**576 Items**:
+Complete WXR export from 2026-07-18. After cleanup it contains
+**576 items**:
 
-| Post-Type | Anzahl | Inhalt |
+| Post Type | Count | Content |
 |---|---|---|
-| `attachment` | 504 | Medienbibliothek-Einträge |
-| `post` | 19 | Blogbeiträge |
-| `nav_menu_item` | 17 | Menüstruktur |
-| `page` | 14 | Seiten |
-| `op-set` | 11 | Öffnungszeiten-Sätze (Saisons) |
-| `elementor_library` | 10 | wiederverwendbare Layout-Bausteine |
-| `custom_css` | 1 | Theme-Anpassungen |
+| `attachment` | 504 | media library entries |
+| `post` | 19 | blog posts |
+| `nav_menu_item` | 17 | menu structure |
+| `page` | 14 | pages |
+| `op-set` | 11 | opening hours sets (seasons) |
+| `elementor_library` | 10 | reusable layout building blocks |
+| `custom_css` | 1 | theme customisations |
 
-Der Export enthält die Elementor-Layoutdaten als JSON im Postmeta
-`_elementor_data`. Dort stehen sowohl die Texte als auch der komplette
-Seitenaufbau — er ist damit die verlässlichste Quelle für die Inhalte.
+The export contains the Elementor layout data as JSON in the post meta
+`_elementor_data`. It holds both the texts and the complete page
+construction — it is therefore the most reliable source for the content.
 
-### 2. Medienbestand
+### 2. Media Holdings
 
-Zwei getrennte Sammlungen, insgesamt rund 750 MB. Details und Empfehlung zur
-Ablage in [06-medien-inventar.md](06-medien-inventar.md).
+Two separate collections, around 750 MB in total. Details and recommendation on
+storage in [06-medien-inventar.md](06-medien-inventar.md).
 
 ### 3. Screenshots
 
-69 Aufnahmen (3,3 MB) des Zustands vom 18.07.2026, in vier Varianten:
-Desktop und Mobil, jeweils als Viewport-Ausschnitt und als Vollseite. Dazu
-Segmentaufnahmen der Startseite und der Preisseite.
+69 captures (3.3 MB) of the state as of 2026-07-18, in four variants:
+desktop and mobile, each as a viewport section and as a full page. In addition,
+segment captures of the home page and the pricing page.
 
-Nützlich als visuelle Referenz, aber mit Einschränkungen: Die
-Viewport-Aufnahmen zeigen nur den ersten Bildschirm, die Vollseiten-Aufnahmen
-sind stark verkleinert und schlecht lesbar, und die Segmentaufnahmen decken die
-Seiten nicht lückenlos ab. Für Inhalte ist der XML-Export die bessere Quelle.
+Useful as a visual reference, but with limitations: the
+viewport captures show only the first screen, the full-page captures
+are heavily scaled down and hard to read, and the segment captures do not cover
+the pages without gaps. For content, the XML export is the better source.
 
-## Aktueller Zustand der Live-Seite
+## Current State of the Live Site
 
-Die Seite ist erreichbar und funktionsfähig. Inhaltlich steht sie auf dem Stand
-von **Mai 2020** — der letzte Blogbeitrag stammt vom 09.05.2020, davor ein
-Corona-Statement. Die Öffnungszeiten wurden dagegen bis **Winter 2024/25**
-weitergepflegt.
+The site is reachable and functional. In terms of content it stands at the state
+of **May 2020** — the last blog post is from 2020-05-09, before that a
+Corona statement. The opening hours, by contrast, were maintained up to
+**winter 2024/25**.
 
-Daraus folgt: Der Betrieb läuft, gepflegt wurde nur das Nötigste. Der Verfall
-ist redaktioneller, nicht technischer Natur.
+It follows that: the business is running, only the bare minimum was maintained.
+The decay is editorial, not technical in nature.
 
-## Bewertung für den Neubau
+## Assessment for the Rebuild
 
-Die Seite ist kein Sanierungsfall, sondern ein **Fertigstellungsfall**. 2017/18
-wurde eine tragfähige Struktur gebaut und danach nie zu Ende geführt: Fünf
-Seiten enthalten bis heute Blindtext, sechs tragen einen „im Aufbau"-Hinweis,
-zum Teil mit Datumsstempel von Januar 2018.
+The site is not a restoration case, but a **completion case**. In 2017/18
+a viable structure was built and afterwards never finished: five
+pages contain placeholder text to this day, six carry a „Diese Seite befindet sich derzeit im Aufbau." notice,
+partly with a date stamp from January 2018.
 
-Inhaltlich ist genug Substanz vorhanden, um daraus eine vollständige Seite zu
-bauen — vor allem die Preisliste, die Beschreibungen der Sonnenbänke und die
-Über-uns-Texte. Was fehlt, ist überschaubar und redaktionell zu lösen.
+In terms of content there is enough substance to build a complete site
+from it — above all the price list, the descriptions of the tanning beds and the
+about-us texts. What is missing is manageable and can be solved editorially.
 
-Gegen eine Fortführung mit WordPress spricht der Betriebsaufwand: WordPress,
-Elementor und vier Plugins müssten dauerhaft aktuell gehalten werden, für
-Funktionen, die eine im Kern statische Seite nicht braucht. Die 2.216
-Spam-Einsendungen im Kontaktformular zeigen, was ein unbeaufsichtigtes Setup
-über die Jahre produziert.
+Against continuing with WordPress speaks the operating effort: WordPress,
+Elementor and four plugins would have to be kept up to date permanently, for
+functions that a site that is static at its core does not need. The 2,216
+spam submissions in the contact form show what an unsupervised setup
+produces over the years.

@@ -11,6 +11,7 @@
  *   2. every indexed ADR that links to a file — that file exists
  *   3. the Status inside an ADR matches the status the index claims for it
  *   4. every relative Markdown link in the repository resolves to an existing file
+ *   5. no American spelling in prose (CLAUDE.md fixes British spelling for this repository)
  *
  * Run: node tools/check-docs.mjs
  * Exits non-zero on the first failing category, listing every violation found.
@@ -105,6 +106,44 @@ for (const file of markdownFiles(ROOT)) {
       problems.push(`${rel(file)} links to ${target}, which does not exist`);
     } else if (statSync(resolved).isDirectory() && !existsSync(join(resolved, 'README.md'))) {
       problems.push(`${rel(file)} links to directory ${target}, which has no README.md`);
+    }
+  }
+}
+
+// --- 5: British spelling ---------------------------------------------------
+// CLAUDE.md fixes British spelling. Left to discipline alone it erodes: a document written
+// months apart by different agents drifts between both, and the result reads as though
+// nobody owned it. The check is deliberately narrow — it looks for the handful of forms that
+// actually showed up, not for every Americanism in the language.
+
+const IRREGULAR = {
+  color: 'colour', colors: 'colours', center: 'centre', centers: 'centres',
+  analyze: 'analyse', analyzed: 'analysed', analyzing: 'analysing',
+  behavior: 'behaviour', behaviors: 'behaviours', catalog: 'catalogue',
+  defense: 'defence', fulfill: 'fulfil', modeling: 'modelling', labeled: 'labelled',
+};
+// -ize is American here, but a few English words legitimately end that way.
+const IZE_ALLOWED = new Set(['size', 'sizes', 'sized', 'sizing', 'resize', 'resizes', 'resized',
+  'resizing', 'seize', 'seizes', 'seized', 'prize', 'prizes', 'capsize', 'maize']);
+
+for (const file of markdownFiles(ROOT)) {
+  // docs/inhalte/ is verbatim German source material; CLAUDE.md is where the rule is stated,
+  // so it necessarily contains examples of what it forbids.
+  const r = rel(file);
+  if (r.startsWith('docs/inhalte/') || r === 'CLAUDE.md') continue;
+
+  // Strip fenced blocks and code spans: identifiers mirror their API's spelling, not ours.
+  const prose = readFileSync(file, 'utf8')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`[^`\n]*`/g, '');
+
+  for (const m of prose.matchAll(/\b[A-Za-z]{3,}\b/g)) {
+    const word = m[0];
+    const lower = word.toLowerCase();
+    if (IRREGULAR[lower]) {
+      problems.push(`${r}: "${word}" is American — use "${IRREGULAR[lower]}"`);
+    } else if (/iz(e|es|ed|ing|ation|ations)$/.test(lower) && !IZE_ALLOWED.has(lower)) {
+      problems.push(`${r}: "${word}" is American — use the -ise form`);
     }
   }
 }

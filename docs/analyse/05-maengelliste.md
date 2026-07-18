@@ -1,316 +1,316 @@
-# 05 — Mängelliste der Altseite
+# 05 — Defect List of the Old Site
 
-Konkrete Defekte des Ist-Zustands, als Arbeitspakete formuliert. Gedacht als
-Ausgangsmaterial für Tickets.
+Concrete defects of the current state, phrased as work packages. Intended as
+source material for tickets.
 
-Jeder Eintrag ist mit `M-nn` referenzierbar. Die Spalte **Quelle** gibt an, wie
-belastbar der Befund ist:
+Every entry can be referenced by `M-nn`. The **Source** column states how
+reliable the finding is:
 
-- **verifiziert** — maschinell gegen den WordPress-Export geprüft
-- **beobachtet** — aus Screenshots abgelesen, visuelle Einschätzung
+- **verified** — machine-checked against the WordPress export
+- **observed** — read off screenshots, visual assessment
 
 ---
 
-## Inhalt
+## Content
 
-### M-01 — Blindtext auf fünf Seiten
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-01 — Placeholder text on five pages
+**Source:** verified · **Priority:** high
 
-Lorem-ipsum-Blindtext steht als Seiteninhalt auf `/moments`, `/kosmetik`,
-`/massage`, `/ton-erden` und `/zertifizierung`. Auf `/zertifizierung` sogar als
-Überschrift („Lorem ipsum dolor") direkt über echtem Fachtext zur
-BfS-Zertifizierung.
+Lorem ipsum placeholder text stands as page content on `/moments`, `/kosmetik`,
+`/massage`, `/ton-erden` and `/zertifizierung`. On `/zertifizierung` even as a
+heading ("Lorem ipsum dolor") directly above genuine specialist text on the
+BfS certification.
 
-**Zu tun:** Texte redaktionell erstellen. Betrifft vor allem den
-Moments-Bereich; die Leistungen und Preise sind bekannt, es fehlen die
-erklärenden Texte.
+**To do:** Write the texts editorially. Affects above all the Moments area;
+the services and prices are known, what is missing are the explanatory texts.
 
-### M-02 — „Im Aufbau"-Hinweise mit Datumsstempel
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-02 — "Im Aufbau" notices with date stamp
+**Source:** verified · **Priority:** high
 
-Sechs Seiten tragen einen Baustellenhinweis, zwei davon mit Datum:
-„Diese Seite befindet sich **seit Januar 2018** im Aufbau" (`/zertifizierung`)
-und „**seit Juli 2019** im Umbau" (`/moments`). Das legt den Stillstand offen.
+Six pages carry a construction notice, two of them with a date:
+"Diese Seite befindet sich **seit Januar 2018** im Aufbau" (`/zertifizierung`)
+and "**seit Juli 2019** im Umbau" (`/moments`). That exposes the standstill.
 
-Auf `/honig` steht der Hinweis, obwohl die Seite vollständigen Inhalt hat.
+On `/honig` the notice appears even though the page has complete content.
 
-**Zu tun:** Hinweise entfernen. Seiten entweder fertigstellen oder gar nicht
-veröffentlichen.
+**To do:** Remove the notices. Either finish the pages or do not publish them
+at all.
 
-### M-03 — Veraltete Aktionen im Schaufenster
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-03 — Outdated promotions in the shop window
+**Source:** verified · **Priority:** high
 
-Die Startseite bewirbt unter „Sonderaktionen" Beiträge von 2019 und 2020,
-darunter ein „Juni Highlight" vom 01.06.2019. Dieselbe Einbindung findet sich
-auf der Preisseite.
+Under "Sonderaktionen" the home page advertises posts from 2019 and 2020,
+among them a "Juni Highlight" dated 2019-06-01. The same embed is found
+on the price page.
 
-**Zu tun:** Einbindung ersetzen. Entweder gepflegte, datierte Aktionen oder
-ersatzlos entfernen.
+**To do:** Replace the embed. Either maintained, dated promotions or remove it
+without replacement.
 
-### M-04 — Uneingelöstes Versprechen im ältesten Beitrag
-**Quelle:** verifiziert · **Priorität:** mittel
+### M-04 — Unfulfilled promise in the oldest post
+**Source:** verified · **Priority:** medium
 
-Der Beitrag „Neuer Webauftritt" vom 22.12.2017 kündigt an, die Seite werde „in
+The post "Neuer Webauftritt" of 2017-12-22 announces that the site will be "in
 den kommenden Tagen und Wochen mit Leben gefüllt".
 
-**Zu tun:** Beitrag nicht übernehmen.
+**To do:** Do not carry the post over.
 
 ---
 
-## Funktion
+## Function
 
-### M-05 — 15 von 20 Sprungmarken laufen ins Leere
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-05 — 15 of 20 anchors lead nowhere
+**Source:** verified · **Priority:** high
 
-Die Leistungskacheln der Startseite verlinken auf Anker der Preisseite, aber mit
-falschen IDs. Geprüft wurden 20 Anker-Links; nur 5 haben ein Ziel.
+The service tiles on the home page link to anchors on the price page, but with
+wrong IDs. 20 anchor links were checked; only 5 have a target.
 
-| Verlinkt | Existiert |
+| Linked | Exists |
 |---|---|
-| `#naturkosmetik` (3×) | nein — heißt `#moments-naturkosmetik` |
-| `#solarium` (3×) | nein — heißt `#sunshine` |
-| `#massagen` (3×) | nein — heißt `#moments-massagen` |
-| `#wellness-paket` (2×) | nein — heißt `#moments-wellness-pakete` |
-| `#wellness` (1×) | nein |
-| `#freundinnen-wellness-paket` (3×) | nein — heißt `#moments-freundinnen-wellness-pakete` |
+| `#naturkosmetik` (3×) | no — it is called `#moments-naturkosmetik` |
+| `#solarium` (3×) | no — it is called `#sunshine` |
+| `#massagen` (3×) | no — it is called `#moments-massagen` |
+| `#wellness-paket` (2×) | no — it is called `#moments-wellness-pakete` |
+| `#wellness` (1×) | no |
+| `#freundinnen-wellness-paket` (3×) | no — it is called `#moments-freundinnen-wellness-pakete` |
 
-Innerhalb einer Kachel funktioniert nur der Textlink „Zu den Preisen…"; Bild
-und Titel derselben Kachel springen ins Leere.
+Within a tile only the text link "Zu den Preisen…" works; image and title of
+the same tile lead nowhere.
 
-**Zu tun:** Beim Neubau Anker aus den Kategorie-IDs generieren, damit Ziel und
-Verweis nicht auseinanderlaufen können. Siehe
+**To do:** In the rebuild, generate anchors from the category IDs so that
+target and reference cannot drift apart. See
 [03-leistungen-und-preise.md](03-leistungen-und-preise.md).
 
-### M-28 — Vier Links auf Seiten, die es nie gab
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-28 — Four links to pages that never existed
+**Source:** verified · **Priority:** high
 
-Startseite und „Über uns" verlinken auf `/ueber-uns/sonnenstudio` und
-`/ueber-uns/kosmetikstudio`. **Beide Seiten existieren im gesamten Export
-nicht** — weder als Seite noch als Beitrag.
+The home page and "Über uns" link to `/ueber-uns/sonnenstudio` and
+`/ueber-uns/kosmetikstudio`. **Neither page exists anywhere in the export**
+— neither as a page nor as a post.
 
-| Fundort | Linktext | Ziel |
+| Location | Link text | Target |
 |---|---|---|
-| Startseite, Kachel „Sunshine" | Bild/Titel | `/ueber-uns/sonnenstudio` |
-| Startseite, Kachel „Moments" | Bild/Titel | `/ueber-uns/sonnenstudio` |
-| Über uns, Absatz Solarien | „hier" | `/ueber-uns/sonnenstudio` |
-| Über uns, Absatz Moments | „hier" | `/ueber-uns/kosmetikstudio` |
+| Home page, "Sunshine" tile | Image/title | `/ueber-uns/sonnenstudio` |
+| Home page, "Moments" tile | Image/title | `/ueber-uns/sonnenstudio` |
+| Über uns, Solarien paragraph | "hier" | `/ueber-uns/sonnenstudio` |
+| Über uns, Moments paragraph | "hier" | `/ueber-uns/kosmetikstudio` |
 
-Zusätzlich ein Verwechsler: Die Kachel **„Moments"** auf der Startseite zeigt
-ebenfalls auf `sonnenstudio` statt auf ein Kosmetik-Ziel.
+In addition a mix-up: the **"Moments"** tile on the home page likewise points
+to `sonnenstudio` instead of to a cosmetics target.
 
-Weitere tote Verweise im Bestand: `/test1` und `/sonderaktion-weihnachten-2018`
-(beide aus der Entwurfsseite „Spielewiese", die ohnehin entfällt) sowie
-`/leistungen-und-preise/embed` und `/ueber-uns/kosmetikstudio` aus Blogbeiträgen.
+Further dead links in the existing content: `/test1` and
+`/sonderaktion-weihnachten-2018` (both from the draft page "Spielewiese", which
+is dropped anyway) as well as `/leistungen-und-preise/embed` and
+`/ueber-uns/kosmetikstudio` from blog posts.
 
-**Zu tun:** Beim Neubau auf die tatsächlich vorhandenen Seiten verlinken
-(`/sunshine`, `/moments`). Zusammen mit M-05 sind das die beiden Stellen, an
-denen die Altseite ihre Besucher systematisch ins Leere schickt — ein
-Link-Check gehört in die Build-Pipeline.
+**To do:** In the rebuild, link to the pages that actually exist
+(`/sunshine`, `/moments`). Together with M-05 these are the two places where
+the old site systematically sends its visitors nowhere — a link check belongs
+in the build pipeline.
 
-### M-06 — Zero-Width-Space in Anker und Überschrift
-**Quelle:** verifiziert · **Priorität:** mittel
+### M-06 — Zero-width space in anchor and heading
+**Source:** verified · **Priority:** medium
 
-Die Überschrift „Moments - Massagen" und der zugehörige Anker
-`#moments-massagen` enthalten am Ende ein unsichtbares Zeichen (U+200B).
-Verweis und Ziel stimmen zwar zeichengenau überein, das ist aber fragil.
+The heading "Moments - Massagen" and the corresponding anchor
+`#moments-massagen` contain an invisible character (U+200B) at the end.
+Reference and target do match character for character, but that is fragile.
 
-Dasselbe Zeichen steht in der Adressangabe der Startseite („Herxheim bei
+The same character stands in the address on the home page ("Herxheim bei
 Landau​ (Pfalz)").
 
-**Zu tun:** Beim Übertragen der Texte auf Steuerzeichen prüfen und entfernen.
+**To do:** When transferring the texts, check for control characters and remove
+them.
 
-### M-07 — Zertifizierungsseite über die Navigation nicht erreichbar
-**Quelle:** verifiziert · **Priorität:** mittel
+### M-07 — Certification page not reachable via the navigation
+**Source:** verified · **Priority:** medium
 
-`/zertifizierung` hängt korrekt als Unterseite unter „Über uns", aber im
-Menübaum existiert kein Eintrag dafür. Die Seite ist nur über Inline-Links
-auffindbar.
+`/zertifizierung` hangs correctly as a subpage under "Über uns", but no entry
+for it exists in the menu tree. The page can only be found via inline links.
 
-**Zu tun:** Beim Neubau in die Navigation aufnehmen oder in „Über uns"
-integrieren.
+**To do:** In the rebuild, add it to the navigation or integrate it into
+"Über uns".
 
-### M-08 — Öffnungszeiten-Widget zeigt doppelte Punkte
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-08 — Opening hours widget shows double periods
+**Source:** observed · **Priority:** medium
 
-Das Widget rendert die Wochentage als „Mo.. – Mi..", „Do.. – Fr..", „Sa..",
-„So..". Sichtbar auf jeder Seite mit Sidebar.
+The widget renders the weekdays as "Mo.. – Mi..", "Do.. – Fr..", "Sa..",
+"So..". Visible on every page with a sidebar.
 
-**Zu tun:** Entfällt mit dem Plugin. Beim Neubau Öffnungszeiten als Daten
-modellieren.
+**To do:** Goes away with the plugin. In the rebuild, model the opening hours
+as data.
 
-### M-09 — Zweispalter bricht mobil nicht um
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-09 — Two-column layout does not wrap on mobile
+**Source:** observed · **Priority:** medium
 
-Auf `/honig` bleiben Bild und Textspalte auf Mobilgeräten nebeneinander. Die
-Textspalte wird auf etwa 130 px gequetscht, die Überschrift bricht mitten im
-Satz um.
+On `/honig` image and text column stay side by side on mobile devices. The
+text column is squeezed to about 130 px, the heading breaks in mid-sentence.
 
-### M-10 — Kontaktformular ohne Validierung und mit gemischter Sprache
-**Quelle:** verifiziert · **Priorität:** mittel
+### M-10 — Contact form without validation and with mixed languages
+**Source:** verified · **Priority:** medium
 
-Das E-Mail-Feld ist als `type="text"` deklariert statt `type="email"`, also ohne
-Browser-Validierung. Die Platzhalter sind teils englisch („Email", „Message"),
-der Button deutsch („Absenden"). Sichtbare Labels fehlen — die `<label>`-Elemente
-sind leer, es gibt nur Platzhalter.
+The email field is declared as `type="text"` instead of `type="email"`, so
+without browser validation. The placeholders are partly English ("Email",
+"Message"), the button German ("Absenden"). Visible labels are missing — the
+`<label>` elements are empty, there are only placeholders.
 
-**Zu tun:** Beim Neubau korrekte Feldtypen, durchgehend deutsche Beschriftung,
-echte Labels (nicht nur Platzhalter, das ist ein Barrierefreiheitsproblem) und
-ein wirksamer Spam-Schutz.
+**To do:** In the rebuild, correct field types, consistently German labelling,
+real labels (not just placeholders, that is an accessibility problem) and
+effective spam protection.
 
-### M-11 — Spam-Aufkommen des alten Formulars
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-11 — Spam volume of the old form
+**Source:** verified · **Priority:** high
 
-Das Pirate-Forms-Formular hat zwischen 2017 und 2021 **2.216 Einsendungen**
-gesammelt, ganz überwiegend Spam, und diese samt E-Mail- und IP-Adressen in der
-Datenbank abgelegt.
+Between 2017 and 2021 the Pirate Forms form collected **2,216 submissions**,
+overwhelmingly spam, and stored them in the database together with email and IP
+addresses.
 
-**Zu tun:** Beim Neubau kein serverseitiges Speichern von Einsendungen. Versand
-per E-Mail genügt. Spam-Schutz ohne Cookies vorsehen.
+**To do:** In the rebuild, no server-side storage of submissions. Sending by
+email suffices. Provide spam protection without cookies.
 
 ---
 
-## Recht
+## Legal
 
-### M-12 — Datenschutzerklärung auf Stand vor DSGVO
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-12 — Privacy policy at pre-GDPR state
+**Source:** verified · **Priority:** high
 
-Das Impressum enthält einen Google-Analytics-Abschnitt mit der Formulierung
-„Durch die Nutzung dieser Website erklären Sie sich mit der Bearbeitung der über
-Sie erhobenen Daten … einverstanden". Das ist das Einwilligungsmodell von vor
+The Impressum contains a Google Analytics section with the wording
+"Durch die Nutzung dieser Website erklären Sie sich mit der Bearbeitung der über
+Sie erhobenen Daten … einverstanden". That is the consent model from before
 2018.
 
-Ferner: Datenschutzerklärung und Impressum stehen auf einer Seite; die
-Erklärung besteht aus drei Absätzen und deckt weder Rechtsgrundlagen noch
-Betroffenenrechte, Speicherdauer oder Auftragsverarbeiter ab.
+Furthermore: privacy policy and Impressum stand on one page; the policy
+consists of three paragraphs and covers neither legal bases nor data subject
+rights, storage periods or processors.
 
-**Zu tun:** Getrennte, aktuelle Datenschutzerklärung. Vor Livegang juristisch
-prüfen lassen.
+**To do:** Separate, up-to-date privacy policy. Have it reviewed legally before
+going live.
 
-### M-13 — Kein Cookie-Banner trotz Google Analytics
-**Quelle:** beobachtet · **Priorität:** hoch
+### M-13 — No cookie banner despite Google Analytics
+**Source:** observed · **Priority:** high
 
-Auf keinem der 15 Screenshots ist ein Consent-Banner zu sehen, während das
-Impressum Google Analytics beschreibt. Möglicherweise beim Screenshotten
-weggeklickt — zu prüfen.
+On none of the 15 screenshots is a consent banner visible, while the Impressum
+describes Google Analytics. Possibly clicked away while taking the screenshots
+— to be checked.
 
-**Zu tun:** Beim Neubau möglichst ohne einwilligungspflichtige Dienste
-auskommen, dann entfällt das Banner. Falls Statistik gewünscht ist, eine
-cookiefreie Lösung wählen.
+**To do:** In the rebuild, manage without consent-requiring services if
+possible, then the banner is unnecessary. If statistics are wanted, choose a
+cookie-free solution.
 
-### M-14 — Google Maps ohne Einwilligung eingebunden
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-14 — Google Maps embedded without consent
+**Source:** verified · **Priority:** high
 
-Die Startseite bindet Google Maps als iframe direkt ein. Damit fließen beim
-Seitenaufruf Daten an Google, ohne vorherige Einwilligung.
+The home page embeds Google Maps directly as an iframe. As a result data flows
+to Google when the page is called up, without prior consent.
 
-**Zu tun:** Statische Kartengrafik mit Link, oder Karte erst nach aktivem Klick
-laden.
+**To do:** Static map graphic with a link, or load the map only after an active
+click.
 
-### M-15 — Bildrechte nicht dokumentiert
-**Quelle:** verifiziert · **Priorität:** hoch
+### M-15 — Image rights not documented
+**Source:** verified · **Priority:** high
 
-Das Impressum sagt, alle Bilder stammten „entweder von pixabay und somit unter
-CC0" oder seien eigene Fotos. Welches Bild welcher Kategorie angehört, ist
-nirgends festgehalten.
+The Impressum says all images either came "entweder von pixabay und somit unter
+CC0" or are own photos. Which image belongs to which category is recorded
+nowhere.
 
-**Zu tun:** Vor Wiederverwendung klären. Siehe
+**To do:** Clarify before reuse. See
 [06-medien-inventar.md](06-medien-inventar.md).
 
 ---
 
-## Text und Konsistenz
+## Text and Consistency
 
-### M-16 — Wiederkehrender Grammatikfehler in Überschriften
-**Quelle:** verifiziert · **Priorität:** niedrig
+### M-16 — Recurring grammatical error in headings
+**Source:** verified · **Priority:** low
 
-„Unser Wellnessprodukte" (`/moments`), „Unser Kosmetikprodukte" (`/kosmetik`),
-„Unser Massageangebote" (`/massage`) — jeweils „Unser" statt „Unsere".
+"Unser Wellnessprodukte" (`/moments`), "Unser Kosmetikprodukte" (`/kosmetik`),
+"Unser Massageangebote" (`/massage`) — in each case "Unser" instead of "Unsere".
 
-### M-17 — Uneinheitliche Schreibweisen
-**Quelle:** verifiziert · **Priorität:** niedrig
+### M-17 — Inconsistent spellings
+**Source:** verified · **Priority:** low
 
-- „Ton Erden" (Seitentitel) vs. „Tonerden" (Überschrift)
-- „Honig Massage" (Überschrift) vs. „Honigmassage" (Fließtext)
-- Telefonnummer als „+49 (0)7276 50 50 550" (Impressum) vs. „07276 / 5050550"
-  (Blogbeitrag)
-- Markenname mit geradem vs. typografischem Apostroph
+- "Ton Erden" (page title) vs. "Tonerden" (heading)
+- "Honig Massage" (heading) vs. "Honigmassage" (body text)
+- Phone number as "+49 (0)7276 50 50 550" (Impressum) vs. "07276 / 5050550"
+  (blog post)
+- Brand name with straight vs. typographic apostrophe
 
-**Zu tun:** Schreibweisen festlegen und beim Übertragen vereinheitlichen.
+**To do:** Fix the spellings and unify them during the transfer.
 
-### M-18 — Tippfehler
-**Quelle:** verifiziert · **Priorität:** niedrig
+### M-18 — Typos
+**Source:** verified · **Priority:** low
 
-„staffender Maske" (gemeint: straffender), „Kostemtik" in mehreren
-Beitragsauszügen, „Highligt", „hygiensch".
+"staffender Maske" (meant: straffender), "Kostemtik" in several post excerpts,
+"Highligt", "hygiensch".
 
-### M-19 — Rohe URL als Linktext
-**Quelle:** verifiziert · **Priorität:** niedrig
+### M-19 — Raw URL as link text
+**Source:** verified · **Priority:** low
 
-Auf `/prowin` steht `http://www.prowin.net/cms/aktuelle-aktionen.htm` als
-sichtbarer Linktext — unverschlüsselt und über zwei Zeilen umbrechend.
+On `/prowin`, `http://www.prowin.net/cms/aktuelle-aktionen.htm` stands as
+visible link text — unencrypted and wrapping across two lines.
 
-### M-20 — Theme-Credit statt Copyright
-**Quelle:** beobachtet · **Priorität:** niedrig
+### M-20 — Theme credit instead of copyright
+**Source:** observed · **Priority:** low
 
-Der Footer trägt als einzige Fußzeile „Hestia | Entwickelt von ThemeIsle". Eine
-eigene Copyright-Angabe fehlt.
+The footer carries as its only footer line "Hestia | Entwickelt von ThemeIsle".
+A copyright notice of its own is missing.
 
 ---
 
-## Gestaltung und Barrierefreiheit
+## Design and Accessibility
 
-### M-21 — Bildmotive ohne Bezug zum Angebot
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-21 — Image motifs with no relation to the offering
+**Source:** observed · **Priority:** medium
 
-Auf der Preisseite illustrieren eine Meeresbucht, Strandkörbe und eine
-Fantasy-Ruinen-Illustration die Solarien-Kategorien — drei Bildstile
-nebeneinander, keiner mit Bezug zum Studio. Der Hero derselben Seite zeigt
-Vintage-Briefpapier mit getrockneten Blüten.
+On the price page a sea bay, beach chairs and a fantasy ruins illustration
+illustrate the solarium categories — three image styles side by side, none of
+them with any relation to the studio. The hero of the same page shows vintage
+stationery with dried flowers.
 
-„Über uns" zeigt dunkle Schaufensterpuppen-Torsos — für die Seite über ein
-persönlich geführtes Studio das denkbar unpassendste Motiv.
+"Über uns" shows dark mannequin torsos — for the page about a personally run
+studio the most unsuitable motif imaginable.
 
-### M-22 — Verlaufs-Hero wirkt wie fehlendes Bild
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-22 — Gradient hero looks like a missing image
+**Source:** observed · **Priority:** medium
 
-Impressum, Zertifizierung und ein Blogbeitrag zeigen statt eines Fotos den
-CSS-Verlauf von Grau-Blau nach Gelb (`#c2d1f0 → #ffc000`, im Custom CSS belegt).
+Impressum, certification and one blog post show, instead of a photo, the CSS
+gradient from grey-blue to yellow (`#c2d1f0 → #ffc000`, set in the custom CSS).
 
-### M-23 — Kontrastprobleme
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-23 — Contrast problems
+**Source:** observed · **Priority:** medium
 
-- Auf dem Blogbeitrag „Neuer Webauftritt" steht die weiße Meta-Zeile mit dem
-  Datum auf dem hellsten Punkt des Hero-Bildes und ist praktisch unlesbar
-- Hilfstexte der Aufbau-Hinweise in sehr hellem Grau auf Weiß — dürfte
-  WCAG AA unterschreiten
-- Hero-Titel auf hellen Bildern (`/ton-erden`, `/honig`, `/ueber-uns`) mit
-  unzureichendem Textschatten
-- Links sind ausschließlich über die Farbe markiert, ohne Unterstreichung
+- On the blog post "Neuer Webauftritt" the white meta line with the date stands
+  on the brightest point of the hero image and is practically unreadable
+- Helper texts of the construction notices in very light grey on white — likely
+  falls below WCAG AA
+- Hero titles on light images (`/ton-erden`, `/honig`, `/ueber-uns`) with
+  insufficient text shadow
+- Links are marked by colour alone, without underlining
 
-### M-24 — Uneinheitliche Innenabstände
-**Quelle:** beobachtet · **Priorität:** niedrig
+### M-24 — Inconsistent padding
+**Source:** observed · **Priority:** low
 
-Der linke Textbeginn variiert je nach Seite spürbar. Ursache ist die Mischung
-aus Theme-Container und Elementor-Sections mit eigenen Paddings. Zusätzlich
-existieren zwei verschiedene Sidebar-Raster für Seiten und für Blogbeiträge.
+The left text start varies noticeably from page to page. The cause is the
+mixture of theme container and Elementor sections with their own paddings. In
+addition there are two different sidebar grids, one for pages and one for blog
+posts.
 
-### M-25 — Kein Anruf-Button auf Mobilgeräten
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-25 — No call button on mobile devices
+**Source:** observed · **Priority:** medium
 
-Der mobile Header enthält nur Schriftzug und Burger-Menü. Für ein lokales
-Studio, dessen Terminvereinbarung telefonisch läuft, fehlt damit der
-naheliegendste Handlungsweg.
+The mobile header contains only the wordmark and the burger menu. For a local
+studio whose appointments are arranged by phone, this means the most obvious
+course of action is missing.
 
-### M-26 — Wichtigste Seite ohne Inhalt im ersten Bildschirm
-**Quelle:** beobachtet · **Priorität:** mittel
+### M-26 — Most important page without content in the first screen
+**Source:** observed · **Priority:** medium
 
-Auf `/leistungen-und-preise` ist mobil nach einem vollen Bildschirm noch kein
-einziger Preis sichtbar — Header, Hero, Leerraum, Einleitungstext. Auf sechs
-weiteren Seiten besteht der erste Bildschirm aus Header, Hero, Leerraum und
-Baustellenhinweis.
+On `/leistungen-und-preise`, after a full screen on mobile not a single price
+is visible yet — header, hero, empty space, introductory text. On six further
+pages the first screen consists of header, hero, empty space and construction
+notice.
 
-### M-27 — Keine Maximalbreite
-**Quelle:** beobachtet · **Priorität:** niedrig
+### M-27 — No maximum width
+**Source:** observed · **Priority:** low
 
-Das Layout läuft fluid bis mindestens 1568 px ohne wirksame Begrenzung.
-Textzeilen werden auf großen Monitoren sehr lang.
+The layout runs fluid up to at least 1568 px without an effective limit. Lines
+of text become very long on large monitors.

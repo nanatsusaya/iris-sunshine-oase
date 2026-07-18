@@ -48,9 +48,9 @@ an assertion.
   assume" one. Take them from [`docs/inhalte/`](docs/inhalte/README.md) (the verbatim extract of the
   old site) or ask the owner. If a value cannot be sourced, leave it out and raise it — an empty field
   is recoverable, a wrong price is not.
-- **Bugs before features** — always prioritize fixing a defect over new work.
+- **Bugs before features** — always prioritise fixing a defect over new work.
 - **ADRs are the source of truth for decisions.** An `Accepted` ADR is immutable **except with
-  explicit owner authorization**, recorded in that ADR's *Amendments* section (ADR 0001). Otherwise a
+  explicit owner authorisation**, recorded in that ADR's *Amendments* section (ADR 0001). Otherwise a
   new decision needs a superseding ADR, not an edit.
 - **Per-ADR workflow**: branch `adr/NNNN-slug` from `main` → write the ADR (`Status: Proposed`, add it
   to `docs/adr/README.md`) → open a PR that states the **open questions for the owner** → owner merges
@@ -111,6 +111,12 @@ an assertion.
 - **Language:** **all repository artefacts are written in English** — code, comments, ADRs, everything
   under `docs/`, READMEs, commit messages, PR titles and bodies, and issues. **Direct conversation
   with the owner is in German.**
+
+  **British spelling** (owner's decision, 2026-07-18): `colour`, `licence` as a noun, `analyse`,
+  `behaviour`, `authorisation`, and `-ise` rather than `-ize` throughout. Not a matter of taste —
+  a repository that drifts between both reads as though several people wrote it, and in a project
+  written entirely by agents that impression is the thing to avoid. Identifiers that mirror an
+  external API keep that API's spelling (`phpUnserialize`, `JSON.stringify`).
 
   Two deliberate exceptions:
 

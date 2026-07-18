@@ -1,107 +1,107 @@
-# 02 — Inhaltsinventar
+# 02 — Content Inventory
 
-Alle Seiten und Beiträge der Altseite mit Bewertung für den Neubau.
-Angaben aus dem WordPress-Export ausgelesen.
+All pages and posts of the old site with an assessment for the rebuild.
+Details read out of the WordPress export.
 
-Legende:
+Legend:
 
-- **Übernehmen** — Inhalt ist brauchbar, wandert weitgehend unverändert mit
-- **Überarbeiten** — Substanz vorhanden, muss redaktionell ergänzt werden
-- **Neu schreiben** — praktisch kein verwertbarer Inhalt
-- **Streichen** — entfällt ersatzlos
+- **Keep** — content is usable, carries over largely unchanged
+- **Rework** — substance is there, needs editorial additions
+- **Rewrite** — practically no usable content
+- **Drop** — removed without replacement
 
-## Seiten
+## Pages
 
-| Seite | Pfad | ID | Zustand | Bewertung |
+| Page | Path | ID | State | Assessment |
 |---|---|---|---|---|
-| Iris' Sunshine Oase (Start) | `/` | 15 | Vollständig, Elementor | **Übernehmen** |
-| Leistungen & Preise | `/leistungen-und-preise` | 83 | Vollständig, gepflegt | **Übernehmen** |
-| Sunshine | `/sunshine` | 74 | Vollständig | **Übernehmen** |
-| Über uns | `/ueber-uns` | 283 | Vollständig | **Übernehmen** |
-| Impressum | `/impressum` | 131 | Vollständig, aber rechtlich veraltet | **Überarbeiten** |
-| Kontakt | `/kontakt` | 132 | Knapp, funktional | **Überarbeiten** |
-| Zertifizierung | `/zertifizierung` | 1557 | Echter Fachtext + Blindtext | **Überarbeiten** |
-| Honig | `/honig` | 2249 | Echter Inhalt, fälschlich als Baustelle markiert | **Überarbeiten** |
-| Moments | `/moments` | 77 | Einleitung echt, Rest Blindtext | **Überarbeiten** |
-| Ton Erden | `/ton-erden` | 2201 | Teils echt, teils Blindtext | **Überarbeiten** |
-| Kosmetik | `/kosmetik` | 2187 | Leistungsliste echt, Rest Blindtext | **Überarbeiten** |
-| Massage | `/massage` | 2191 | Überwiegend Blindtext | **Neu schreiben** |
-| proWIN | `/prowin` | 285 | 750 Zeichen, verweist nach extern | **Klären** |
-| Spielewiese | (Entwurf) | 429 | Elementor-Spielwiese, reiner Blindtext | **Streichen** |
+| Iris' Sunshine Oase (Start) | `/` | 15 | Complete, Elementor | **Keep** |
+| Leistungen & Preise | `/leistungen-und-preise` | 83 | Complete, maintained | **Keep** |
+| Sunshine | `/sunshine` | 74 | Complete | **Keep** |
+| Über uns | `/ueber-uns` | 283 | Complete | **Keep** |
+| Impressum | `/impressum` | 131 | Complete, but legally outdated | **Rework** |
+| Kontakt | `/kontakt` | 132 | Brief, functional | **Rework** |
+| Zertifizierung | `/zertifizierung` | 1557 | Real subject-matter text + placeholder text | **Rework** |
+| Honig | `/honig` | 2249 | Real content, wrongly marked as under construction | **Rework** |
+| Moments | `/moments` | 77 | Introduction real, rest placeholder text | **Rework** |
+| Ton Erden | `/ton-erden` | 2201 | Partly real, partly placeholder text | **Rework** |
+| Kosmetik | `/kosmetik` | 2187 | Service list real, rest placeholder text | **Rework** |
+| Massage | `/massage` | 2191 | Mostly placeholder text | **Rewrite** |
+| proWIN | `/prowin` | 285 | 750 characters, points to an external site | **Clarify** |
+| Spielewiese | (draft) | 429 | Elementor playground, pure placeholder text | **Drop** |
 
-### Anmerkungen
+### Notes
 
-**Struktur:** „Moments" ist Elternseite von Kosmetik, Massage, Ton Erden und
-Honig. „Über uns" ist Elternseite von Zertifizierung.
+**Structure:** "Moments" is the parent page of Kosmetik, Massage, Ton Erden and
+Honig. "Über uns" is the parent page of Zertifizierung.
 
-**Zertifizierung ist nicht erreichbar.** Die Seite existiert und hängt korrekt
-unter „Über uns", aber im Menübaum ist kein Eintrag dafür angelegt — verifiziert
-über die `nav_menu_item`-Daten. Sie ist nur über Inline-Links im Text zu finden.
+**Zertifizierung is unreachable.** The page exists and is correctly attached
+under "Über uns", but no entry for it is set up in the menu tree — verified
+via the `nav_menu_item` data. It can only be found through inline links in the text.
 
-**Der Zertifizierungstext ist inhaltlich wertvoll**, trotz der Blindtext-Umgebung:
-Das Studio wurde 2008 vom Bundesamt für Strahlenschutz für drei Jahre
-zertifiziert; die Zertifizierung wird seither nicht mehr angeboten, die
-Standards werden laut Text weiter eingehalten. Das ist ein Vertrauensargument
-und sollte erhalten bleiben — allerdings mit Vorsicht formuliert, weil eine
-abgelaufene Zertifizierung nicht als aktuelle ausgegeben werden darf.
+**The certification text is valuable in substance**, despite the placeholder text
+around it: in 2008 the studio was certified for three years by the Bundesamt für
+Strahlenschutz; the certification has not been offered since then, and according
+to the text the standards continue to be met. That is a trust argument
+and should be preserved — but worded carefully, because an expired
+certification must not be presented as a current one.
 
-**proWIN** ist ein Direktvertrieb für Reinigungs- und Wellnessprodukte, den das
-Studio nebenher betreibt. Die Seite besteht aus zwei Absätzen und einer rohen
-externen URL. Vor dem Neubau zu klären: Ist das noch aktiv? Wenn ja, gehört es
-ordentlich integriert; wenn nein, ersatzlos streichen.
+**proWIN** is a direct-sales business for cleaning and wellness products that the
+studio runs on the side. The page consists of two paragraphs and a raw
+external URL. To be clarified before the rebuild: is this still active? If so, it
+belongs properly integrated; if not, drop it without replacement.
 
-**Spielewiese** ist ein Entwurf mit Slug `/` — eine Elementor-Testseite mit
-Blindtext und Beispiel-Preistabellen. Ohne Wert.
+**Spielewiese** is a draft with slug `/` — an Elementor test page with
+placeholder text and example price tables. Without value.
 
-## Blogbeiträge
+## Blog Posts
 
-19 Beiträge, alle zwischen Dezember 2017 und Mai 2020.
+19 posts, all between December 2017 and May 2020.
 
-| Zeitraum | Anzahl | Art |
+| Period | Count | Type |
 |---|---|---|
-| 2017 | 2 | Begrüßung „Neuer Webauftritt", Weihnachtsaktion |
-| 2018 | 5 | Sonderaktionen, 5-Jahres-Jubiläum mit Gewinnspiel |
-| 2019 | 9 | „Kosmetik des Monats"-Reihe, Winter-Öffnungszeiten |
-| 2020 | 3 | Corona-Statement, Wiedereröffnung, Kosmetik des Monats Mai |
+| 2017 | 2 | Welcome post "Neuer Webauftritt", Christmas promotion |
+| 2018 | 5 | Special promotions, 5-year anniversary with prize draw |
+| 2019 | 9 | "Kosmetik des Monats" series, winter opening hours |
+| 2020 | 3 | Corona statement, reopening, Kosmetik des Monats Mai |
 
-### Bewertung
+### Assessment
 
-Die Beiträge sind **abgelaufene Aktionen**. „Kosmetik des Monats Mai" von 2019
-und 2020, Weihnachtsangebote von 2017 und 2018, ein Gewinnspiel von 2018 mit
-eigener Teilnahmebedingungen-Seite. Nichts davon hat heute noch Gültigkeit.
+The posts are **expired promotions**. "Kosmetik des Monats Mai" from 2019
+and 2020, Christmas offers from 2017 and 2018, a 2018 prize draw with
+its own terms-of-participation page. None of it is still valid today.
 
-Zwei Beiträge sind aktiv schädlich, wenn sie online bleiben:
+Two posts are actively harmful if they stay online:
 
-- **„Neuer Webauftritt"** (22.12.2017) kündigt an, die Seite werde „in den
-  kommenden Tagen und Wochen mit Leben gefüllt". Acht Jahre später liest sich
-  das als uneingelöstes Versprechen.
-- **Das Corona-Statement** (15.03.2020) und die Wiedereröffnungs-Meldung
-  (09.05.2020) sind erkennbar veraltet und lassen die Seite tot wirken.
+- **"Neuer Webauftritt"** (2017-12-22) announces that the site will "be filled
+  with life over the coming days and weeks". Eight years later this reads
+  as an unkept promise.
+- **The Corona statement** (2020-03-15) and the reopening notice
+  (2020-05-09) are visibly outdated and make the site look dead.
 
-**Empfehlung:** Blog beim Neubau nicht übernehmen. Die Beitragsstruktur an sich
-ist sinnvoll — für „Kosmetik des Monats" und saisonale Aktionen —, aber sie
-sollte leer starten. Wenn ein Archiv gewünscht ist, gehört es hinter eine
-deutliche Datierung und nicht auf die Startseite.
+**Recommendation:** do not carry the blog over into the rebuild. The post structure
+as such makes sense — for "Kosmetik des Monats" and seasonal promotions —, but it
+should start empty. If an archive is wanted, it belongs behind a
+clear dating and not on the home page.
 
-Wichtig für den Neubau: Auf der **Startseite** und auf der **Preisseite** werden
-diese Beiträge aktuell als „Sonderaktionen" eingebunden. Die Startseite bewirbt
-damit prominent ein „Juni Highlight" von 2019. Diese Einbindung muss ersetzt
-werden — entweder durch gepflegte Aktionen oder ersatzlos.
+Important for the rebuild: on the **home page** and on the **price page** these
+posts are currently embedded as "Sonderaktionen". The home page thereby
+prominently advertises a "Juni Highlight" from 2019. This embedding must be
+replaced — either by maintained promotions or without replacement.
 
-## Was inhaltlich fehlt
+## What Is Missing in Terms of Content
 
-Für eine vollständige neue Seite müsste redaktionell ergänzt werden:
+For a complete new site, the following would have to be added editorially:
 
-1. **Moments-Bereich** — Kosmetik, Massage, Ton Erden brauchen echte
-   Beschreibungstexte. Die Leistungen und Preise sind bekannt (siehe
-   [03-leistungen-und-preise.md](03-leistungen-und-preise.md)), es fehlen die
-   erklärenden Texte drumherum.
-2. **Aktuelle Öffnungszeiten** — die hinterlegten Datensätze stammen aus 2024,
-   und es existieren zwei Sommer-Sets mit abweichenden Sonntagszeiten. Vor dem
-   Livegang beim Betreiber abgleichen.
-3. **Team-Vorstellung** — „Unser Team" existiert als Überschrift mit einem
-   allgemeinen Absatz, ohne Personen.
-4. **Aktuelle Preise** — die Preisliste ist vollständig, aber der Stand ist
-   unbekannt. Vor Übernahme bestätigen lassen.
-5. **Datenschutzerklärung** — siehe [05-maengelliste.md](05-maengelliste.md);
-   die vorhandene ist vor-DSGVO.
+1. **Moments area** — Kosmetik, Massage, Ton Erden need real
+   descriptive texts. The services and prices are known (see
+   [03-leistungen-und-preise.md](03-leistungen-und-preise.md)), what is missing is the
+   explanatory text around them.
+2. **Current opening hours** — the stored data sets are from 2024,
+   and two summer sets exist with differing Sunday hours. Before
+   going live, check against the owner.
+3. **Team introduction** — "Unser Team" exists as a heading with a
+   general paragraph, without any people.
+4. **Current prices** — the price list is complete, but its date is
+   unknown. Have it confirmed before keeping it.
+5. **Privacy policy** — see [05-maengelliste.md](05-maengelliste.md);
+   the existing one predates the GDPR.

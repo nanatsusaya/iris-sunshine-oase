@@ -1,15 +1,21 @@
 /**
- * Extrahiert alle Inhalte des alten WordPress-Exports als Markdown nach docs/inhalte/.
+ * Extracts every text of the old WordPress export to Markdown under docs/inhalte/.
  *
- * Hintergrund: Der Ordner Archive/ ist per .gitignore vom Repository ausgeschlossen
- * (ungeklaerte Bildrechte, personenbezogene Daten). Damit die Texte trotzdem
- * verfuegbar bleiben, werden sie einmalig hierher extrahiert und versioniert.
+ * Why this exists: the Archive/ folder is excluded from the repository by .gitignore
+ * (undocumented image rights, third-party personal data). Extracting the texts here is
+ * what makes that exclusion affordable — they stay versioned, the 600 MB does not.
  *
- * Aufruf (lokal, mit vorhandenem Archiv):
+ * The German page text this emits is *source material*, reproduced verbatim, and must
+ * stay German (CLAUDE.md records the exception). Only the framing this file generates
+ * around it — headings, table headers, widget annotations — is English.
+ *
+ * Requires the archive to be present locally; it cannot run in CI. Correct this
+ * generator and re-run it, never hand-edit its output.
+ *
+ * Usage (locally, with the archive in place):
  *   node tools/extract-wp-content.mjs
  *
- * Quelle ist die BEREINIGTE Export-Datei, nicht die Fassung mit dem Suffix
- * ORIGINAL-MIT-PII.
+ * The source is the CLEANED export file, not the one suffixed ORIGINAL-MIT-PII.
  */
 
 import fs from 'node:fs';
@@ -19,15 +25,15 @@ const XML_PATH = 'Archive/iris-sujnshine-oase-backup/iris039sunshineoase.WordPre
 const OUT = 'docs/inhalte';
 
 if (!fs.existsSync(XML_PATH)) {
-  console.error(`Export nicht gefunden: ${XML_PATH}`);
-  console.error('Das Archiv liegt nicht im Repository. Lokal bereitstellen und erneut ausfuehren.');
+  console.error(`Export not found: ${XML_PATH}`);
+  console.error('The archive is not part of the repository. Provide it locally and re-run.');
   process.exit(1);
 }
 
 const xml = fs.readFileSync(XML_PATH, 'utf8');
 const items = xml.match(/<item>[\s\S]*?<\/item>/g) || [];
 
-// ---------------------------------------------------------------- Hilfsmittel
+// ------------------------------------------------------------------- Helpers
 
 function tag(it, name) {
   let m = it.match(new RegExp('<' + name + '><!\\[CDATA\\[([\\s\\S]*?)\\]\\]></' + name + '>'));
@@ -56,10 +62,10 @@ function decode(s) {
   return s
     .replace(/&#(\d+);/g, (m, d) => (ENTITIES[m] !== undefined ? ENTITIES[m] : String.fromCharCode(+d)))
     .replace(/&[a-zA-Z]+;/g, (m) => (ENTITIES[m] !== undefined ? ENTITIES[m] : m))
-    .replace(/​/g, ''); // Zero-Width-Space entfernen (siehe Maengelliste M-06)
+    .replace(/​/g, ''); // strip zero-width spaces (defect M-06)
 }
 
-/** HTML aus dem Editor in schlichtes Markdown ueberfuehren. */
+/** Turn editor HTML into plain Markdown. */
 function htmlToMd(html) {
   if (!html) return '';
   let s = html;
@@ -76,11 +82,11 @@ function htmlToMd(html) {
   s = s.replace(/<[^>]+>/g, '');
   s = decode(s);
   s = s.replace(/[ \t]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n').trim();
-  // Ueberschriften brauchen eine Leerzeile davor, sonst verschmelzen sie mit dem Absatz.
+  // A heading needs a blank line before it, or it merges into the preceding paragraph.
   return s.replace(/([^\n])\n(#{1,6} )/g, '$1\n\n$2');
 }
 
-/** Elementor-JSON in Dokumentreihenfolge durchlaufen und Markdown erzeugen. */
+/** Walk the Elementor JSON in document order and emit Markdown. */
 function elementorToMd(json) {
   let data;
   try {
@@ -113,7 +119,7 @@ function elementorToMd(json) {
           break;
         case 'accordion':
         case 'toggle': {
-          // Eine Ebene unter der zuletzt gesetzten Ueberschrift einhaengen.
+          // Nest one level below the most recent heading.
           const h = '#'.repeat(Math.min(lastHeadingLevel + 1, 6));
           for (const t of s.tabs || []) {
             out.push(`\n\n${h} ${decode(String(t.tab_title || '')).trim()}\n`);
@@ -125,21 +131,21 @@ function elementorToMd(json) {
           if (s.anchor) seenAnchors.push(decode(String(s.anchor)).trim());
           break;
         case 'image':
-          if (s.image?.url) out.push(`\n> Bild: \`${path.basename(s.image.url)}\`\n`);
+          if (s.image?.url) out.push(`\n> Image: \`${path.basename(s.image.url)}\`\n`);
           break;
         case 'image-carousel': {
           const names = (s.carousel || []).map((c) => path.basename(c.url || '')).filter(Boolean);
-          if (names.length) out.push(`\n> Bildergalerie: ${names.map((n) => `\`${n}\``).join(', ')}\n`);
+          if (names.length) out.push(`\n> Image gallery: ${names.map((n) => `\`${n}\``).join(', ')}\n`);
           break;
         }
         case 'google_maps':
-          out.push('\n> Eingebettete Google-Maps-Karte\n');
+          out.push('\n> Embedded Google Maps\n');
           break;
         case 'content_form_contact':
-          out.push('\n> Kontaktformular\n');
+          out.push('\n> Contact form\n');
           break;
         case 'obfx-posts-grid':
-          out.push('\n> Automatisches Beitrags-Grid (zeigte Blogbeitraege)\n');
+          out.push('\n> Automatic post grid (listed blog posts)\n');
           break;
         case 'spacer':
         case undefined:
@@ -152,7 +158,7 @@ function elementorToMd(json) {
   };
   walk(data);
 
-  // Widgets mit Leerzeile trennen, sonst klebt eine Ueberschrift am vorigen Absatz.
+  // Separate widgets with a blank line, or a heading sticks to the previous paragraph.
   const body = out.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
   return { body, anchors: seenAnchors };
 }
@@ -163,7 +169,7 @@ function slugify(s) {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-/** Minimaler Parser fuer PHP-serialisierte Daten (Oeffnungszeiten-Plugin). */
+/** Minimal parser for PHP-serialised data (the opening-hours plugin stores it that way). */
 function phpUnserialize(str) {
   let i = 0;
   function parse() {
@@ -191,14 +197,15 @@ function phpUnserialize(str) {
       i += 1;
       return o;
     }
-    throw new Error('Unbekannter Typ an Position ' + i + ': ' + type);
+    throw new Error('Unknown type at position ' + i + ': ' + type);
   }
   try { return parse(); } catch { return null; }
 }
 
-const WEEKDAYS = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+// Index 0 is Sunday — the plugin's own convention, kept so the numbers map straight across.
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-// ---------------------------------------------------------------- Einsammeln
+// ------------------------------------------------------------------ Collect
 
 const byType = {};
 for (const it of items) {
@@ -216,9 +223,9 @@ function write(rel, content) {
   written.push(rel);
 }
 
-const GENERATED = '<!-- Automatisch erzeugt von tools/extract-wp-content.mjs. Nicht von Hand bearbeiten. -->\n';
+const GENERATED = '<!-- Generated by tools/extract-wp-content.mjs. Do not edit by hand. -->\n';
 
-// ---------------------------------------------------------------- 1. Seiten
+// ------------------------------------------------------------------ 1. Pages
 
 const pages = byType.page || [];
 const pageIndex = [];
@@ -236,7 +243,7 @@ for (const it of pages) {
   if (M._elementor_data) {
     const r = elementorToMd(M._elementor_data);
     if (r) { body = r.body; anchors = r.anchors; }
-    else body = '_(Elementor-Daten konnten nicht gelesen werden.)_';
+    else body = '_(Elementor data could not be parsed.)_';
   } else {
     body = htmlToMd(tag(it, 'content:encoded'));
   }
@@ -247,19 +254,19 @@ for (const it of pages) {
   const fileSlug = slug && slug !== '/' ? slugify(slug) : slugify(title);
   const rel = `seiten/${fileSlug}.md`;
 
-  // null = optionale Zeile, die entfaellt. Leerstrings sind gewollte Leerzeilen.
+  // null = an optional row that is dropped. Empty strings are intentional blank lines.
   const head = [
     GENERATED,
     `# ${title}`,
     '',
     '| | |',
     '|---|---|',
-    `| Pfad | \`/${slug}\` |`,
+    `| Path | \`/${slug}\` |`,
     `| Status | ${status} |`,
-    `| WordPress-ID | ${id} |`,
-    parentTitle ? `| Unterseite von | ${parentTitle} |` : null,
-    `| Aufbau | ${M._elementor_data ? 'Elementor' : 'klassischer Editor'} |`,
-    anchors.length ? `| Sprungmarken | ${anchors.map((a) => '`#' + a + '`').join(', ')} |` : null,
+    `| WordPress ID | ${id} |`,
+    parentTitle ? `| Child page of | ${parentTitle} |` : null,
+    `| Built with | ${M._elementor_data ? 'Elementor' : 'classic editor'} |`,
+    anchors.length ? `| Anchors | ${anchors.map((a) => '`#' + a + '`').join(', ')} |` : null,
     '',
     '---',
     '',
@@ -269,13 +276,14 @@ for (const it of pages) {
   pageIndex.push({ title, slug, status, rel, parentTitle, len: body.length });
 }
 
-// ---------------------------------------------------------------- 2. Beitraege
+// ------------------------------------------------------------------ 2. Posts
 
 const posts = (byType.post || []).sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b, 'wp:post_date')));
-let postsMd = GENERATED + '\n# Blogbeiträge der Altseite\n\n' +
-  'Alle 19 Beiträge, chronologisch. Sie sind **inhaltlich abgelaufen** ' +
-  '(abgelaufene Aktionen, Corona-Meldungen) und sollen laut Inhaltsinventar nicht ' +
-  'übernommen werden. Hier gesichert, damit nichts verloren geht.\n\n---\n';
+let postsMd = GENERATED + '\n# Blog posts of the old site\n\n' +
+  'All 19 posts, chronologically. Every one is **out of date** — expired promotions and ' +
+  'pandemic-era notices — and the content inventory rates none of them for reuse. ' +
+  'Kept here so nothing is lost, not because anything here is wanted.\n\n' +
+  'The post text below is the original German, reproduced verbatim.\n\n---\n';
 
 for (const it of posts) {
   postsMd += `\n## ${decode(tag(it, 'title'))}\n\n`;
@@ -285,21 +293,21 @@ for (const it of posts) {
 }
 write('beitraege.md', postsMd);
 
-// ---------------------------------------------------------------- 3. Oeffnungszeiten
+// --------------------------------------------------------- 3. Opening hours
 
 const sets = byType['op-set'] || [];
-let ozMd = GENERATED + '\n# Öffnungszeiten-Datensätze\n\n' +
-  'Alle im alten System hinterlegten Saison-Sätze, aus den PHP-serialisierten ' +
-  'Plugin-Daten dekodiert. Der jüngste Satz stammt aus 2024.\n\n' +
-  '> **Vor Übernahme mit dem Betreiber abgleichen.** Es existieren zwei Sommer-Sätze ' +
-  'für 2024 mit abweichenden Zeiten; welcher zuletzt aktiv war, geht aus dem Export ' +
-  'nicht hervor.\n';
+let ozMd = GENERATED + '\n# Opening-hours records\n\n' +
+  'Every seasonal set stored in the old system, decoded from the plugin\'s ' +
+  'PHP-serialised data. The most recent set is from 2024.\n\n' +
+  '> **Confirm with the owner before reuse.** Two summer sets exist for 2024 with ' +
+  'differing times, and the export does not say which was active last. Do not guess ' +
+  'which one is current — opening hours are a fact customers act on.\n';
 
 for (const it of sets.sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b, 'wp:post_date')))) {
   const M = metaOf(it);
   ozMd += `\n## ${decode(tag(it, 'title'))}\n\n`;
   const desc = M._op_meta_box_set_details_description;
-  if (desc) ozMd += `Zeitraum: **${decode(desc).trim()}**\n\n`;
+  if (desc) ozMd += `Period: **${decode(desc).trim()}**\n\n`;
   const periods = phpUnserialize(M._op_set_periods || '');
   if (periods && typeof periods === 'object') {
     const byDay = {};
@@ -307,28 +315,29 @@ for (const it of sets.sort((a, b) => tag(a, 'wp:post_date').localeCompare(tag(b,
       if (!p || typeof p !== 'object') continue;
       (byDay[p.weekday] ||= []).push(`${p.timeStart}–${p.timeEnd}`);
     }
-    ozMd += '| Tag | Zeiten |\n|---|---|\n';
+    ozMd += '| Day | Hours |\n|---|---|\n';
     for (let d = 1; d <= 7; d++) {
       const idx = d % 7;
-      if (byDay[idx]) ozMd += `| ${WEEKDAYS[idx]} | ${byDay[idx].join(' und ')} |\n`;
+      if (byDay[idx]) ozMd += `| ${WEEKDAYS[idx]} | ${byDay[idx].join(' and ')} |\n`;
     }
   } else {
-    ozMd += '_(keine Zeiten hinterlegt)_\n';
+    ozMd += '_(no hours recorded)_\n';
   }
   const hol = phpUnserialize(M._op_set_holidays || '');
   if (hol && Object.keys(hol).length) {
     const names = Object.values(hol).map((h) => h?.name).filter(Boolean);
-    if (names.length) ozMd += `\nFeiertage: ${names.join(', ')}\n`;
+    if (names.length) ozMd += `\nHolidays: ${names.join(', ')}\n`;
   }
 }
 write('oeffnungszeiten.md', ozMd);
 
-// ---------------------------------------------------------------- 4. URL-Liste
+// ------------------------------------------------------------------- 4. URLs
 
-let urlMd = GENERATED + '\n# URL-Bestand der Altseite\n\n' +
-  'Alle öffentlich erreichbaren Adressen. Grundlage für die Weiterleitungen beim ' +
-  'Relaunch — bestehende Links und Suchmaschinen-Treffer sollen nicht ins Leere laufen.\n\n' +
-  '| Alte URL | Titel | Typ | Neue URL |\n|---|---|---|---|\n';
+let urlMd = GENERATED + '\n# URLs of the old site\n\n' +
+  'Every publicly reachable address, and the basis for the redirects at relaunch. ' +
+  'These URLs are indexed today: a nine-year-old local business has accumulated search ' +
+  'ranking against them, and existing links point at them. None may silently 404.\n\n' +
+  '| Old URL | Title | Type | New URL |\n|---|---|---|---|\n';
 
 const published = [];
 for (const t of ['page', 'post']) {
@@ -339,80 +348,84 @@ for (const t of ['page', 'post']) {
 }
 published.sort((a, b) => a.type.localeCompare(b.type) || a.slug.localeCompare(b.slug));
 for (const p of published) {
-  urlMd += `| \`/${p.slug}/\` | ${p.title} | ${p.type === 'page' ? 'Seite' : 'Beitrag'} | _offen_ |\n`;
+  urlMd += `| \`/${p.slug}/\` | ${p.title} | ${p.type === 'page' ? 'Page' : 'Post'} | _open_ |\n`;
 }
-urlMd += `\n**${published.length} veröffentlichte Adressen.**\n`;
+urlMd += `\n**${published.length} published addresses.**\n`;
 write('urls-und-redirects.md', urlMd);
 
-// ---------------------------------------------------------------- 5. Medien
+// ------------------------------------------------------------------ 5. Media
 
 const attachments = byType.attachment || [];
-const usage = new Map(); // Dateiname -> Set von Seitentiteln
+const usage = new Map(); // file name -> set of page titles
 
 for (const t of ['page', 'post']) {
   for (const it of byType[t] || []) {
     const title = decode(tag(it, 'title'));
     const hay = (metaOf(it)._elementor_data || '') + tag(it, 'content:encoded');
     for (const m of hay.matchAll(/uploads\\?\/\d{4}\\?\/\d{2}\\?\/([A-Za-z0-9._%-]+\.(?:jpe?g|png|gif|svg))/gi)) {
-      const f = m[1].replace(/-\d{2,4}x\d{2,4}(?=\.)/, ''); // Groessenvariante auf Original zurueckfuehren
+      const f = m[1].replace(/-\d{2,4}x\d{2,4}(?=\.)/, ''); // map a size variant back to its original
       if (!usage.has(f)) usage.set(f, new Set());
       usage.get(f).add(title);
     }
   }
 }
 
-let medMd = GENERATED + '\n# Verwendete Bilddateien\n\n' +
-  'Zuordnung Bilddatei → Seite, aus dem Export ermittelt. Die Dateien selbst liegen ' +
-  'im ausgelagerten Archiv (siehe [Medien-Inventar](../analyse/06-medien-inventar.md)) ' +
-  'und sind **nicht** Teil dieses Repositorys.\n\n' +
-  '> **Bildrechte sind nicht dokumentiert.** Vor Wiederverwendung klären — siehe ' +
-  'Mängel M-15.\n\n' +
-  `Insgesamt ${attachments.length} Medien in der alten Mediathek, davon ${usage.size} ` +
-  'nachweislich auf Seiten oder in Beiträgen eingebunden.\n\n' +
-  '| Datei | Verwendet auf |\n|---|---|\n';
+let medMd = GENERATED + '\n# Images in use\n\n' +
+  'Which image file appeared on which page, determined from the export. The files ' +
+  'themselves live in the excluded archive (see the ' +
+  '[media inventory](../analyse/06-medien-inventar.md)) and are **not** part of this ' +
+  'repository.\n\n' +
+  '> **Image rights are undocumented.** Establish provenance before reusing any of ' +
+  'these — see defect M-15. No image enters the repository without its source, licence ' +
+  'and evidence recorded.\n\n' +
+  `${attachments.length} media items existed in the old library; ${usage.size} of them are ` +
+  'demonstrably embedded in a page or post.\n\n' +
+  '| File | Used on |\n|---|---|\n';
 
 for (const [file, pagesSet] of [...usage].sort((a, b) => a[0].localeCompare(b[0]))) {
   medMd += `| \`${file}\` | ${[...pagesSet].join(', ')} |\n`;
 }
 write('medien-verwendung.md', medMd);
 
-// ---------------------------------------------------------------- 6. Index
+// ------------------------------------------------------------------ 6. Index
 
-let idx = GENERATED + '\n# Inhalte der Altseite\n\n' +
-  'Vollständige Sicherung aller Texte des alten WordPress-Auftritts. Erzeugt aus dem ' +
-  'bereinigten Export mit `tools/extract-wp-content.mjs`.\n\n' +
-  'Dieser Ordner existiert, weil `Archive/` nicht Teil des Repositorys ist. Er ist ' +
-  'damit die **einzige** versionierte Quelle der Alt-Inhalte.\n\n' +
-  '## Seiten\n\n| Seite | Pfad | Status | Datei |\n|---|---|---|---|\n';
+let idx = GENERATED + '\n# Content of the old site\n\n' +
+  'A complete capture of every text from the old WordPress site, generated from the ' +
+  'cleaned export by `tools/extract-wp-content.mjs`.\n\n' +
+  'This folder exists because `Archive/` is not part of the repository. It is therefore ' +
+  'the **only** versioned source of the old content.\n\n' +
+  '> **The page text below is German and stays German.** It is source material — a record ' +
+  'of what the site said — not documentation. Only the framing around it is English. ' +
+  'Correct the generator, never these files.\n\n' +
+  '## Pages\n\n| Page | Path | Status | File |\n|---|---|---|---|\n';
 
 for (const p of pageIndex.sort((a, b) => a.title.localeCompare(b.title))) {
-  idx += `| ${p.title}${p.parentTitle ? ` <br><small>unter ${p.parentTitle}</small>` : ''} | \`/${p.slug}\` | ${p.status} | [${path.basename(p.rel)}](${p.rel}) |\n`;
+  idx += `| ${p.title}${p.parentTitle ? ` <br><small>under ${p.parentTitle}</small>` : ''} | \`/${p.slug}\` | ${p.status} | [${path.basename(p.rel)}](${p.rel}) |\n`;
 }
 
-idx += '\n## Weitere Sicherungen\n\n' +
-  '| Datei | Inhalt |\n|---|---|\n' +
-  '| [beitraege.md](beitraege.md) | Alle 19 Blogbeiträge (abgelaufen, nicht zur Übernahme) |\n' +
-  '| [oeffnungszeiten.md](oeffnungszeiten.md) | Alle Saison-Datensätze, dekodiert |\n' +
-  '| [urls-und-redirects.md](urls-und-redirects.md) | URL-Bestand als Grundlage für Weiterleitungen |\n' +
-  '| [medien-verwendung.md](medien-verwendung.md) | Welches Bild lag auf welcher Seite |\n\n' +
-  '## Hinweise\n\n' +
-  '- Texte sind **unverändert** übernommen, inklusive der in der Mängelliste ' +
-  'vermerkten Tipp- und Grammatikfehler. Sie sind beim Übertragen zu korrigieren, ' +
-  'nicht hier.\n' +
-  '- Blindtext (Lorem ipsum) ist bewusst mitgesichert, damit erkennbar bleibt, ' +
-  'welche Stellen redaktionell zu füllen sind.\n' +
-  '- Unsichtbare Zero-Width-Spaces (U+200B) aus dem Original wurden beim Extrahieren ' +
-  'entfernt.\n' +
-  '- **Links in den Texten zeigen auf die alte Seitenstruktur** (`/kontakt`, ' +
-  '`/leistungen-und-preise#solarium` und so weiter) und sind bewusst unverändert. ' +
-  'Sie sind keine Verweise innerhalb dieser Dokumentation. Ein Teil von ihnen war ' +
-  'schon auf der Altseite defekt — siehe Mängel M-05 und M-28.\n';
+idx += '\n## Other captures\n\n' +
+  '| File | Contents |\n|---|---|\n' +
+  '| [beitraege.md](beitraege.md) | All 19 blog posts (expired, not for reuse) |\n' +
+  '| [oeffnungszeiten.md](oeffnungszeiten.md) | Every seasonal record, decoded |\n' +
+  '| [urls-und-redirects.md](urls-und-redirects.md) | The URL inventory behind the redirects |\n' +
+  '| [medien-verwendung.md](medien-verwendung.md) | Which image appeared on which page |\n\n' +
+  '## Notes\n\n' +
+  '- Texts are reproduced **unchanged**, including the typos and grammatical errors ' +
+  'recorded in the defect list. Fix them when the content is carried over, not here.\n' +
+  '- Placeholder text (lorem ipsum) is captured deliberately, so it stays visible which ' +
+  'passages were never actually written.\n' +
+  '- Invisible zero-width spaces (U+200B) from the original were stripped during ' +
+  'extraction (defect M-06).\n' +
+  '- **Links inside the texts point at the old site structure** (`/kontakt`, ' +
+  '`/leistungen-und-preise#solarium` and so on) and are deliberately unchanged. They are ' +
+  'not cross-references within this documentation, and `tools/check-docs.mjs` skips them ' +
+  'for that reason. Some were already broken on the old site — see defects M-05 and M-28.\n';
 
 write('README.md', idx);
 
-// ---------------------------------------------------------------- Bericht
+// ----------------------------------------------------------------- Report
 
-console.log(`Geschrieben nach ${OUT}/:`);
+console.log(`Written to ${OUT}/:`);
 for (const w of written.sort()) console.log('  ' + w);
-console.log(`\n${written.length} Dateien, ${pageIndex.length} Seiten, ${posts.length} Beiträge, ` +
-  `${sets.length} Öffnungszeiten-Sätze, ${published.length} URLs, ${usage.size} Bildzuordnungen.`);
+console.log(`\n${written.length} files, ${pageIndex.length} pages, ${posts.length} posts, ` +
+  `${sets.length} opening-hours sets, ${published.length} URLs, ${usage.size} image mappings.`);

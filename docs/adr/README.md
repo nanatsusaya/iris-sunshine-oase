@@ -1,7 +1,7 @@
 # Architecture Decision Records
 
 One file per significant decision, numbered `NNNN-title.md`. ADRs are immutable once `Accepted`
-**unless the owner authorizes an amendment** (recorded in that ADR's *Amendments* section); otherwise
+**unless the owner authorises an amendment** (recorded in that ADR's *Amendments* section); otherwise
 a later ADR supersedes an earlier one. See [ADR 0001](0001-record-architecture-decisions.md) for the
 rules and the per-ADR workflow.
 
@@ -13,7 +13,7 @@ Every ADR file must appear in this table with a status.
 | 0002 | Tech stack and tooling | Planned |
 | 0003 | Content model — structured data and where authority lives | Planned |
 | 0004 | Styling and design tokens | Planned |
-| 0005 | Internationalization — German default, English secondary | Planned |
+| 0005 | Internationalisation — German default, English secondary | Planned |
 | 0006 | Deployment, preview and hosting | Planned |
 | 0007 | Legal, privacy and third-party services | Planned |
 | 0008 | URL migration and redirects from the old site | Planned |
