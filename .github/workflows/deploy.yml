@@ -8,10 +8,34 @@ name: Deploy preview
 # to a draft nobody can find; afterwards, merging a pull request publishes to the live site. What
 # protects it is that CI runs the full check chain on every PR and `main` is branch-protected, so a
 # build that fails cannot reach this workflow.
+#
+# ---------------------------------------------------------------------------------------------
+# **The `push` trigger is deliberately commented out, and this is a temporary state.**
+#
+# The workflow's precondition does not exist yet: GitHub Pages is not enabled on this repository,
+# and enabling it is the owner's call because it publishes a real business's draft to a public URL
+# (`CLAUDE.md`). Left on `push`, this failed on every merge to `main` — and a check that is always
+# red is worse than no check, because it teaches everyone to scroll past a failing workflow.
+#
+# It is disabled rather than made to pass. A deploy job that "succeeds" without deploying would be
+# a lie told once per merge.
+#
+# **To re-enable — in this order, because the middle step is what makes the first safe:**
+#   1. Verify the apex domain with GitHub (ADR 0009 §5, R3): *Settings → Pages → Add a domain*,
+#      then the `TXT` record at netcup. Without this the `preview` subdomain is takeover-able.
+#   2. Add the `preview` CNAME at netcup → `nanatsusaya.github.io` (ADR 0006 §2).
+#   3. Enable Pages with *Source: GitHub Actions* and set the custom domain to
+#      `preview.iris-sunshine-oase.de`.
+#   4. Uncomment the two `push` lines below and delete this block.
+#
+# Do **not** enable Pages without the custom domain. A project page serves from a subpath
+# (`nanatsusaya.github.io/iris-sunshine-oase/`), which puts `robots.txt` somewhere no crawler
+# looks for it and reintroduces the `base`-path problem ADR 0006 §2 (R1) chose the subdomain to
+# avoid.
+# ---------------------------------------------------------------------------------------------
 on:
-  push:
-    branches: [main]
-  # Lets the owner re-publish without an empty commit — useful after changing the custom domain.
+  # push:
+  #   branches: [main]
   workflow_dispatch:
 
 # Least privilege per job would be narrower still, but `deploy-pages` needs both of these and

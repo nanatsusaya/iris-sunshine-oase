@@ -77,9 +77,11 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 - ✅ **The indexing gate**, as one build-time flag defaulting to `preview` (ADR 0006 §5). Verified in
   both directions locally: `preview` emits `noindex` and no sitemap; `live` emits neither the tag nor
   a `Disallow`, and does emit the sitemap.
-- ⛔ **Not yet deployed.** The Pages workflow exists but the preview URL needs two owner actions:
-  verifying the apex domain with GitHub (ADR 0009 R3) and adding the `preview` `CNAME` at netcup
-  (ADR 0006 §2). Until then the epic's Definition of Done — *a URL the owner can open* — is unmet.
+- ⛔ **Not yet deployed, and the deploy workflow is switched off on purpose.** GitHub Pages is not
+  enabled on the repository, so the workflow failed on the first merge to `main`. Its `push` trigger
+  is commented out until the precondition exists — a check that is always red teaches everyone to
+  ignore failing checks. The workflow file carries the four-step re-enable procedure. Until then the
+  epic's Definition of Done — *a URL the owner can open* — is unmet.
 
 > **Two of the epic's own constraints are superseded and were deliberately not followed.** It requires
 > `robots.txt` `Disallow: /`, which **ADR 0006 §4** shows defeats the `noindex` it sits beside; and it
@@ -108,7 +110,7 @@ protects nothing, so this table tracks the gap explicitly; the ADR's status neve
 | Default workflow token permissions `read` | 0009 §3 | ✅ in force (pre-existing) |
 | Private Vulnerability Reporting | 0009 §9, R4 | ✅ in force (pre-existing) |
 | Secret scanning + push protection | 0009 | ✅ in force (pre-existing) |
-| **Apex domain verified with GitHub** (`TXT` at `_github-pages-challenge-nanatsusaya`) | 0009 §5, R3 | ⛔ **owner action — blocks the `preview` CNAME** |
+| **Apex domain verified with GitHub** (`TXT` at `_github-pages-challenge-nanatsusaya`) | 0009 §5, R3 | ⛔ **owner action — blocks the CNAME, and with it the whole deployment** |
 | netcup: two-factor authentication, automatic renewal | 0009 §5 | ❓ owner action, unverified |
 | `npm ci --ignore-scripts`, `npm audit` gating, Dependabot npm entry | 0009 §2 | ✅ in force (2026-07-19) |
 | Explicit `permissions:` block per workflow | 0009 §3 | ✅ in force (2026-07-19) |
