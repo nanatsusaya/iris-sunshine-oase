@@ -8,6 +8,8 @@ This folder exists because `Archive/` is not part of the repository. It is there
 
 > **The page text below is German and stays German.** It is source material — a record of what the site said — not documentation. Only the framing around it is English. Correct the generator, never these files.
 
+> **E-mail addresses here are redactions, not data.** The export was PII-cleaned before extraction and every address was replaced with a placeholder under `example.invalid` — the cleaning did not spare the studio's own address. For the real values see [`../business-facts.md`](../business-facts.md).
+
 ## Pages
 
 | Page | Path | Status | File |

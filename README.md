@@ -39,6 +39,7 @@ everything else.
 | [`docs/STATUS.md`](docs/STATUS.md) | Where the rebuild currently stands |
 | [`docs/analyse/`](docs/analyse/README.md) | What the old site is, and its 28 documented defects |
 | [`docs/inhalte/`](docs/inhalte/README.md) | Every text of the old site, extracted verbatim |
+| [`docs/business-facts.md`](docs/business-facts.md) | The studio's address and contact details — the one authoritative copy |
 | [`docs/meta/`](docs/meta/agent-collaboration-log.md) | Why the way we work looks the way it does |
 
 Two things are deliberately *not* here. The **archive** of the old site — roughly 600 MB of image
@@ -76,4 +77,4 @@ This repository holds two different kinds of material, licensed differently. See
 - **The business content** — page copy, service descriptions, prices, opening hours, the business
   name, the logo and all image material — is © 2026 Iris Zellner, Kosmetik- & Sonnenstudio Iris'
   Sunshine Oase. **All rights reserved.** It is public here because the rebuild is developed in the
-  open, not to grant any right of use.
+  open, not to grant any right of use. [`LICENSE`](LICENSE) says where to write to ask for it.

@@ -16,6 +16,7 @@ two files compete to answer the same thing.
 | [`../CLAUDE.md`](../CLAUDE.md) | How is work done here? | rarely |
 | [`adr/`](adr/README.md) | What was decided, and why? | append-only |
 | [`STATUS.md`](STATUS.md) | Where do we stand? | often |
+| [`business-facts.md`](business-facts.md) | What are the studio's address and contact details? | rarely |
 | [`meta/agent-collaboration-log.md`](meta/agent-collaboration-log.md) | Why does the way we work look like this? | occasionally |
 | GitHub issues | What is to be done? | continuously |
 
@@ -63,7 +64,7 @@ of what the site said, not documentation.
 | Maintenance | through GitHub issues, worked by an agent |
 | Languages | German by default, English as an additional locale |
 | Preview | GitHub Pages, updated from `main`, `noindex` until go-live |
-| Hosting | open — the current provider (netcup) is under review |
+| Hosting | Cloudflare Pages; the domain stays registered at netcup (decided 2026-07-18, ADR 0006) |
 
 Two guardrails follow from this, and they explain most of the decisions here:
 
