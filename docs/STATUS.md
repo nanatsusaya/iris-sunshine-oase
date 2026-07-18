@@ -23,7 +23,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 | Phase | Epic | State |
 |---|---|---|
 | 0 — Analysis & foundation | [#2](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2) | ▶ in progress |
-| 1 — Decisions (ADRs 0002–0008) | [#3](https://github.com/nanatsusaya/iris-sunshine-oase/issues/3) | planned |
+| 1 — Decisions (ADRs 0002–0008) | [#3](https://github.com/nanatsusaya/iris-sunshine-oase/issues/3) | ▶ in progress |
 | 2 — Scaffold & first preview | [#4](https://github.com/nanatsusaya/iris-sunshine-oase/issues/4) | planned |
 | 3 — Content | [#5](https://github.com/nanatsusaya/iris-sunshine-oase/issues/5) | planned |
 | 4 — Defects, accessibility, SEO | [#6](https://github.com/nanatsusaya/iris-sunshine-oase/issues/6) | planned |
@@ -42,11 +42,24 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, labels, CI.
 
-**Phase 1 — decisions** (#3)**:** planned. ADRs 0002–0008, one PR each (see the
+**Phase 1 — decisions** (#3)**:** ▶ in progress. ADRs 0002–0008, one PR each (see the
 [ADR index](adr/README.md) for the set and its rationale).
 
-**Phase 2 — scaffold and first preview** (#4)**:** planned. The Astro scaffold plus the GitHub Pages
-deployment, so drafts are reviewable in a browser early. Gated on ADR 0002 and ADR 0006.
+- ✅ [ADR 0002](adr/0002-tech-stack-and-tooling.md) — tech stack and tooling — **Accepted**
+  (2026-07-18): Astro 7 static with npm, Node 24, TypeScript `strict` with `astro check`, plain CSS
+  with custom properties, Biome as a **blocking** check, `@astrojs/sitemap` as the only integration,
+  and no unit-test framework until something exists that needs one. State: **designed** — no code yet.
+- ▶ ADRs 0003–0008 outstanding. **ADR 0006** (deployment, preview and hosting) is the one on the
+  critical path: it is the second of Phase 2's two blockers, so nothing can be scaffolded until it is
+  Accepted.
+- ⏸ **ADR 0004** (styling and design tokens) waits on input from outside this repository: the owner is
+  drafting a visual design for the new site (2026-07-18, in progress). Design tokens invented before
+  that design exists would be replaced by it, so 0004 is deliberately *not* the next ADR despite its
+  low number. The other six do not depend on how the site looks.
+
+**Phase 2 — scaffold and first preview** (#4)**:** planned, **still blocked**. The Astro scaffold plus
+the GitHub Pages deployment, so drafts are reviewable in a browser early. Of its two gates, ADR 0002 is
+now Accepted and **ADR 0006 is not yet written**. The epic says plainly: do not scaffold ahead of them.
 
 **Phase 3 — content** (#5)**:** planned. The 14 pages, prices and opening hours as structured data.
 
@@ -62,7 +75,6 @@ Recorded here so they are not lost before the owning ADR is written:
 
 | Decision | Date | Owning ADR |
 |---|---|---|
-| Astro as the static site generator | 2026-07-18 | 0002 |
 | Maintenance runs through GitHub issues, worked by an AI agent | 2026-07-18 | — (working model, `CLAUDE.md`) |
 | Repository artefacts in English; conversation in German | 2026-07-18 | — (`CLAUDE.md`) |
 | Site content German by default, English as an additional locale | 2026-07-18 | 0005 |
@@ -80,4 +92,9 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-Finish Phase 0 (#2) — translate `docs/` to English — then open ADR 0002 (tech stack) as the first decision PR under Phase 1 (#3).
+**ADR 0006 — deployment, preview and hosting.** It is the last thing standing between here and a
+preview URL: Phase 2 (#4) names ADR 0002 and ADR 0006 as its two gates, and only the first is now
+Accepted. Everything Phase 2 promises — the scaffold, the Pages workflow, the `noindex` gate — is
+waiting on it, and none of it depends on the visual design still being drafted.
+
+Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.
