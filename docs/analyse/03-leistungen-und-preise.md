@@ -1,20 +1,20 @@
-# 03 — Leistungen & Preise
+# 03 — Services & Prices
 
-Vollständige Preisliste der Altseite, aus dem WordPress-Export ausgelesen.
+Complete price list of the old site, extracted from the WordPress export.
 
-> **Achtung:** Stand unbekannt, vermutlich 2019/2020. Die Preise sind vor
-> Übernahme in die neue Seite vom Betreiber zu bestätigen. Auf der Altseite
-> steht der Vorbehalt „*Alle Preise ohne Gewähr" am Seitenende.
+> **Note:** Date unknown, presumably 2019/2020. The prices are to be confirmed
+> by the owner before being carried over into the new site. The old site carries
+> the disclaimer „*Alle Preise ohne Gewähr" at the bottom of the page.
 
-Alle Preise sind im Original mit einem Sternchen versehen, das auf diesen
-Vorbehalt verweist.
+In the original, all prices are marked with an asterisk that refers to this
+disclaimer.
 
 ## Sunshine — Solarien
 
-Einleitung: „Detaillierte Beschreibungen zu unseren Sonnenbänken finden Sie
-hier." (verweist auf `/sunshine`)
+Introduction: „Detaillierte Beschreibungen zu unseren Sonnenbänken finden Sie
+hier." (points to `/sunshine`)
 
-| Position | Beschreibung | Preis |
+| Item | Description | Price |
 |---|---|---|
 | Einsteiger | Einsteiger- & Tiefenbräuner für die sonnenentwöhnte Haut in der Mittelmeer Kabine | ab 3,00 € |
 | Tiefenbräuner | Einsteiger- & Tiefenbräuner für den Einsteiger oder zum Erhalt Ihrer Bräune mit OxyTAN Röhren in der Ostsee Kabine | ab 3,00 € |
@@ -22,23 +22,23 @@ hier." (verweist auf `/sunshine`)
 | Power | Powerbank mit leichterem Gesichtsbräuner für den gebräunten Hauttyp in der Asia Kabine | ab 5,00 € |
 | Super Power | Diese Powerbank in unserer Afrika Kabine ist für die gebräunte Haut sehr gut geeignet | ab 5,00 € |
 
-Die Kabinen sind thematisch benannt: Mittelmeer, Ostsee, Ägypten, Asia, Afrika.
+The cabins are named thematically: Mittelmeer, Ostsee, Ägypten, Asia, Afrika.
 
 ### Happy Hour
 
 „Genießen Sie mehr Sonne für den gleichen Preis"
 
-| Zeitraum | Zeit |
+| Period | Time |
 |---|---|
 | Di. – Sa. | 09:00 – 11:00 Uhr |
 | Mo. – Sa. | ab 17:00 Uhr |
 | Sonn-/Feiertag | ganztags |
 
-### Zuordnung der Geräte
+### Device mapping
 
-Aus der Sunshine-Seite, ergänzend zur Preistabelle:
+From the Sunshine page, supplementing the price table:
 
-| Stufe | Gerät | Technik |
+| Tier | Device | Technology |
 |---|---|---|
 | Einsteiger & Tiefenbräuner | Mega Sun 5600 | 100 W Tiefenbräuner-Röhren, 400 W Gesichtsbräuner |
 | Einsteiger & Tiefenbräuner | Soltron X 50 | 100 W OxyTAN-Röhren, 400 W Gesichtsbräuner |
@@ -48,10 +48,10 @@ Aus der Sunshine-Seite, ergänzend zur Preistabelle:
 
 ## Moments — Naturkosmetik
 
-Einleitung: „Buchen Sie einen Termin telefonisch oder vor Ort und genießen Sie
+Introduction: „Buchen Sie einen Termin telefonisch oder vor Ort und genießen Sie
 Ihre Auszeit."
 
-| Position | Beschreibung | Preis |
+| Item | Description | Price |
 |---|---|---|
 | Anti Aging Gesichtsbehandlung | Brillante Anti-Aging-Behandlung für jeden Hauttyp, Gesichtsreinigung mit Peeling, diverse (z. B. ägyptische) Tonerde-Maske, Königs-Honig-Maske, Finish mit Anti-Age-Gesichtsmassage, ca. 70 min | 69,00 € |
 | Regenerations Gesichtsbehandlung | Exklusive Powerpflege für trockene Haut, Gesichtsreinigung mit Peeling, Königs-Honig-Maske, Finish mit Gesichtsmassage, bis 60 min | 52,00 € |
@@ -59,12 +59,12 @@ Ihre Auszeit."
 | Aufbaubehandlung Hyaluron | Klassische Kosmetik — Reinigung mit Peeling, Hyaluron-Serum zur intensiven Auffüllung von Mimikfältchen, Finish mit Anti-Aging-Creme, bis 45 min | 52,00 € |
 | Aufbaubehandlung Ceramide | Klassische Kosmetik — Reinigung mit Peeling, Serum mit hochwertigen Ceramiden zur intensiven Auffüllung von Mimikfältchen, Finish mit Anti-Aging-Creme, bis 45 min | 52,00 € |
 
-Die Kosmetik-Unterseite unterscheidet zusätzlich zwischen **Jugend Problemhaut**
-und **Erwachsenen Problemhaut** — das erklärt die Preisspanne 39–44 €.
+The cosmetics subpage additionally distinguishes between **Jugend Problemhaut**
+and **Erwachsenen Problemhaut** — that explains the price range 39–44 €.
 
 ### Augenpflege
 
-| Position | Preis |
+| Item | Price |
 |---|---|
 | Augenbrauen in Form | 8,50 € |
 | Augenbrauen färben | 10,00 € |
@@ -72,51 +72,51 @@ und **Erwachsenen Problemhaut** — das erklärt die Preisspanne 39–44 €.
 | Kombipaket mit straffender Maske | 22,00 € |
 | Wimpern färben | 8,50 € |
 
-> Im Original steht „staffender Maske" — Tippfehler, hier bereits korrigiert.
+> The original reads „staffender Maske" — a typo, already corrected here.
 
 ## Moments — Massagen
 
-Einleitung: „Entfliehen Sie dem Alltag. Buchen Sie einen Termin telefonisch oder
+Introduction: „Entfliehen Sie dem Alltag. Buchen Sie einen Termin telefonisch oder
 vor Ort und genießen Sie Ihre Auszeit."
 
-| Position | Beschreibung | Preis |
+| Item | Description | Price |
 |---|---|---|
 | Relax-Massage | Körpermassage inkl. ägyptischem Spezialöl, bis 30 min / 60 min | 30,00 € / 57,00 € |
 | Fußreflexzonen-Massage | Grifftechniken an den Reflexzonen des Fußes, inkl. vorbereitendem Gespräch und belebendem Fußbad, ca. 60 min | *zZ. vergriffen* |
 | Hotstone Rückenmassage | Behandlung mit warmen Basaltsteinen, bis 40 min | 54,00 € |
 
-Die Fußreflexzonen-Massage ist im Original ohne Preis und mit dem Status
-„zZ. vergriffen" hinterlegt — vor dem Neubau klären, ob sie wieder angeboten
-wird oder ersatzlos entfällt.
+In the original, the Fußreflexzonen-Massage has no price and carries the status
+„zZ. vergriffen" — clarify before the rebuild whether it will be offered again
+or dropped without replacement.
 
-Zusätzlich auf der Honig-Unterseite beschrieben, aber **nicht in der Preisliste
-enthalten**: die **Honigmassage**. Falls sie angeboten wird, fehlt der Preis.
+Additionally described on the honey subpage, but **not contained in the price
+list**: the **Honigmassage**. If it is offered, the price is missing.
 
 ## Moments — Wellness Pakete
 
-| Paket | Leistung | Preis |
+| Package | Service | Price |
 |---|---|---|
 | Paket 1 | bis 15 min Sonnenbank nach Wahl inkl. 1× Solarkosmetik, bis 45 min Kosmetikbehandlung nach Hauttyp, ägyptischer Tee | 49,00 € |
 | Paket 2 | bis 15 min Sonnenbank nach Wahl inkl. 1× Solarkosmetik, bis 45 min Kosmetikbehandlung nach Hauttyp, 1× Fußpflege inkl. Lack, ägyptischer Tee | 79,00 € |
 
 ## Moments — Freundinnen Wellness Pakete
 
-| Paket | Leistung | Preis |
+| Package | Service | Price |
 |---|---|---|
 | Paket 1 | 2× bis 15 min Sonnenbank nach Wahl inkl. je 1× Solarkosmetik, 2× bis 40 min Kosmetikbehandlung nach Hauttyp, 1 Flasche Sekt | 115,00 € |
 | Paket 2 | 2× bis 15 min Sonnenbank nach Wahl inkl. je 1× Solarkosmetik, 1× bis 40 min Relaxmassage, 1× bis 40 min Kosmetikbehandlung nach Hauttyp, 1 Flasche Sekt | 115,00 € |
 
-> Beide Pakete kosten identisch 115,00 €. Das ist kein Übertragungsfehler, so
-> steht es im Original — aber sachlich fragwürdig, weil Paket 2 mehr Leistung
-> für denselben Preis enthält. Vor Übernahme prüfen.
+> Both packages cost an identical 115,00 €. This is not a transcription error,
+> it is stated that way in the original — but questionable in substance, because
+> Paket 2 contains more service for the same price. Check before carrying over.
 
 ## Angebote
 
 ### Stammkundenkarte
 
-Rabatt gestaffelt nach Einkaufswert, gutgeschrieben als Bonus:
+Discount tiered by purchase value, credited as a bonus:
 
-| Wert | Ersparnis |
+| Value | Saving |
 |---|---|
 | 1,00 – 29,00 € | 10 % |
 | 30,00 – 49,00 € | 15 % |
@@ -128,7 +128,7 @@ Rabatt gestaffelt nach Einkaufswert, gutgeschrieben als Bonus:
 
 ### 10er-Karten
 
-| Preis | Ersparnis |
+| Price | Saving |
 |---|---|
 | 27,00 € | 3,00 € |
 | 36,00 € | 4,00 € |
@@ -137,17 +137,16 @@ Rabatt gestaffelt nach Einkaufswert, gutgeschrieben als Bonus:
 ### Gutschein
 
 „Sie suchen noch das ideale Geschenk? Schenken Sie Ihren Liebsten oder sich
-einen liebevoll verpackten Wert-Gutschein." — ohne festen Preis.
+einen liebevoll verpackten Wert-Gutschein." — without a fixed price.
 
-## Hinweise für die Umsetzung
+## Implementation notes
 
-**Als Daten modellieren, nicht als Layout.** Auf der Altseite ist jede
-Preisposition ein handgebauter Elementor-Block aus Bild, Überschrift, Text,
-Abstandshalter und Preis-Überschrift. Eine Preisänderung bedeutet dort eine
-Sitzung im Page Builder.
+**Model as data, not as layout.** On the old site, every price item is a
+hand-built Elementor block made of image, heading, text, spacer and price
+heading. A price change there means a session in the page builder.
 
-Für den Neubau gehört die Preisliste in eine strukturierte Datei
-(YAML oder JSON) mit einem Schema in der Art:
+For the rebuild, the price list belongs in a structured file
+(YAML or JSON) with a schema along the lines of:
 
 ```yaml
 kategorien:
@@ -161,14 +160,13 @@ kategorien:
         bild: …
 ```
 
-Damit sind Preispflege und Layout getrennt, die Sprungmarken werden aus den IDs
-generiert (was die derzeit toten Anker unmöglich macht — siehe
-[05-maengelliste.md](05-maengelliste.md)), und eine Änderung ist eine Zeile
-statt eines Layout-Eingriffs. Für den vorgesehenen Ticket-Workflow ist das die
-Voraussetzung dafür, dass ein Agent eine Preisänderung überhaupt zuverlässig
-umsetzen kann.
+This separates price maintenance from layout, the jump anchors are generated
+from the IDs (which makes the currently dead anchors impossible — see
+[05-maengelliste.md](05-maengelliste.md)), and a change is one line instead of a
+layout intervention. For the intended ticket workflow, this is the precondition
+for an agent being able to carry out a price change reliably at all.
 
-**Sonderfälle im Schema berücksichtigen:** Preis als Spanne (39–44 €), Preis mit
-zwei Varianten (30/57 €), Preis als Statustext („zZ. vergriffen"), Position ganz
-ohne Preis (Gutschein, Happy Hour), und Positionen die statt einer Beschreibung
-eine Tabelle tragen (Happy Hour, Augenpflege, Stammkunden- und 10er-Karten).
+**Account for special cases in the schema:** price as a range (39–44 €), price
+with two variants (30/57 €), price as a status text („zZ. vergriffen"), item
+with no price at all (Gutschein, Happy Hour), and items that carry a table
+instead of a description (Happy Hour, Augenpflege, Stammkunden- and 10er-Karten).

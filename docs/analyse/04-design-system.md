@@ -1,136 +1,136 @@
-# 04 — Design-System der Altseite
+# 04 — Design System of the Old Site
 
-Erfasst aus den Screenshots vom 18.07.2026. **Alle Farb-, Größen- und
-Abstandsangaben sind visuelle Schätzungen**, keine aus dem Stylesheet
-ausgelesenen Werte. Als Anhaltspunkt für die Gestaltungsrichtung gedacht, nicht
-als Spezifikation.
+Recorded from the screenshots of 2026-07-18. **All colour, size and spacing
+figures are visual estimates**, not values read out of the stylesheet. Intended
+as a reference point for the design direction, not as a
+specification.
 
-Die einzige exakt belegte Farbangabe stammt aus dem Custom CSS im Export:
-der Hero-Verlauf `#c2d1f0 → #ffc000`.
+The only exactly documented colour figure comes from the Custom CSS in the export:
+the hero gradient `#c2d1f0 → #ffc000`.
 
-## Farben
+## Colours
 
-| Rolle | Wert (geschätzt) | Verwendung |
+| Role | Value (estimated) | Usage |
 |---|---|---|
-| Akzent Orange | ~`#F5A623` | Links, aktiver Menüpunkt, Telefonnummer, „Zu den Preisen…" |
-| Button Orange | ~`#FF9800` – `#F57C00` | Suchbutton, Kategorie-Badges |
-| Überschriften | ~`#3C4858` | alle H1–H4 im Inhalt (blaustichiges Anthrazit, Hestia-Standard) |
-| Fließtext | ~`#55595C` – `#767676` | Absätze |
-| Hilfstext | ~`#9A9A9A` | Untertexte, Datumsangaben — kontrastschwach |
-| Flächen | `#FFFFFF` | Header, Inhaltskarte |
-| Abschnittswechsel | ~`#F5F5F7` | einzelne Sektionen mit hellgrauem Hintergrund |
-| Footer | ~`#2D3436` – `#333` | dunkler Anthrazit-Block |
+| Accent orange | ~`#F5A623` | Links, active menu item, phone number, „Zu den Preisen…" |
+| Button orange | ~`#FF9800` – `#F57C00` | Search button, category badges |
+| Headings | ~`#3C4858` | all H1–H4 in the content (blue-tinged anthracite, Hestia default) |
+| Body text | ~`#55595C` – `#767676` | Paragraphs |
+| Helper text | ~`#9A9A9A` | Subtexts, dates — low contrast |
+| Surfaces | `#FFFFFF` | Header, content card |
+| Section change | ~`#F5F5F7` | individual sections with a light grey background |
+| Footer | ~`#2D3436` – `#333` | dark anthracite block |
 
-Die Sonnen-Farbwelt in Orange und Amber ist die tragende Idee und passt zum
-Namen. Sie sollte erhalten bleiben.
+The sun colour world in orange and amber is the load-bearing idea and fits the
+name. It should be retained.
 
-## Typografie
+## Typography
 
-Durchgehend eine serifenlose Grotesk mit Roboto-Charakter — vermutlich Roboto
-selbst, das Hestia-Standard ist.
+Throughout, a sans-serif grotesque with a Roboto character — presumably Roboto
+itself, which is the Hestia default.
 
-| Ebene | Größe (geschätzt) | Auszeichnung |
+| Level | Size (estimated) | Styling |
 |---|---|---|
-| Hero-H1 | ~40–42 px | Bold, weiß, zentriert, Textschatten |
-| Sektions-H2 | ~30–32 px | Semibold, zentriert |
-| H3 | ~24–26 px | linksbündig |
-| Fließtext | ~16–17 px | Zeilenhöhe ~1,5 |
-| Menü | ~11–12 px | Uppercase, leichte Laufweite |
+| Hero H1 | ~40–42 px | Bold, white, centred, text shadow |
+| Section H2 | ~30–32 px | Semibold, centred |
+| H3 | ~24–26 px | left-aligned |
+| Body text | ~16–17 px | Line height ~1.5 |
+| Menu | ~11–12 px | Uppercase, slight letter spacing |
 
-Der Hero-Titel skaliert nicht mit der Textlänge — lange Titel behalten dieselbe
-Größe und laufen bis an den Rand.
+The hero title does not scale with the text length — long titles keep the same
+size and run right up to the edge.
 
 ## Layout
 
-**Prägendes Element ist Hestias `main-raised`:** Der gesamte Inhalt liegt auf
-einer weißen Karte, die den Hero um etwa 50 px nach oben überlappt, mit weichem
-Schlagschatten und minimal gerundeten Ecken. Links und rechts bleiben etwa 24 px
-Rand, durch den der Seitenhintergrund durchscheint.
+**The defining element is Hestia's `main-raised`:** The entire content sits on
+a white card that overlaps the hero upwards by about 50 px, with a soft drop
+shadow and minimally rounded corners. On the left and right about 24 px of
+margin remain, through which the page background shows.
 
-Weitere Merkmale:
+Further characteristics:
 
-- **Karten** mit weichem, diffusem Schatten (Material-Design-Anmutung), Radius
-  ~4–6 px. Das Kartenbild sitzt leicht nach oben versetzt und trägt einen
-  eigenen, stärkeren Schatten — ein charakteristisches Detail.
-- **Buttons** mit farbigem Schlagschatten in der Buttonfarbe.
-- **Formularfelder** im Material-Stil: kein Rahmen, nur Unterstrich.
-- **Abstände** werden über explizite Elementor-Spacer-Widgets erzeugt, nicht
-  über CSS-Margins. Zwischen praktisch jeder Sektion steht ein eigener
-  Abstandshalter als Vollbreiten-Sektion.
-- **Raster:** dreispaltig für Karten (je 33 %), zweispaltig für Bild-Text-Blöcke
-  (50/50), einspaltig für Fließtext.
-- **Keine wirksame Maximalbreite** — das Layout läuft fluid bis mindestens
-  1568 px, Textzeilen werden auf großen Monitoren sehr breit.
+- **Cards** with a soft, diffuse shadow (Material Design look), radius
+  ~4–6 px. The card image sits slightly offset upwards and carries its own,
+  stronger shadow — a characteristic detail.
+- **Buttons** with a coloured drop shadow in the button colour.
+- **Form fields** in Material style: no border, only an underline.
+- **Spacing** is produced via explicit Elementor spacer widgets, not
+  via CSS margins. Between practically every section there is a separate
+  spacer as a full-width section.
+- **Grid:** three-column for cards (33 % each), two-column for image-text blocks
+  (50/50), single-column for body text.
+- **No effective maximum width** — the layout runs fluid up to at least
+  1568 px, text lines become very wide on large monitors.
 
-## Was übernommen werden sollte
+## What should be kept
 
-- Die **warme Sonnen-Farbwelt** in Orange/Amber als Akzent
-- Die **großzügigen Foto-Heros** als Seiteneinstieg
-- Die **Kartenstruktur** für Leistungen und Preise — inhaltlich sinnvoll
-  gegliedert, nur technisch schlecht umgesetzt
-- Die **klare Sektionsgliederung** der Startseite
+- The **warm sun colour world** in orange/amber as an accent
+- The **generous photo heroes** as the page entry point
+- The **card structure** for services and prices — sensibly structured in terms
+  of content, only poorly implemented technically
+- The **clear section structure** of the home page
 
-## Was verworfen werden sollte
+## What should be discarded
 
-**Der Verlaufs-Hero.** Auf Impressum, Zertifizierung und einem Blogbeitrag
-erscheint statt eines Fotos der CSS-Verlauf von Grau-Blau nach Gelb. Er wirkt
-wie ein fehlendes Bild und bricht die Farbwelt. Entweder überall ein Bild oder
-überall eine bewusst gestaltete Fläche.
+**The gradient hero.** On Impressum, Zertifizierung and one blog post, the CSS
+gradient from grey-blue to yellow appears instead of a photo. It looks like a
+missing image and breaks the colour world. Either an image everywhere or
+a deliberately designed surface everywhere.
 
-**Der Serifen-Stilbruch.** Die „im Aufbau"-Hinweisboxen und die
-Footer-Überschriften sind in einer Serifenschrift gesetzt, alles andere
-serifenlos. Ohne erkennbare Absicht.
+**The serif style break.** The „im Aufbau" notice boxes and the
+footer headings are set in a serif typeface, everything else
+sans-serif. Without discernible intent.
 
-**Die Material-Design-Anmutung von 2017.** Überlappende Karte, farbige
-Buttonschatten, Unterstrich-Formularfelder — das datiert die Seite sofort.
+**The Material Design look of 2017.** Overlapping card, coloured
+button shadows, underline form fields — that dates the site immediately.
 
-**Fluid ohne Maximalbreite.** Eine Lesebreite von etwa 65–75 Zeichen begrenzen.
+**Fluid without a maximum width.** Limit to a reading width of about 65–75 characters.
 
-**Abstände über Spacer-Elemente.** Gehört in ein Abstandssystem im CSS.
+**Spacing via spacer elements.** Belongs in a spacing system in CSS.
 
-## Markenauftritt
+## Brand Presence
 
-**Es gibt kein Logo.** Der Header trägt nur den Schriftzug „Iris' Sunshine Oase"
-in der Systemschrift, ohne Bildmarke und ohne Claim.
+**There is no logo.** The header carries only the wordmark „Iris' Sunshine Oase"
+in the system font, without a graphic mark and without a claim.
 
-Im Medienarchiv liegen zwar Dateien mit Logo-Namen (`Logo.png`, `logo2.png`,
-`logo3.png`, `logo4.png`, `Logo-Sun.svg`, `favicon.ico`), aber:
+The media library does contain files with logo names (`Logo.png`, `logo2.png`,
+`logo3.png`, `logo4.png`, `Logo-Sun.svg`, `favicon.ico`), but:
 
-> **`Logo-Sun.svg` ist kein Vektorlogo.** Die Datei ist ein SVG-Container, in
-> den ein 500 × 500 px großes PNG als Base64 eingebettet wurde. Skaliert also
-> nicht verlustfrei.
+> **`Logo-Sun.svg` is not a vector logo.** The file is an SVG container into
+> which a 500 × 500 px PNG was embedded as Base64. It therefore does not
+> scale losslessly.
 
-Für den Neubau bedeutet das: Ein echtes Vektorlogo muss neu erstellt werden,
-wenn eines gewünscht ist. Die vorhandenen PNGs können als Vorlage dienen.
+For the rebuild this means: a real vector logo has to be created anew, if
+one is wanted. The existing PNGs can serve as a template.
 
-Kleinigkeit am Rande: Der Markenname wird uneinheitlich geschrieben — im Header
-mit geradem Apostroph, im Hero mit typografischem. Für den Neubau eine
-Schreibweise festlegen. Empfehlung: `Iris’ Sunshine Oase` mit typografischem
-Apostroph.
+A minor aside: the brand name is written inconsistently — in the header
+with a straight apostrophe, in the hero with a typographic one. Settle on one
+spelling for the rebuild. Recommendation: `Iris’ Sunshine Oase` with a typographic
+apostrophe.
 
 ## Navigation
 
-Menüstruktur der Altseite:
+Menu structure of the old site:
 
 ```
 HOME
-LEISTUNGEN & PREISE  ▾  (Untermenü: Sonderaktionen)
+LEISTUNGEN & PREISE  ▾  (Submenu: Sonderaktionen)
 SUNSHINE
-MOMENTS              ▾  (Untermenü: Kosmetik, Massage, Ton Erden, Honig)
-ÜBER UNS                (Unterseite Zertifizierung fehlt im Menü)
+MOMENTS              ▾  (Submenu: Kosmetik, Massage, Ton Erden, Honig)
+ÜBER UNS                (Zertifizierung subpage missing from the menu)
 proWIN
 BEITRÄGE
-[Telefon-Icon]  [Such-Icon]
+[Phone icon]  [Search icon]
 ```
 
-Anmerkungen:
+Notes:
 
-- „proWIN" bricht als einziger Punkt die Uppercase-Konvention (über die
-  CSS-Pseudo-Tags `<lower>`/`<upper>` erzwungen)
-- Der aktive Menüpunkt wird auf Unterseiten und im Blog nicht hervorgehoben
-- Im Export liegen zwei ungenutzte Menüeinträge mit **Hestia-Demodaten**:
-  `1-800-123-4567` und `friends@themeisle.com`. Sie erscheinen nicht im Header,
-  sind aber angelegt.
-- Es gibt **keinen Call-to-Action** im Header — weder Terminanfrage noch
-  Anruf-Button. Für ein lokales Studio ist besonders auf Mobilgeräten ein
-  direkter Anruf-Button naheliegend.
+- „proWIN" is the only item that breaks the uppercase convention (forced via the
+  CSS pseudo tags `<lower>`/`<upper>`)
+- The active menu item is not highlighted on subpages and in the blog
+- The export contains two unused menu entries with **Hestia demo data**:
+  `1-800-123-4567` and `friends@themeisle.com`. They do not appear in the header,
+  but they exist.
+- There is **no call to action** in the header — neither an appointment request nor
+  a call button. For a local studio a direct call button is an obvious choice,
+  especially on mobile devices.

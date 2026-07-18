@@ -1,214 +1,217 @@
-# 06 — Medien-Inventar und Ablage-Empfehlung
+# 06 — Media Inventory and Storage Recommendation
 
-## Mengengerüst
+## Volume breakdown
 
-Gemessen am 18.07.2026, vor und nach dem Aufräumen (siehe unten).
+Measured on 2026-07-18, before and after the cleanup (see below).
 
-| Bereich | Dateien vorher | Größe vorher | Dateien jetzt | Größe jetzt |
+| Area | Files before | Size before | Files now | Size now |
 |---|---|---|---|---|
-| `iris-sujnshine-oase-backup/wp-content/` | 2.523 | 145,3 MB | 505 | 85,7 MB |
-| `media-backup/` | 849 | 590,3 MB | 345 | 494,3 MB |
-| `screenshots/` | 69 | 3,3 MB | 69 | 3,3 MB |
-| XML-Export (beide Fassungen) | 2 | 10,7 MB | 2 | 10,7 MB |
-| **Gesamt** | **3.443** | **749,7 MB** | **921** | **594,0 MB** |
+| `iris-sujnshine-oase-backup/wp-content/` | 2,523 | 145.3 MB | 505 | 85.7 MB |
+| `media-backup/` | 849 | 590.3 MB | 345 | 494.3 MB |
+| `screenshots/` | 69 | 3.3 MB | 69 | 3.3 MB |
+| XML export (both versions) | 2 | 10.7 MB | 2 | 10.7 MB |
+| **Total** | **3,443** | **749.7 MB** | **921** | **594.0 MB** |
 
-Die folgenden Abschnitte beschreiben den **Zustand vor dem Aufräumen** — sie
-erklären, woraus sich die Differenz ergibt.
+The following sections describe the **state before the cleanup** — they
+explain where the difference comes from.
 
-## Wie viel davon ist Substanz?
+## How much of that is substance?
 
-### wp-content: zwei Drittel sind reproduzierbar
+### wp-content: two thirds are reproducible
 
-| | Dateien | Größe |
+| | Files | Size |
 |---|---|---|
-| Automatisch erzeugte Größenvarianten | 2.018 | 59,6 MB |
-| Originale | 505 | 85,7 MB |
+| Automatically generated size variants | 2,018 | 59.6 MB |
+| Originals | 505 | 85.7 MB |
 
-WordPress legt zu jedem Upload mehrere Zuschnitte an (`-150x150.jpg`,
-`-300x200.jpg` und so weiter). Diese 2.018 Dateien sind **reine Ableitungen** —
-sie tragen keine Information, die nicht in den Originalen steckt, und würden von
-einem Astro-Build ohnehin neu erzeugt.
+WordPress creates several crops for every upload (`-150x150.jpg`,
+`-300x200.jpg` and so on). These 2,018 files are **pure derivatives** —
+they carry no information that is not already in the originals, and an Astro
+build would regenerate them anyway.
 
-Die Zahl der Originale (505) deckt sich mit den 504 `attachment`-Einträgen im
-Export.
+The number of originals (505) matches the 504 `attachment` entries in the
+export.
 
-### media-backup: hoher Duplikat-Anteil
+### media-backup: high proportion of duplicates
 
-Der Ordner enthält thematisch sortierte Originalfotos: Studio, Frau, Mann, Paar,
-Massage, Kosmetik, Sonnenbank, Landschaft, Stilleben, Thema, Sonne. Dazu ein
-Ordner „sunshine alles" mit Material von 2013 (Logo-Entwürfe, GIMP-Dateien, ein
-Flyer als PowerPoint).
+The folder contains original photos sorted by topic: Studio, Frau, Mann, Paar,
+Massage, Kosmetik, Sonnenbank, Landschaft, Stilleben, Thema, Sonne. Plus a
+folder "sunshine alles" with material from 2013 (logo drafts, GIMP files, a
+flyer as a PowerPoint).
 
-Auffällig: 373 Dateien (259,8 MB) tragen den Zusatz `-Big` und existieren
-zusätzlich in einer Webgröße.
+Notable: 373 files (259.8 MB) carry the suffix `-Big` and also exist in a
+web size.
 
-### Inhaltsgleiche Duplikate
+### Content-identical duplicates
 
-Über `media-backup` und die wp-content-Originale hinweg per SHA1 geprüft:
+Checked via SHA1 across `media-backup` and the wp-content originals:
 
-**485 Dateien sind byte-identische Kopien anderer Dateien — 83,2 MB.**
+**485 files are byte-identical copies of other files — 83.2 MB.**
 
-Das ist erwartbar, weil dieselben Fotos einmal im Sortier-Archiv und einmal in
-der WordPress-Mediathek liegen.
+That is to be expected, because the same photos sit once in the sorting archive
+and once in the WordPress media library.
 
-### Zusammengefasst
+### In summary
 
-| | Größe |
+| | Size |
 |---|---|
-| Reproduzierbare Größenvarianten | 59,6 MB |
-| Redundante Kopien | 83,2 MB |
-| Windows-Artefakte (`Thumbs.db`) | 12,9 MB |
-| **Tatsächlich einzigartiges Quellmaterial** | **594,0 MB** |
+| Reproducible size variants | 59.6 MB |
+| Redundant copies | 83.2 MB |
+| Windows artefacts (`Thumbs.db`) | 12.9 MB |
+| **Actually unique source material** | **594.0 MB** |
 
-## Bildrechte — vor Wiederverwendung klären
+## Image rights — clarify before reuse
 
-Das Impressum der Altseite sagt, alle Bilder stammten „entweder von der Webseite
-pixabay und somit unter dem CC0" oder seien eigene Fotos.
+The Impressum of the old site states, verbatim:
 
-**Welches Bild zu welcher Kategorie gehört, ist nirgends dokumentiert.** Bei den
-Studio-Aufnahmen ist die Herkunft klar, bei Stock-Motiven aus 2013–2017 nicht.
+> Alle auf dieser Webseite präsentierten Bilder sind entweder von der Webseite
+> https://pixabay.com/ und somit unter dem CC0 veröffentlicht oder eigene Fotos.
 
-Das ist nicht bloß eine Formalie: Pixabay hat seine Lizenzbedingungen 2019
-geändert, und CC0 galt nur für ältere Uploads. Wer heute ein damals
-heruntergeladenes Bild weiterverwendet, sollte die Herkunft belegen können.
+In English: every image is either from Pixabay and therefore published under CC0,
+or one of the owner's own photos.
 
-**Empfehlung:** Beim Kuratieren für die neue Seite jedes übernommene Bild in
-einer Liste erfassen — Datei, Quelle, Lizenz, Nachweis. Im Zweifel lieber neu
-fotografieren oder neu lizenzieren. Für ein Studio, das ohnehin von eigenen
-Räumen und Geräten lebt, sind eigene Aufnahmen die bessere Wahl.
+**Which image belongs to which category is documented nowhere.** For the
+studio shots the provenance is clear, for stock motifs from 2013–2017 it is not.
 
-Vorhandene Markenassets: `Logo.png`, `logo2.png`, `logo3.png`, `logo4.png`,
-`favicon.ico`, `Logo-Sun.svg`. Letztere ist trotz der Endung **kein Vektorlogo**,
-sondern ein eingebettetes PNG.
+This is not merely a formality: Pixabay changed its licence terms in 2019, and
+CC0 applied only to older uploads. Anyone reusing an image downloaded back then
+today should be able to prove its provenance.
+
+**Recommendation:** When curating for the new site, record every image taken
+over in a list — file, source, licence, proof. When in doubt, rather take new
+photos or license anew. For a studio that lives off its own premises and
+equipment anyway, its own shots are the better choice.
+
+Existing brand assets: `Logo.png`, `logo2.png`, `logo3.png`, `logo4.png`,
+`favicon.ico`, `Logo-Sun.svg`. The latter, despite its extension, is **not a
+vector logo** but an embedded PNG.
 
 ---
 
-## Ablage — getroffene Entscheidung
+## Storage — decision taken
 
-> **Der gesamte Ordner `Archive/` ist per `.gitignore` vom Repository
-> ausgeschlossen.** Kein Bild, kein Screenshot und keine Export-Datei wird
-> versioniert.
+> **The entire `Archive/` folder is excluded from the repository via
+> `.gitignore`.** No image, no screenshot and no export file is put under
+> version control.
 
-### Begründung
+### Rationale
 
-Zwei Gründe, ein technischer und ein rechtlicher.
+Two reasons, one technical and one legal.
 
-**Rechtlich:** Die Nutzungsrechte an den Bildern sind nicht dokumentiert (siehe
-oben). In ein öffentliches Repository gehört kein Material, dessen Lizenzstatus
-ungeklärt ist. Der Ausschluss ist bewusst **pauschal** gehalten — eine Regel
-statt einer Einzelfallprüfung je Datei. Regeln überleben, Abwägungen erodieren.
+**Legally:** The usage rights to the images are not documented (see above). No
+material whose licence status is unclear belongs in a public repository. The
+exclusion is deliberately kept **blanket** — a rule instead of a case-by-case
+check per file. Rules survive, judgement calls erode.
 
-**Technisch:** Bei einem Workflow, in dem Tickets von einem Agenten abgearbeitet
-werden, wird das Repository bei jedem Lauf neu geklont. Jedes Megabyte kostet
-dann bei jedem einzelnen Ticket Zeit — dauerhaft, nicht einmalig. Dazu speichert
-Git Binärdateien ohne Delta-Kompression: Ein einmal eingechecktes Bild bleibt
-für immer in der Historie, auch nach dem Löschen.
+**Technically:** In a workflow where tickets are worked off by an agent, the
+repository is cloned afresh on every run. Every megabyte then costs time on
+every single ticket — permanently, not just once. On top of that, Git stores
+binary files without delta compression: an image checked in once stays in the
+history forever, even after deletion.
 
-### Wie die Inhalte trotzdem erhalten bleiben
+### How the contents are preserved nonetheless
 
-Der Ausschluss funktioniert nur, weil das Wesentliche vorher herausgelöst wurde:
+The exclusion only works because the essentials were extracted beforehand:
 
-| Was | Wo | Erzeugt durch |
+| What | Where | Generated by |
 |---|---|---|
-| Alle Seitentexte, Beiträge, Öffnungszeiten, URL-Bestand, Bildzuordnung | [`docs/inhalte/`](../inhalte/README.md) | `tools/extract-wp-content.mjs` |
-| Preisliste, Design-System, Mängel, Struktur | `docs/analyse/` | diese Analyse |
+| All page texts, posts, opening hours, URL inventory, image mapping | [`docs/inhalte/`](../inhalte/README.md) | `tools/extract-wp-content.mjs` |
+| Price list, design system, defects, structure | `docs/analyse/` | this analysis |
 
-Damit ist `docs/` die einzige versionierte Quelle der Alt-Inhalte — und zugleich
-die einzige, die ein Agent überhaupt braucht.
+This makes `docs/` the only versioned source of the old content — and at the
+same time the only one an agent needs at all.
 
-### Was später doch ins Repository kommt
+### What will go into the repository later after all
 
-Die **kuratierten Webbilder** — also die 30 bis 60 Bilder, die die neue Seite
-tatsächlich zeigt. Aber erst, wenn für jedes einzelne die Herkunft geklärt und
-dokumentiert ist. Sie kommen dann nach `src/assets/`, auf Zielgröße gebracht als
-WebP oder AVIF; die Größenvarianten erzeugt Astro beim Build.
+The **curated web images** — that is, the 30 to 60 images the new site actually
+shows. But only once the provenance of every single one has been clarified and
+documented. They will then go to `src/assets/`, brought to target size as
+WebP or AVIF; the size variants are generated by Astro at build time.
 
-Bilder mit ungeklärter Herkunft kommen nicht ins Repository — auch nicht
-„vorläufig".
+Images with unclear provenance do not go into the repository — not even
+"provisionally".
 
-### Aufgeräumt am 18.07.2026 — erledigt
+### Cleaned up on 2026-07-18 — done
 
-Entfernt wurden 2.522 Dateien (155,7 MB), ausschließlich solche ohne eigenen
-Informationsgehalt:
+2,522 files (155.7 MB) were removed, exclusively ones with no information
+content of their own:
 
-| Kategorie | Dateien | Größe | Regel |
+| Category | Files | Size | Rule |
 |---|---|---|---|
-| Größenvarianten | 2.018 | 59,6 MB | `-BREITExHÖHE` vor der Endung, nur wenn das Original im selben Ordner liegt |
-| Inhaltsgleiche Duplikate | 485 | 83,2 MB | byte-identisch per SHA1; behalten wurde die Fassung unter `wp-content/` |
-| `Thumbs.db` | 19 | 12,9 MB | Windows-Artefakte |
+| Size variants | 2,018 | 59.6 MB | `-WIDTHxHEIGHT` before the extension, only if the original is in the same folder |
+| Content-identical duplicates | 485 | 83.2 MB | byte-identical via SHA1; the version under `wp-content/` was kept |
+| `Thumbs.db` | 19 | 12.9 MB | Windows artefacts |
 
-**Kein Motiv ist verloren gegangen.** Zu jeder entfernten Datei existiert
-entweder das Original oder eine byte-identische Kopie; verwaiste Varianten ohne
-Original gab es keine.
+**No motif has been lost.** For every removed file there exists either the
+original or a byte-identical copy; there were no orphaned variants without an
+original.
 
-Das vollständige Protokoll aller 2.522 Einträge liegt im Archiv selbst unter
-`Archive/AUFRAEUMPROTOKOLL.md`. Es hält zu jedem entfernten Duplikat fest,
-welche Datei an seine Stelle tritt — damit bleibt die thematische Einsortierung
-des `media-backup/` (`Media/Studio/`, `Media/Frau/` …) nachvollziehbar, auch wo
-die dortige Kopie zugunsten der `wp-content/`-Fassung entfallen ist.
+The complete protocol of all 2,522 entries lies in the archive itself under
+`Archive/AUFRAEUMPROTOKOLL.md`. For every removed duplicate it records which
+file takes its place — this keeps the thematic sorting of the `media-backup/`
+(`Media/Studio/`, `Media/Frau/` …) traceable, even where the copy there was
+dropped in favour of the `wp-content/` version.
 
-Unangetastet blieben die Screenshots und beide XML-Exporte. Mitentfernt wurden
-97 leere Ordner, darunter die Jahresordner `wp-content/2021/` bis `2026/` — sie
-waren bereits vorher leer, nach Mai 2020 wurde nichts mehr hochgeladen.
+The screenshots and both XML exports were left untouched. Also removed were
+97 empty folders, among them the year folders `wp-content/2021/` to `2026/` —
+they were already empty beforehand, nothing was uploaded after May 2020.
 
-### Wohin mit dem Archiv?
+### Where should the archive go?
 
-> **Die Sicherung des Archivs verantwortet der Betreiber selbst.** Der folgende
-> Abschnitt hält nur fest, welche Wege geprüft wurden und warum einer davon
-> ausscheidet.
+> **Backing up the archive is the owner's own responsibility.** The following
+> section only records which routes were examined and why one of them is ruled
+> out.
 
-**Ausgeschlossen: ein GitHub Release in diesem Repository.**
+**Ruled out: a GitHub release in this repository.**
 
-Naheliegend wäre, das Archiv als ZIP an ein Release zu hängen — Release-Assets
-liegen außerhalb der Git-Historie, ein `git clone` lädt sie nicht mit. Das löst
-das Größenproblem, aber nicht das eigentliche:
+The obvious option would be to attach the archive as a ZIP to a release —
+release assets sit outside the Git history, a `git clone` does not pull them.
+That solves the size problem, but not the actual one:
 
-**Dieses Repository ist öffentlich, und Release-Assets eines öffentlichen
-Repositorys sind ebenfalls öffentlich.** Jeder kann sie ohne Anmeldung
-herunterladen. Sie liegen außerhalb der Historie, nicht außerhalb der
-Öffentlichkeit.
+**This repository is public, and release assets of a public repository are
+public too.** Anyone can download them without signing in. They sit outside
+the history, not outside the public eye.
 
-Ein Archiv-Release würde damit genau das veröffentlichen, wovor der
-`.gitignore`-Ausschluss schützen soll: die Bilder mit ungeklärten
-Nutzungsrechten und die Datei `…ORIGINAL-MIT-PII.xml` mit 2.216
-Kontaktformular-Einsendungen samt E-Mail- und IP-Adressen.
+An archive release would therefore publish precisely what the `.gitignore`
+exclusion is meant to protect against: the images with unclear usage rights
+and the file `…ORIGINAL-MIT-PII.xml` with 2,216 contact form submissions
+including email and IP addresses.
 
-**Wenn GitHub, dann ein separates privates Repository.** Dessen Release-Assets
-sind nur für Berechtigte sichtbar. Auch dort gehört `…ORIGINAL-MIT-PII.xml`
-aber nicht hinein — personenbezogene Daten Dritter gehören nur dorthin, wo es
-einen Grund für sie gibt, und den gibt es außerhalb des lokalen Rechners nicht.
+**If GitHub, then a separate private repository.** Its release assets are
+visible only to authorised people. But `…ORIGINAL-MIT-PII.xml` does not belong
+there either — third parties' personal data belongs only where there is a
+reason for it, and outside the local machine there is none.
 
-**Sonst außerhalb von GitHub.** Externe Festplatte plus verschlüsseltes
-Cloud-Backup. Das Archiv ist ein Backup, kein Projektartefakt — ein Agent
-braucht es nie, weil alles Nötige in `docs/` steht.
+**Otherwise outside GitHub.** External hard drive plus encrypted cloud backup.
+The archive is a backup, not a project artefact — an agent never needs it,
+because everything necessary is in `docs/`.
 
-**Von Git LFS ist abzuraten** (Begründung unten) — und ebenso davon, das Archiv
-unverändert einzuchecken.
+**Git LFS is advised against** (rationale below) — and likewise checking the
+archive in unchanged.
 
-### Wovon abzuraten ist
+### What is advised against
 
-**Git LFS.** Auf den ersten Blick die naheliegende Lösung, in diesem Fall aber
-die schlechteste. GitHub gibt kostenlos 1 GB Speicher und 1 GB Bandbreite pro
-Monat; beides wird bei 594 MB Bestand und wiederholten Clones sofort gesprengt,
-danach kostet es. LFS bringt zusätzliche Werkzeugabhängigkeiten mit, und wenn
-ein Agent den Checkout ohne LFS-Unterstützung macht, hat er statt der Bilder
-Textdateien mit Zeigern darin — ein Fehlerbild, das schwer zu diagnostizieren
-ist.
+**Git LFS.** At first glance the obvious solution, but in this case the worst.
+GitHub gives 1 GB of storage and 1 GB of bandwidth per month for free; with
+594 MB of holdings and repeated clones both are blown immediately, after which
+it costs money. LFS brings additional tooling dependencies with it, and if an
+agent does the checkout without LFS support, it has text files with pointers in
+them instead of the images — a failure mode that is hard to diagnose.
 
-**Alles unverändert einchecken.** Funktioniert technisch (kein Einzelfile
-überschreitet GitHubs 100-MB-Grenze), aber macht jeden Clone zu einem
-600-MB-Download und die Historie unumkehrbar schwer.
+**Check everything in unchanged.** Works technically (no single file exceeds
+GitHub's 100 MB limit), but makes every clone a 600 MB download and the history
+irreversibly heavy.
 
-### Offene Schritte
+### Open steps
 
-- [x] Texte nach `docs/inhalte/` extrahieren
-- [x] `Archive/` per `.gitignore` ausschließen
-- [x] Archiv aufräumen — 749,7 MB → 594,0 MB
-- [ ] Archiv sichern — **liegt beim Betreiber**, nicht in diesem Projekt
-- [ ] Bilder für die neue Seite auswählen, Herkunft je Bild klären und
-      dokumentieren, optimiert nach `src/assets/` übernehmen
+- [x] Extract texts to `docs/inhalte/`
+- [x] Exclude `Archive/` via `.gitignore`
+- [x] Clean up the archive — 749.7 MB → 594.0 MB
+- [ ] Back up the archive — **lies with the owner**, not in this project
+- [ ] Select images for the new site, clarify and document provenance per
+      image, take them over optimised into `src/assets/`
 
-> **Wichtig:** Mit dem `.gitignore`-Ausschluss ist das Repository ausdrücklich
-> **kein** Backup des Altbestands mehr. Solange das Archiv nur auf einem Rechner
-> liegt, existiert es einfach. Sicherung und Versionierung des Archivs liegen
-> beim Betreiber und sind nicht Teil dieses Repositorys.
+> **Important:** With the `.gitignore` exclusion, the repository is expressly
+> **no longer** a backup of the old holdings. As long as the archive lies on
+> only one machine, it merely exists. Backup and versioning of the archive lie
+> with the owner and are not part of this repository.

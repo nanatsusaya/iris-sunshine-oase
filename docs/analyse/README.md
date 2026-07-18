@@ -1,60 +1,56 @@
-# Dokumentation — Relaunch iris-sunshine-oase.de
+# Survey of the old site
 
-Bestandsaufnahme der bestehenden WordPress-Seite als Grundlage für den Neubau
-mit Astro.
+A record of the existing WordPress site, as the basis for the rebuild with Astro.
 
-## Inhalt
+## Contents
 
-| Datei | Zweck |
+| File | Purpose |
 |---|---|
-| [01-ausgangslage.md](01-ausgangslage.md) | Technischer Stand der Altseite, Datenlage im Backup, Datenschutz-Bereinigung |
-| [02-inhaltsinventar.md](02-inhaltsinventar.md) | Alle Seiten und Beiträge mit Bewertung: übernehmen, überarbeiten oder streichen |
-| [03-leistungen-und-preise.md](03-leistungen-und-preise.md) | Vollständige Preisliste — das inhaltlich wichtigste Asset |
-| [04-design-system.md](04-design-system.md) | Farben, Typografie, Layout der Altseite; was übernommen und was verworfen wird |
-| [05-maengelliste.md](05-maengelliste.md) | Konkrete Defekte der Altseite, als Arbeitspakete formuliert |
-| [06-medien-inventar.md](06-medien-inventar.md) | Bildbestand, Mengengerüst und Empfehlung zur Ablage |
+| [01-ausgangslage.md](01-ausgangslage.md) | Technical state of the old site, the data in the backup, the privacy cleanup |
+| [02-inhaltsinventar.md](02-inhaltsinventar.md) | Every page and post, rated: keep, rework or drop |
+| [03-leistungen-und-preise.md](03-leistungen-und-preise.md) | The full price list — the most valuable content asset |
+| [04-design-system.md](04-design-system.md) | Colours, typography and layout of the old site; what carries over and what does not |
+| [05-maengelliste.md](05-maengelliste.md) | Concrete defects, written as work packages |
+| [06-medien-inventar.md](06-medien-inventar.md) | Image inventory, volume breakdown, storage decision |
 
-## Herkunft der Angaben
+## How reliable each statement is
 
-Zwei Quellen, mit unterschiedlicher Belastbarkeit:
+Two sources, with different weight — and the difference matters enough that every claim is
+tagged with which one it came from.
 
-**Aus dem WordPress-Export ausgelesen** — exakt, maschinell verifiziert. Dazu
-zählen alle Seiten- und Beitragslisten, Preise, Texte, Menüstruktur,
-Öffnungszeiten-Datensätze und die Auswertung der Sprungmarken.
+**Read out of the WordPress export** — exact, machine-verified. This covers all page and post
+listings, prices, texts, the menu structure, the opening-hours records and the anchor
+analysis. Tagged **verified**.
 
-**Aus Screenshots abgelesen** — visuelle Einschätzung, keine gemessenen Werte.
-Dazu zählen Farbangaben (Hex-Werte sind Schätzungen), Schriftgrößen,
-Abstände und alle Aussagen zur Optik. Diese Angaben sind als Anhaltspunkt
-gedacht, nicht als Spezifikation.
+**Read off screenshots** — a visual assessment, not a measurement. This covers colour values
+(the hex codes are estimates), font sizes, spacing and every statement about appearance.
+Tagged **observed**. Treat these as a starting point, not a specification.
 
-Wo eine Aussage verifiziert wurde, ist das im Text vermerkt.
+## The archive is not part of the repository
 
-## Wichtig: Das Archiv ist nicht Teil des Repositorys
+The `Archive/` folder holding the WordPress backup is **excluded entirely** via `.gitignore` —
+undocumented image rights and third parties' personal data. The reasoning and the volume
+breakdown are in [06-medien-inventar.md](06-medien-inventar.md).
 
-Der Ordner `Archive/` mit dem WordPress-Backup ist per `.gitignore` **komplett
-ausgeschlossen** — wegen ungeklärter Bildrechte und personenbezogener Daten
-Dritter. Begründung und Mengengerüst in
-[06-medien-inventar.md](06-medien-inventar.md).
+The texts of the old site were extracted beforehand and are versioned under
+[`docs/inhalte/`](../inhalte/README.md). **That is the only versioned source of the old
+content.**
 
-Die Texte des Altauftritts wurden vorher herausgelöst und liegen versioniert
-unter [`docs/inhalte/`](../inhalte/README.md). **Das ist die einzige
-versionierte Quelle der Alt-Inhalte.**
+If the archive is available locally, it holds two versions of the export:
 
-Falls das Archiv lokal vorliegt, gibt es dort zwei Export-Fassungen:
+- `…2026-07-18.xml` — cleaned: without the 2,216 `pf_contact` entries (contact-form
+  submissions from 2017–2021 carrying third parties' e-mail and IP addresses), without two
+  spam comments with sender IPs, and with every real e-mail address replaced by a placeholder
+  under `example.invalid`
+- `…ORIGINAL-MIT-PII.xml` — complete and unmodified. **Must not be committed, uploaded or
+  passed on in any form.** Note that release assets of a public repository are public too, so
+  a GitHub Release is not an exception to this.
 
-- `…2026-07-18.xml` — bereinigt: ohne die 2.216 `pf_contact`-Einträge
-  (Kontaktformular-Einsendungen 2017–2021 mit E-Mail- und IP-Adressen Dritter),
-  ohne zwei Spam-Kommentare mit Absender-IP, alle echten E-Mail-Adressen durch
-  Platzhalter unter `example.invalid` ersetzt
-- `…ORIGINAL-MIT-PII.xml` — vollständig und unverändert. Darf nicht committet,
-  hochgeladen oder anderweitig nach außen gegeben werden.
+Anyone who needs the real business e-mail address for the Impressum should take it from the
+original file or ask the owner. It is deliberately nowhere in this documentation.
 
-Wer die echte Geschäfts-E-Mail fürs Impressum braucht: aus der Original-Datei
-entnehmen oder beim Betreiber erfragen. Sie steht bewusst nirgends in dieser
-Dokumentation.
+## State
 
-## Stand
-
-Bestandsaufnahme vom 18.07.2026, bezogen auf den Export vom selben Tag.
-Die Live-Seite war zu diesem Zeitpunkt erreichbar; inhaltlich ist sie auf dem
-Stand von Mai 2020, die Öffnungszeiten wurden bis Winter 2024/25 gepflegt.
+Survey taken 2026-07-18, against the export of the same day. The live site was reachable at
+that point; its content is current as of May 2020, and its opening hours were maintained
+through winter 2024/25.
