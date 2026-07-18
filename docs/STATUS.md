@@ -59,10 +59,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   drafting a visual design for the new site (2026-07-18, in progress). Design tokens invented before
   that design exists would be replaced by it, so 0004 is deliberately *not* the next ADR despite its
   low number. The other ADRs do not depend on how the site looks.
-- 🔜 **ADR 0009 — security by design** (#28) is proposed as an addition to the reserved set. It is not
-  in the original eight, and it is deliberately taken **before** the scaffold: it decides workflow
-  permissions, dependency policy and the no-external-resources invariant, all of which are cheaper to
-  build in than to retrofit.
+- ✅ [ADR 0009](adr/0009-security-by-design.md) — security by design (#28) — **Accepted** (2026-07-18):
+  an addition to the reserved eight, taken **before** the scaffold because it decides workflow
+  permissions, dependency policy and the no-external-resources invariant — all cheaper to build in than
+  to retrofit. It amended [ADR 0001](adr/0001-record-architecture-decisions.md) (owner-authorised): the
+  `Proposed → Accepted` flip is no longer a direct commit, because `main` is now protected against
+  administrators too. Unusually for an ADR, part of it is already **in force** rather than only
+  designed — see the table below.
 
 **Phase 2 — scaffold and first preview** (#4)**:** **unblocked** — both gates (ADR 0002 and ADR 0006)
 are Accepted. The Astro scaffold plus the GitHub Pages deployment, so drafts are reviewable in a
@@ -79,6 +82,27 @@ keep them from recurring.
 
 **Phase 5 — go-live** (#7)**:** planned. Domain cutover from netcup, redirects for the 32 old URLs, removal of
 the `noindex` gate. Every step here is owner-approved.
+
+## Security controls — decided vs. in force
+
+ADR 0009 is `Accepted`, which means *decided*. A security control that is decided and not applied
+protects nothing, so this table tracks the gap explicitly; the ADR's status never answers this question.
+
+| Control | ADR | State |
+|---|---|---|
+| `main` branch-protected — PR required, `verify` must pass, no force-push, no deletion, admins included | 0009 §4 | ✅ in force (2026-07-18) |
+| Allowed actions restricted to GitHub-owned | 0009 §3, R2 | ✅ in force (2026-07-18) |
+| SHA pinning required by repository policy | 0009 §3, R2 | ✅ in force (2026-07-18) |
+| Default workflow token permissions `read` | 0009 §3 | ✅ in force (pre-existing) |
+| Private Vulnerability Reporting | 0009 §9, R4 | ✅ in force (pre-existing) |
+| Secret scanning + push protection | 0009 | ✅ in force (pre-existing) |
+| **Apex domain verified with GitHub** (`TXT` at `_github-pages-challenge-nanatsusaya`) | 0009 §5, R3 | ⛔ **owner action — blocks the `preview` CNAME** |
+| netcup: two-factor authentication, automatic renewal | 0009 §5 | ❓ owner action, unverified |
+| `npm ci --ignore-scripts`, `npm audit` gating, Dependabot npm entry | 0009 §2 | ⏳ lands with the scaffold |
+| Explicit `permissions:` block per workflow | 0009 §3 | ⏳ lands with the Pages workflow |
+| External-resources fitness function | 0009 §6 | ⏳ lands with the scaffold |
+| CSP via `<meta http-equiv>` | 0009 §7 | ⏳ lands with the layout |
+| `SECURITY.md` | 0009 §9 (#18) | ⏳ not written |
 
 ## Decisions taken (not yet ADRs)
 
@@ -101,20 +125,15 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**ADR 0009 — security by design (#28), then the Phase 2 scaffold.**
+**Write the Phase 2 tickets, then build the Astro scaffold (#4).**
 
-Phase 2 is unblocked and could start now. It is taken second on purpose. The scaffold is where the
-build workflow, its token permissions, the dependency set and the site's external-resource policy come
-into existence, and each of those is a security decision that is cheap to make now and expensive to
-retrofit. Security by design means the decision precedes the scaffold, not that it audits one.
+Both gates are Accepted and ADR 0009 is in force where it can be, so Phase 2 is genuinely open. Epic #4
+currently has **no implementation tickets** underneath it — those come first, so they carry ADR 0002's
+stack, ADR 0006's deployment shape and ADR 0009's constraints rather than rediscovering them.
 
-Two findings already argue for it, and neither is theoretical:
-
-- **`main` is not branch-protected.** "Never commit directly to `main`" is currently convention only —
-  nothing enforces it, including against an agent with a wrong idea.
-- ADR 0006 §2 introduces `preview.iris-sunshine-oase.de` as a `CNAME` to GitHub Pages. If that
-  repository is ever renamed, deleted or made private while the record survives, the subdomain becomes
-  claimable by a stranger — on the studio's own domain. The decision is right; it needs the
-  corresponding lifecycle rule written next to it.
+**One owner action blocks the end of Phase 2, not its start:** the apex domain must be verified with
+GitHub (R3) **before** the `preview` `CNAME` is created. Scaffolding, the build workflow and CI can all
+proceed without it; only the first public deployment cannot. Raise it in good time rather than at the
+moment it blocks.
 
 Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.

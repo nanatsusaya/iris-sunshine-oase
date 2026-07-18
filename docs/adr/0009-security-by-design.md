@@ -1,6 +1,6 @@
 # ADR 0009 — Security by design
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-07-18
 - **Depends on:** [ADR 0002](0002-tech-stack-and-tooling.md) §1 (static output — the reason most
   classic web threats are absent), §5 (the precedent that a check blocks rather than warns) and §7 (the
@@ -46,9 +46,14 @@ Facts, gathered from the GitHub API and the repository. They are inputs; what to
 | SHA pinning required by policy | **no** (the workflow does it by convention) |
 | Secret scanning / push protection | enabled |
 | Dependabot security updates | enabled |
+| Private Vulnerability Reporting | enabled |
 | Secrets stored in the repository | **none** |
 
 Two of these are the reason this ADR precedes the scaffold rather than following it.
+
+The rows in bold were the gaps. All three are closed as of this ADR's acceptance — see the *Resolved
+questions* below; the table is left as it was measured, because a control's history is what tells a
+later reader whether it was designed in or noticed late.
 
 ## Decision
 
@@ -132,11 +137,20 @@ decision rather than a coincidence.
 matters most for the actor this project actually relies on: an agent that has misread the rule faces
 no obstacle at all.
 
-**`main` is protected: pull request required, CI must pass, no force-push, no deletion.**
+**`main` is protected: pull request required, CI must pass, no force-push, no deletion — and the
+protection applies to administrators too.**
 
-This collides with ADR 0001, which makes the `Proposed → Accepted` status flip the single sanctioned
-direct commit — and that flip has been used four times, including for this ADR's predecessors. The
-collision is real and is not resolved silently; see **O1**.
+Enforcement against administrators is the load-bearing half. The agent that maintains this project runs
+with the owner's credentials, so a protection that admins may bypass is a protection the agent may
+bypass, and the agent is precisely the actor §4 exists to constrain.
+
+**Required approving reviews are set to zero, deliberately.** GitHub does not let anyone approve their
+own pull request, and both the agent's PRs and the owner's are authored by the same account; any
+non-zero requirement would make `main` unmergeable rather than well-reviewed. The review that matters
+here happens because the owner reads the PR, not because a counter demands it.
+
+This collided with ADR 0001, which made the `Proposed → Accepted` status flip the single sanctioned
+direct commit — a flip used twice before this ADR. The collision was not resolved silently; see **R1**.
 
 ### 5. The domain and DNS are security assets
 
@@ -151,7 +165,7 @@ while the domain remains configured for GitHub Pages and is not verified"*
 ([GitHub — verifying your custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)).
 A stranger could then serve anything they liked on the studio's own subdomain.
 
-- **The custom domain is verified with GitHub before any `CNAME` is created** (see O3). Verification is
+- **The custom domain is verified with GitHub before any `CNAME` is created** (see R3). Verification is
   a `TXT` record at `_github-pages-challenge-nanatsusaya`, after which only repositories owned by that
   account may publish to the domain — and verifying the apex protects its immediate subdomains too.
   This turns the takeover risk into a non-issue rather than into a thing to remember.
@@ -228,7 +242,9 @@ in any component — every part behaves exactly as designed.
 ### 9. Vulnerability disclosure
 
 - **GitHub Private Vulnerability Reporting is enabled** so that a reporter has a private channel and is
-  not pushed toward a public issue, which would disclose a flaw before a fix exists.
+  not pushed toward a public issue, which would disclose a flaw before a fix exists. It was already
+  enabled when this was checked (R4) — recorded as a decision anyway, so that turning it off is a
+  change to something rather than a return to a default.
 - **`SECURITY.md` states the channel and an honest expectation.** It must **not** copy the sibling
   project's five-working-day response commitment: this is a single-owner project worked at
   hobby cadence, and a promise that cannot be kept is worse than no promise. Content and wording are
@@ -255,8 +271,13 @@ in any component — every part behaves exactly as designed.
   documented, time-boxed exception in the PR, not a silent threshold change.
 - **`--ignore-scripts` may break `sharp`.** Named in advance with a bounded remedy (§2) rather than
   discovered during the scaffold.
-- **Branch protection removes a workflow the project uses**, and O1 has to resolve it; either answer
-  costs something.
+- **Branch protection removes a workflow the project used.** The `Proposed → Accepted` flip now costs a
+  pull request instead of a commit, and ADR 0001 — an `Accepted` ADR — had to be amended to permit that.
+  Amending an Accepted ADR is meant to be expensive, and spending it on a two-line status change is a
+  real cost, paid once (R1).
+- **Restricting actions to GitHub-owned will one day block something wanted** (R2). Like the
+  external-resources check in §6, that is the intended behaviour: a third-party action gets a decision
+  rather than a commit.
 - **Clickjacking is unmitigable** in this hosting model (§7). Accepted, and the acceptance is written
   down so a future session does not spend a day looking for the header setting.
 - **The external-resources check will one day block something genuinely wanted** — an embedded map is
@@ -283,35 +304,36 @@ in any component — every part behaves exactly as designed.
   and the threat it addresses (a forged author on a repository with one human) is not the one that is
   open. Revisit if collaborators are ever added.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-07-18)
 
-- **O1 — How is branch protection reconciled with ADR 0001's sanctioned direct commit?** Protecting
-  `main` blocks the `Proposed → Accepted` status flip that ADR 0001 explicitly permits and that has been
-  used four times.
-  **Recommendation:** protect `main` and let the flip go through a pull request like everything else.
-  It is a two-line diff and CI passes in under a minute, so the exception was buying very little. That
-  needs an **amendment to ADR 0001**, which only you can authorise — the alternative is to keep an
-  owner bypass, which works but means the protection does not apply to the one actor most likely to be
-  wrong about the rules.
-- **O2 — May the repository's action policy be tightened?** `allowed_actions` is currently `all`, and
-  GitHub offers a setting that *requires* SHA pinning rather than relying on our convention.
-  **Recommendation:** enable required SHA pinning, and restrict allowed actions to GitHub-owned plus
-  any specifically needed. Both are repository settings only you can change.
-- **O3 — When is the domain verified with GitHub, and by whom?** §5 requires it **before** the
-  `preview` `CNAME` exists. It needs a `TXT` record at netcup — touching DNS, which `CLAUDE.md` reserves
-  to you.
-  **Recommendation:** verify the **apex** (`iris-sunshine-oase.de`), not just the preview subdomain.
-  Verifying the apex covers its immediate subdomains, so one record protects both the preview now and
-  the live site later. It changes nothing about how the domain currently resolves — a `TXT` record adds
-  no behaviour — so it can be done at any time before Phase 2 deploys.
-- **O4 — Is Private Vulnerability Reporting enabled?** A repository setting (*Settings → Security*).
-  **Recommendation:** yes, before `SECURITY.md` (#18) is written, so the document describes a channel
-  that exists rather than one that is promised.
+- **R1 — Branch protection wins; ADR 0001 is amended.** The `Proposed → Accepted` flip goes through a
+  pull request like every other change. The owner authorised the corresponding **amendment to ADR
+  0001**, recorded in that ADR's *Amendments* section. The alternative — protecting `main` but leaving
+  an administrator bypass — was rejected on the reasoning in §4: the agent runs with the owner's
+  credentials, so an admin bypass is an agent bypass, and the configuration would have looked protected
+  while leaving the likeliest failure open. **In force:** `main` is protected as described in §4.
+- **R2 — The action policy is tightened.** `allowed_actions` is `selected` with GitHub-owned actions
+  permitted and no other publisher or pattern allowed; `sha_pinning_required` is on, so §3's pinning
+  rule is enforced by GitHub rather than by convention. Today's workflow uses only `actions/*`, and the
+  Pages deployment ADR 0006 requires (`configure-pages`, `upload-pages-artifact`, `deploy-pages`) is
+  GitHub-owned too, so nothing needs an exception yet. **In force.**
+- **R3 — The owner verifies the apex domain, before Phase 2 deploys.** `iris-sunshine-oase.de`, not the
+  preview subdomain: verifying the apex covers its immediate subdomains, so one record protects the
+  preview now and the live site later. GitHub exposes no API for this — the token is issued in
+  *Settings → Pages → Add a domain* and the `TXT` record is created at netcup, both owner-only. It adds
+  no resolution behaviour, so it is safe to do at any time; it is **not yet done** and is a blocking
+  precondition for the `preview` `CNAME`, tracked in `STATUS.md` and as a Phase 2 ticket.
+- **R4 — Private Vulnerability Reporting was already enabled**, as were secret scanning and push
+  protection; verified against the GitHub API rather than assumed. Nothing to do. #18 can therefore
+  describe an existing channel, subject to §9's honesty constraint.
+
+Three of the four were settled by measuring or by acting rather than by deliberating — see the
+collaboration log entry for 2026-07-18 on why that is worth noticing.
 
 ## References
 
 - Issue #28 — the owning ticket
-- [ADR 0001](0001-record-architecture-decisions.md) — the workflow, and the exception O1 concerns
+- [ADR 0001](0001-record-architecture-decisions.md) — the workflow, and the *Amendments* entry R1 produced
 - [ADR 0002](0002-tech-stack-and-tooling.md) — §1, §5, §7
 - [ADR 0006](0006-deployment-preview-hosting.md) — §2 the preview subdomain, §4 the indexing gate
 - [`docs/business-facts.md`](../business-facts.md) — the only personal data in scope

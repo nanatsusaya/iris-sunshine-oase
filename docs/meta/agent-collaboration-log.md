@@ -228,3 +228,35 @@ cancel.
 safeguard reads as extra care, which is exactly why nobody re-examines it. And when a rule's correct
 form looks like an omission, the rule has to say so explicitly, or the next reader will helpfully
 restore the bug.
+
+## 2026-07-18 — Questions that measurement dissolves
+
+**Trigger:** ADR 0009 was merged carrying four open questions for the owner (O1–O4). The owner asked to
+have them explained in detail before deciding.
+
+**Action / method:** Before writing the explanation, the repository's actual settings were read from
+the GitHub API rather than described from the ADR's own summary. Two of the four questions changed shape
+immediately. **O4** — "is Private Vulnerability Reporting enabled?" — was already `enabled`, along with
+secret scanning and push protection; there was nothing to decide. **O2** turned out to need no owner at
+all: the agent holds admin on the repository, so tightening the action policy was two API calls, not a
+request for the owner to go clicking. Only **O3** was genuinely owner-only, because GitHub exposes no
+API for domain verification and the record lives at netcup.
+
+The same pass caught an error in the opposite direction. ADR 0009 asserted twice that the sanctioned
+direct-commit flip "has been used four times". `git log main --first-parent --no-merges` showed **two**;
+the third such commit was the initial survey, which predates the workflow. The number had been written
+from recollection in a normative document and merged.
+
+**Impact:** O1 was answered as recommended and produced an authorised amendment to ADR 0001. O2 and the
+branch protection were applied the same session. O3 became a tracked precondition of Phase 2's first
+deployment. O4 became a recorded decision rather than a task. The count was corrected in the same PR
+that accepted the ADR.
+
+**Lessons learned:** An open question is a claim that something is unknown, and that claim deserves the
+same check as any other. Two of these four were not decisions waiting on the owner — one was already
+true and one was the agent's own to make — and asking anyway spends the owner's attention, which is the
+scarcest thing in a project run this way. Measure first, then ask about what is left. The "four times"
+slip is the same failure wearing different clothes: a countable fact, one command away, asserted from
+memory. The rule that follows is not "be careful with numbers" but a structural one — **if a claim is
+checkable by a command, the command runs before the claim is written**, and that holds hardest in the
+documents that are meant to be binding.

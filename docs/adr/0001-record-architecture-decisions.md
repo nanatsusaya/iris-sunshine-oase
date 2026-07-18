@@ -47,10 +47,10 @@ editing it. The point is an audit trail: the reasoning that was valid at the tim
 once it has been overtaken.
 
 **Workflow.** Branch `adr/NNNN-slug` from `main` → write the ADR with `Status: Proposed` and add it to
-the index → open a PR that names the **open questions for the owner** → the owner merges → sync
-`main` and flip `Proposed → Accepted` in both the ADR and the index as a direct follow-up commit. That
-status flip is the single documented exception to the never-commit-to-`main` rule; it is mechanical
-and carries no reviewable content.
+the index → open a PR that names the **open questions for the owner** → the owner merges → sync `main`,
+then fold the owner's answers into the ADR and flip `Proposed → Accepted` in both the ADR and the index
+**in a second pull request**. There is **no exception** to the never-commit-to-`main` rule
+(*amended 2026-07-18 — see* Amendments).
 
 ## Consequences
 
@@ -62,3 +62,32 @@ and carries no reviewable content.
   survives.
 - A two-step dance for every decision (propose, then flip to accepted). Slower than deciding in a
   commit; the point is that the decision becomes reviewable *before* code depends on it.
+
+## Amendments
+
+### 2026-07-18 — the direct-commit exception is withdrawn (owner-authorised)
+
+**Authorised by the owner on 2026-07-18**, in the course of accepting
+[ADR 0009 §4](0009-security-by-design.md) (R1).
+
+The *Workflow* paragraph above previously ended:
+
+> … the owner merges → sync `main` and flip `Proposed → Accepted` in both the ADR and the index as a
+> direct follow-up commit. That status flip is the single documented exception to the
+> never-commit-to-`main` rule; it is mechanical and carries no reviewable content.
+
+ADR 0009 protects `main` — pull request required, CI must pass, enforced against administrators — which
+makes that exception unexecutable. The choice was between weakening the protection to preserve the
+exception and dropping the exception to preserve the protection. The exception was dropped, for the
+reason set out in ADR 0009 §4: the agent that maintains this project runs with the owner's credentials,
+so any bypass wide enough to permit the flip is also wide enough to permit the mistake the protection
+exists to catch. An administrator exemption would have exempted the actor most likely to be wrong.
+
+The original reasoning was not incorrect at the time — the flip *is* mechanical, and it was used twice
+under the old rule without incident. What changed is that the exception's cost is now visible: it is the
+one hole in an otherwise closed door, and it was buying a two-line diff and a minute of CI.
+
+**Effect.** The second step of the workflow is now a pull request. The status flip is folded into the
+same PR that records the owner's answers to the ADR's open questions, so the two-step dance keeps two
+steps and gains no third. ADR 0009 itself was accepted this way — the first ADR to be, and its own
+occasion.
