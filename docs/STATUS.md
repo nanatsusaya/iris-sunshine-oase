@@ -67,13 +67,25 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   administrators too. Unusually for an ADR, part of it is already **in force** rather than only
   designed — see the table below.
 
-**Phase 2 — scaffold and first preview** (#4)**:** **unblocked** — both gates (ADR 0002 and ADR 0006)
-are Accepted. The Astro scaffold plus the GitHub Pages deployment, so drafts are reviewable in a
-browser early. Nothing is built yet.
+**Phase 2 — scaffold and first preview** (#4)**:** ▶ in progress.
 
-> The epic's *Constraints* section still requires `robots.txt` `Disallow: /`. That requirement is
-> **superseded by ADR 0006 §4** and is corrected in the ticket; if the two ever appear to disagree, the
-> ADR wins.
+- ✅ **Astro scaffold** (2026-07-19): Astro 7 static, Node 24, TypeScript `strict` with `astro check`,
+  Biome blocking, `@astrojs/sitemap` in the live state only. State: **draft** — one holding page, no
+  design.
+- ✅ **The full check chain** replaces the documentation-only step: audit → typecheck → lint → build →
+  docs → external-resource check.
+- ✅ **The indexing gate**, as one build-time flag defaulting to `preview` (ADR 0006 §5). Verified in
+  both directions locally: `preview` emits `noindex` and no sitemap; `live` emits neither the tag nor
+  a `Disallow`, and does emit the sitemap.
+- ⛔ **Not yet deployed.** The Pages workflow exists but the preview URL needs two owner actions:
+  verifying the apex domain with GitHub (ADR 0009 R3) and adding the `preview` `CNAME` at netcup
+  (ADR 0006 §2). Until then the epic's Definition of Done — *a URL the owner can open* — is unmet.
+
+> **Two of the epic's own constraints are superseded and were deliberately not followed.** It requires
+> `robots.txt` `Disallow: /`, which **ADR 0006 §4** shows defeats the `noindex` it sits beside; and it
+> describes GitHub *project-page* hosting from a subpath, which **ADR 0006 §2 (R1)** replaced with a
+> preview subdomain so that both states serve from the root and no `base` path changes at cutover.
+> Where the ticket and an ADR disagree, the ADR wins.
 
 **Phase 3 — content** (#5)**:** planned. The 14 pages, prices and opening hours as structured data.
 
@@ -98,10 +110,10 @@ protects nothing, so this table tracks the gap explicitly; the ADR's status neve
 | Secret scanning + push protection | 0009 | ✅ in force (pre-existing) |
 | **Apex domain verified with GitHub** (`TXT` at `_github-pages-challenge-nanatsusaya`) | 0009 §5, R3 | ⛔ **owner action — blocks the `preview` CNAME** |
 | netcup: two-factor authentication, automatic renewal | 0009 §5 | ❓ owner action, unverified |
-| `npm ci --ignore-scripts`, `npm audit` gating, Dependabot npm entry | 0009 §2 | ⏳ lands with the scaffold |
-| Explicit `permissions:` block per workflow | 0009 §3 | ⏳ lands with the Pages workflow |
-| External-resources fitness function | 0009 §6 | ⏳ lands with the scaffold |
-| CSP via `<meta http-equiv>` | 0009 §7 | ⏳ lands with the layout |
+| `npm ci --ignore-scripts`, `npm audit` gating, Dependabot npm entry | 0009 §2 | ✅ in force (2026-07-19) |
+| Explicit `permissions:` block per workflow | 0009 §3 | ✅ in force (2026-07-19) |
+| External-resources fitness function | 0009 §6 | ✅ in force (2026-07-19) |
+| CSP via `<meta http-equiv>` | 0009 §7 | ✅ in force (2026-07-19) |
 | `SECURITY.md` | 0009 §9 (#18) | ⏳ not written |
 
 ## Decisions taken (not yet ADRs)
@@ -125,15 +137,29 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**Write the Phase 2 tickets, then build the Astro scaffold (#4).**
+**ADR 0004 — styling and design tokens**, from the owner's design draft.
 
-Both gates are Accepted and ADR 0009 is in force where it can be, so Phase 2 is genuinely open. Epic #4
-currently has **no implementation tickets** underneath it — those come first, so they carry ADR 0002's
-stack, ADR 0006's deployment shape and ADR 0009's constraints rather than rediscovering them.
+The draft exists (Claude Design, „Iris Sunshine Oase Redesign", 2026-07-19) and carries its own token
+layer of 14 CSS custom properties, stable across every iteration. Turns 6–10 are the canonical set;
+turn 5 is labelled *„Finale Version"* and is **not** — turn 6 supersedes it with the WCAG rework.
 
-**One owner action blocks the end of Phase 2, not its start:** the apex domain must be verified with
-GitHub (R3) **before** the `preview` `CNAME` is created. Scaffolding, the build workflow and CI can all
-proceed without it; only the first public deployment cannot. Raise it in good time rather than at the
-moment it blocks.
+Five findings from reading it need an owner decision and belong in ADR 0004 as open questions:
+
+1. It loads **Google Fonts**, which ADR 0009 §6 forbids. All four families are self-hostable — Mulish,
+   Cormorant Garamond and Kaushan Script under OFL, Yellowtail under Apache 2.0 (verified against the
+   `google/fonts` repository).
+2. `--muted` (`#6B5D57`) and `--blue-ink` (`#4E63A0`) clear AA on cards but **not directly on the page
+   gradient**, where they fall to 4.10 and 3.77 against a 4.5 requirement.
+3. `--orange` (`#FFC000`) is never a legible text colour (1.07–1.60) — surface only, and that should be
+   written down.
+4. `--orange-ink` is used once and **never defined**; it survives on a literal fallback.
+5. Icons are **emoji** (☎ 📍 ✉ ✔), which render inconsistently and read badly to a screen reader.
+
+The design references exactly one image — the sun — and no photographs at all, so the provenance
+question is far smaller than feared. Whether photography is planned, and where the sun came from, are
+open questions for the owner.
+
+**Then:** the two owner actions that unblock the preview URL (domain verification, the `preview`
+`CNAME`), the remaining Phase 2 tickets, and the homepage itself.
 
 Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.

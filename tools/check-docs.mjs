@@ -17,8 +17,8 @@
  * Exits non-zero on the first failing category, listing every violation found.
  */
 
-import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
-import { join, dirname, resolve, relative } from 'node:path';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { dirname, join, relative, resolve } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const ADR_DIR = join(ROOT, 'docs', 'adr');
@@ -98,7 +98,8 @@ for (const file of markdownFiles(ROOT)) {
     const target = m[1];
     // Any URI scheme (https:, mailto:, tel:, …) and any site-absolute path is out of scope:
     // only repository-relative links are ours to verify.
-    if (/^[a-z][a-z0-9+.-]*:/i.test(target) || target.startsWith('/') || target.startsWith('#')) continue;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(target) || target.startsWith('/') || target.startsWith('#'))
+      continue;
     const [path] = target.split('#');
     if (!path) continue; // pure anchor
     const resolved = resolve(dirname(file), path);
@@ -117,14 +118,39 @@ for (const file of markdownFiles(ROOT)) {
 // actually showed up, not for every Americanism in the language.
 
 const IRREGULAR = {
-  color: 'colour', colors: 'colours', center: 'centre', centers: 'centres',
-  analyze: 'analyse', analyzed: 'analysed', analyzing: 'analysing',
-  behavior: 'behaviour', behaviors: 'behaviours', catalog: 'catalogue',
-  defense: 'defence', fulfill: 'fulfil', modeling: 'modelling', labeled: 'labelled',
+  color: 'colour',
+  colors: 'colours',
+  center: 'centre',
+  centers: 'centres',
+  analyze: 'analyse',
+  analyzed: 'analysed',
+  analyzing: 'analysing',
+  behavior: 'behaviour',
+  behaviors: 'behaviours',
+  catalog: 'catalogue',
+  defense: 'defence',
+  fulfill: 'fulfil',
+  modeling: 'modelling',
+  labeled: 'labelled',
 };
 // -ize is American here, but a few English words legitimately end that way.
-const IZE_ALLOWED = new Set(['size', 'sizes', 'sized', 'sizing', 'resize', 'resizes', 'resized',
-  'resizing', 'seize', 'seizes', 'seized', 'prize', 'prizes', 'capsize', 'maize']);
+const IZE_ALLOWED = new Set([
+  'size',
+  'sizes',
+  'sized',
+  'sizing',
+  'resize',
+  'resizes',
+  'resized',
+  'resizing',
+  'seize',
+  'seizes',
+  'seized',
+  'prize',
+  'prizes',
+  'capsize',
+  'maize',
+]);
 
 for (const file of markdownFiles(ROOT)) {
   // docs/inhalte/ is verbatim German source material; CLAUDE.md is where the rule is stated,
@@ -164,4 +190,6 @@ if (problems.length) {
   for (const p of problems) console.error(`  - ${p}`);
   process.exit(1);
 }
-console.log(`Documentation check passed (${adrFiles.length} ADR(s), ${markdownFiles(ROOT).length} Markdown files).`);
+console.log(
+  `Documentation check passed (${adrFiles.length} ADR(s), ${markdownFiles(ROOT).length} Markdown files).`,
+);

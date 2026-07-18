@@ -1,0 +1,91 @@
+---
+import { IS_LIVE, SITE_URL } from '../config/site';
+
+interface Props {
+  /** Page title, without the site name — the layout appends that. */
+  title: string;
+  /** Meta description. Optional while the content model (ADR 0003) does not exist yet. */
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// The canonical URL is built from the state's own origin, so a preview page never claims to be
+// the live one (ADR 0006 §5 — the gate governs the canonical URL as well as the `noindex` tag).
+const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/*
+      The indexing gate (ADR 0006 §4). `noindex` is the guarantee, and it is the *only* guarantee:
+      `robots.txt` deliberately does not block crawling, because a blocked crawler never reads this
+      tag and the URL can then be indexed by name anyway. Adding a `Disallow` is not a safety
+      improvement — it defeats this. Removing this tag is a go-live gate, never a side effect.
+    */}
+    {!IS_LIVE && <meta name="robots" content="noindex, nofollow" />}
+
+    {/*
+      Content Security Policy via a meta element (ADR 0009 §7). GitHub Pages serves static files and
+      allows no custom response headers, so this is the only delivery mechanism available. It is
+      defence in depth behind ADR 0009 §6's invariant — the site loads nothing from a third party —
+      not a substitute for it.
+
+      `frame-ancestors`, `report-uri` and `sandbox` are excluded from meta-delivered policies by the
+      CSP specification, so clickjacking cannot be mitigated in this hosting model. ADR 0009 §7
+      records that as an accepted residual risk rather than leaving a future session to hunt for a
+      header setting that does not exist here.
+
+      `style-src` allows inline styles because Astro emits scoped component styles that way; every
+      other directive is `self` or `none`.
+    */}
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src 'none'"
+    />
+
+    <title>{title} — Kosmetik- &amp; Sonnenstudio Iris' Sunshine Oase</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  /*
+    Deliberately almost empty. Colours, typography, spacing and breakpoints belong to ADR 0004,
+    which is still `Planned` — the owner's design draft exists but its decisions are not recorded
+    yet, and settling them here would decide an open ADR in code (`CLAUDE.md`). What is here is only
+    enough to keep the holding page legible.
+  */
+  :global(html) {
+    /*
+      Legibility, not palette. A page that declares no colours inherits the browser's dark theme and
+      renders dark-on-dark — which is what the first browser check of this scaffold actually showed.
+      `color-scheme` alone fixed the text but left both root elements transparent, so the result
+      still depended on a browser default being what we hoped; these two declarations make it
+      explicit instead.
+
+      Black on white is the absence of a design, not a choice of one. Every real value — the warm
+      gradient, the bordeaux, the type scale — belongs to ADR 0004 and is deliberately not decided
+      here.
+    */
+    color-scheme: light;
+    background: #fff;
+    color: #111;
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  :global(body) {
+    margin: 0;
+    padding: 2rem 1.25rem;
+  }
+</style>
