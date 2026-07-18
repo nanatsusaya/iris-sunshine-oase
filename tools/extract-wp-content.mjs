@@ -397,6 +397,14 @@ let idx = GENERATED + '\n# Content of the old site\n\n' +
   '> **The page text below is German and stays German.** It is source material — a record ' +
   'of what the site said — not documentation. Only the framing around it is English. ' +
   'Correct the generator, never these files.\n\n' +
+  // The redaction warning is emitted here rather than left to a reader's inference, because a
+  // placeholder sitting where a real value belongs reads exactly like a real value. The Impressum
+  // and contact pages show `studio@example.invalid`; anyone building the new contact page would
+  // otherwise copy it in good faith and publish a dead address.
+  '> **E-mail addresses here are redactions, not data.** The export was PII-cleaned before ' +
+  'extraction and every address was replaced with a placeholder under `example.invalid` — the ' +
+  "cleaning did not spare the studio's own address. For the real values see " +
+  '[`../business-facts.md`](../business-facts.md).\n\n' +
   '## Pages\n\n| Page | Path | Status | File |\n|---|---|---|---|\n';
 
 for (const p of pageIndex.sort((a, b) => a.title.localeCompare(b.title))) {
