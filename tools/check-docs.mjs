@@ -12,6 +12,7 @@
  *   3. the Status inside an ADR matches the status the index claims for it
  *   4. every relative Markdown link in the repository resolves to an existing file
  *   5. no American spelling in prose (CLAUDE.md fixes British spelling for this repository)
+ *   6. no document still asserts a rule that has been withdrawn
  *
  * Run: node tools/check-docs.mjs
  * Exits non-zero on the first failing category, listing every violation found.
@@ -180,6 +181,52 @@ for (const file of markdownFiles(ROOT)) {
       problems.push(`${r}: "${word}" is American — use "${IRREGULAR[lower]}"`);
     } else if (/iz(e|es|ed|ing|ation|ations)$/.test(lower) && !IZE_ALLOWED.has(lower)) {
       problems.push(`${r}: "${word}" is American — use the -ise form`);
+    }
+  }
+}
+
+// --- 6: withdrawn rules stay withdrawn -------------------------------------
+// When a rule changes, its *copies* are what go stale. ADR 0001's direct-commit exception was
+// withdrawn on 2026-07-18, and CLAUDE.md and the ADR were updated in that change — but three
+// session skills still instructed a future agent to commit straight to `main`, which branch
+// protection now refuses. Nobody would have noticed until an agent followed the instruction and
+// failed.
+//
+// So each retired rule gets an assertion here rather than a note somewhere. The list is expected to
+// grow slowly and to stay short: a rule earns an entry only once it has actually been reversed.
+//
+// **Quotations are exempt.** A blockquote is how this repository records superseded wording — ADR
+// 0001's own *Amendments* section quotes the old rule verbatim so the audit trail survives the
+// edit. Preserving history is the opposite of asserting the rule, so `>` lines are skipped.
+const WITHDRAWN = [
+  {
+    pattern:
+      /single documented exception|one workflow-sanctioned non-PR commit|flip\b[^.]*\bas a direct follow-up commit/i,
+    what: 'the ADR status-flip exception to the never-commit-to-`main` rule',
+    since: 'withdrawn 2026-07-18 (ADR 0001 Amendments, arising from ADR 0009 §4)',
+    instead: 'the flip goes through a pull request; `main` is protected against administrators too',
+  },
+];
+
+for (const file of markdownFiles(ROOT)) {
+  const r = rel(file);
+  if (r.startsWith('docs/inhalte/')) continue;
+
+  const lines = readFileSync(file, 'utf8').split('\n');
+  let fenced = false;
+  for (const [i, line] of lines.entries()) {
+    if (/^\s*```/.test(line)) fenced = !fenced;
+    if (fenced) continue;
+    // A quoted line is a record of what the rule used to say, not a claim that it still holds.
+    if (/^\s*>/.test(line)) continue;
+
+    for (const rule of WITHDRAWN) {
+      if (rule.pattern.test(line)) {
+        problems.push(
+          `${r}:${i + 1} still asserts ${rule.what} — ${rule.since}. Instead: ${rule.instead}. ` +
+            '(If this line is quoting the old rule for the record, make it a "> " blockquote.)',
+        );
+      }
     }
   }
 }
