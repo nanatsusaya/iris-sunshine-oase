@@ -1,0 +1,61 @@
+MIT License
+
+Copyright (c) 2026 Daniel Wagner
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+
+SCOPE OF THIS LICENCE
+
+This repository contains two different kinds of material, and the MIT licence
+above covers only one of them.
+
+1. COVERED BY THE MIT LICENCE ABOVE — the software
+
+   Copyright (c) 2026 Daniel Wagner
+
+   Source code, templates, layouts, stylesheets, build configuration, the
+   scripts under tools/, and the project's own process documentation
+   (CLAUDE.md, docs/adr/, docs/STATUS.md, docs/meta/).
+
+2. NOT LICENSED — the business content
+
+   Copyright (c) 2026 Iris Zellner,
+   Kosmetik- & Sonnenstudio Iris' Sunshine Oase, Herxheim bei Landau (Pfalz)
+
+   The content of the website itself and everything describing the business:
+   page copy, service descriptions, prices, opening hours, the business name,
+   the logo, and all photographs and image material — including the extracted
+   texts of the previous website under docs/inhalte/ and the price and content
+   material under docs/analyse/.
+
+   All rights to this material are reserved. It is published here because the
+   rebuild is developed in the open, NOT to grant any right of use. It may not
+   be copied, redistributed, adapted or used commercially without the written
+   permission of the rights holder.
+
+Where the two are hard to separate — a template that has business copy written
+into it, for example — the more restrictive term applies to the content and the
+MIT licence applies to the surrounding code.
+
+NOTE ON IMAGES: no image is added to this repository without documented source,
+licence and evidence. Nothing in this file should be read as a warranty that any
+particular image may be reused; the rights situation of the previous website's
+image material is explicitly undocumented (see docs/analyse/06-medien-inventar.md).
