@@ -97,7 +97,11 @@ active maintenance and consistency across the owner's projects, accepting the ex
 
 Consequences of that acceptance:
 
-- Biome runs in the check chain over the whole repository.
+- Biome runs in the check chain over the whole repository, and **its failure blocks CI** from the
+  start (owner decision, R1). An advisory check is one nobody reads, and the drift it is there to
+  prevent is exactly what accumulated silently in this repository before the spelling rule became a
+  check. If the experimental parser does misfire on a template, the answer is the exclusion below —
+  not a downgrade to warnings.
 - `.astro` formatting is treated as **best effort**. If it turns out to reformat templates wrongly or
   destructively, `.astro` is excluded from the formatter — not worked around by hand-fighting it — and
   that exclusion is recorded here as an amendment.
@@ -147,8 +151,11 @@ The check chain instead:
 | `node tools/check-docs.mjs` | ADR index, dead documentation links, British spelling |
 | link and image check over the built output | dead internal links, missing images — the class the old site actually suffered from (`M-28`: four links to pages that never existed) |
 
-The last row is the one that earns its keep, and it is the one still to be specified: it is proposed
-here in principle and belongs to Phase 4 (#6) to implement.
+The last row is the one that earns its keep, and it is the one still to be specified. It is decided
+here **in principle** and **specified and implemented in Phase 4 (#6)** (owner decision, R2), where it
+sits alongside the defect list it exists to close. Phase 2 gets the scaffold and the first four rows;
+pulling the link check forward is allowed if it turns out to be cheap once the build exists, but it is
+not a Phase 2 obligation.
 
 If real logic ever appears — a price calculator, a booking form — this decision is revisited, and a test
 framework is the right answer then. It is not one now.
@@ -194,18 +201,20 @@ framework is the right answer then. It is not one now.
   Fourteen static pages do not need a server, and one would add exactly the class of attack surface and
   upgrade pressure the rebuild is meant to remove.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-07-18)
 
-- **O1 — Should Biome's check block CI from the start, or warn first?** Given the experimental Astro
-  parser, a blocking check could fail on a template Biome simply misreads. *Recommended default:*
-  blocking, because an advisory check is one nobody reads — and if it does misfire, §5 already commits
-  to excluding `.astro` rather than to fighting it.
-- **O2 — Is the link and image check in scope for Phase 2, or Phase 4?** It is the single most valuable
-  check on this site, which argues for early. *Recommended default:* specify it in Phase 4 (#6) as
-  planned, but if it is cheap when the scaffold lands, pull it forward — it directly covers `M-28`.
-- **O3 — Confirm that this ADR may correct the CI Node pin.** The `'22'` pin predates this decision and
-  is now a maintenance-line version. *Recommended default:* leave CI untouched in this PR — this is a
-  decision PR, not an implementation PR — and change the pin with the scaffold in Phase 2 (#4).
+- **R1 — Biome's check blocks CI from the start.** The risk accepted knowingly: the experimental Astro
+  parser could fail on a template it merely misreads. Chosen anyway, because an advisory check is one
+  nobody reads — the repository has already demonstrated that a convention left to discipline drifts
+  within hours. If the parser does misfire, §5's fallback is to exclude `.astro` from the formatter, not
+  to soften the check into a warning.
+- **R2 — The link and image check is specified and built in Phase 4 (#6)**, not Phase 2. It is decided
+  in principle here so that Phase 2's scaffold does not foreclose it. It may be pulled forward if it
+  proves cheap once a build exists, but Phase 2 is not obliged to carry it. Folded into §7.
+- **R3 — The CI Node pin is not changed by this PR.** This is a decision PR; §2 records that Node 24 is
+  the decision and that the current `'22'` pin is on a maintenance line, and the pin itself moves with
+  the scaffold in Phase 2 (#4). Recording the decision without touching the implementation is the whole
+  point of the separation.
 
 ## References
 
