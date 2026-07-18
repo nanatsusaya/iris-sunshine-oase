@@ -132,10 +132,20 @@ for (const file of markdownFiles(ROOT)) {
   const r = rel(file);
   if (r.startsWith('docs/inhalte/') || r === 'CLAUDE.md') continue;
 
-  // Strip fenced blocks and code spans: identifiers mirror their API's spelling, not ours.
+  // Strip everything that is not prose before judging spelling.
+  //
+  // Code spans and fenced blocks: identifiers mirror their API's spelling, not ours.
+  //
+  // URLs: a link target is an address, not a word — it cannot be respelt without breaking it.
+  // Astro's own documentation lives at /guides/internationalization/, and citing a primary source
+  // is required by CLAUDE.md, so a check that forbids the citation would be a rule fighting a rule.
+  // The link *text* is prose and stays in scope; only the target is removed.
   const prose = readFileSync(file, 'utf8')
     .replace(/```[\s\S]*?```/g, '')
-    .replace(/`[^`\n]*`/g, '');
+    .replace(/`[^`\n]*`/g, '')
+    .replace(/\]\([^)\s]*\)/g, ']')
+    .replace(/<https?:\/\/[^>\s]*>/g, '')
+    .replace(/https?:\/\/\S+/g, '');
 
   for (const m of prose.matchAll(/\b[A-Za-z]{3,}\b/g)) {
     const word = m[0];
