@@ -79,16 +79,42 @@ constraints at this size and are recorded only so a later session need not re-ch
 stops holding and the hosting decision must be re-opened by a superseding ADR before that feature
 ships.
 
-### 2. The domain stays at netcup; only two records change
+### 2. The domain stays at netcup; three records in total, in two steps
 
-Registration **and** DNS authority remain at netcup. At cutover the apex `A` records are repointed to
-GitHub's four addresses, and `www` becomes a `CNAME`
+Registration **and** DNS authority remain at netcup. Records are added in two separate steps, months
+apart, and keeping them separate is the point — the first touches nothing the live site depends on
 ([GitHub custom domain documentation](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)):
+
+**Now, for the preview (Phase 2):**
+
+| Record | Name | Value |
+|---|---|---|
+| CNAME | `preview` | `nanatsusaya.github.io` |
+
+**At cutover (Phase 5), and not before:**
 
 | Record | Name | Value |
 |---|---|---|
 | A | `iris-sunshine-oase.de` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
 | CNAME | `www` | `nanatsusaya.github.io` |
+
+**The preview gets its own subdomain** (owner decision, R1): `preview.iris-sunshine-oase.de`. The
+reason is not comfort. A GitHub project page serves from a **subpath**
+(`nanatsusaya.github.io/iris-sunshine-oase/`) while the live site serves from the root, and that
+difference has to be carried in the build configuration as a `base` path. Carrying it means the
+cutover changes how every asset URL is resolved, on the one day when nobody wants to discover a broken
+stylesheet. With a subdomain both states serve from the root and the cutover changes nothing about
+paths.
+
+Adding this record cannot affect the live site: a new subdomain has no bearing on the apex, `www`, or
+mail. The cost is that the draft becomes publicly reachable under the studio's own domain — behind the
+`noindex` of §4, which is why that section had to be correct before this one was safe.
+
+**One custom domain at a time.** A Pages site holds a single custom domain, so at cutover
+`preview.iris-sunshine-oase.de` is *replaced* by the apex rather than joined by it. The preview
+subdomain stops serving at that moment, and its `CNAME` should be removed in the same session — a
+stale record pointing at a site that no longer answers for it is exactly the kind of leftover nobody
+finds until it matters.
 
 **The apex stays canonical**, with `www` redirecting to it — GitHub creates that redirect
 automatically. This is the form the site is indexed under today; changing it is a separate risk that
@@ -119,6 +145,10 @@ cutover, merging a PR publishes to the live site.** Until cutover, merging publi
 can find. The protection is that CI runs the full check chain (ADR 0002 §7) on every PR, so a build
 that fails cannot deploy; what CI cannot catch is a change that builds correctly and looks wrong.
 
+Accepted by the owner (R3), with the revisit condition named rather than left implicit: the first time
+a change reaches the live site looking wrong, that is the evidence that a staging step is worth its
+cost — and it becomes a ticket, not a rule added in advance against a failure that may never occur.
+
 ### 4. The indexing gate: `noindex` is the guarantee, and `robots.txt` must not defeat it
 
 This section corrects a rule this repository already holds, and it does so on the evidence of the
@@ -137,6 +167,10 @@ documentation is explicit:
 A blanket `Disallow: /` prevents the crawl that would have discovered the `noindex`. The URL can then
 still be indexed — without its content, but by name — if anything anywhere links to it. The
 belt-and-braces configuration is weaker than the belt alone.
+
+**`CLAUDE.md` is corrected in the same change that introduces this ADR** (owner decision, R2). Leaving
+the two to disagree would be worse than either being wrong alone: a standing rule and a normative ADR
+contradicting each other is how a future session ends up picking whichever it happened to read first.
 
 Therefore, until go-live:
 
@@ -170,8 +204,9 @@ Executed in Phase 5 (#7), by the owner, never by an agent.
 **86 400 seconds — 24 hours**. Without this step the "reversible in minutes" property that justifies
 this whole arrangement does not exist, and that is the single most important line in this ADR.
 
-**Cutover:** attach the custom domain to the Pages site and let the certificate issue; verify the site
-answers on the GitHub address; flip the gate flag in its own PR; repoint the two DNS records; enable
+**Cutover:** replace `preview.iris-sunshine-oase.de` with the apex as the Pages site's custom domain
+and let the certificate issue; verify the site answers on the GitHub address; flip the gate flag in its
+own PR; add the apex `A` records and the `www` `CNAME`; remove the now-dead `preview` `CNAME`; enable
 *Enforce HTTPS* once GitHub offers it (the documentation notes this can take up to 24 hours).
 
 **Verify, by fetching the deployed site rather than reading the source:** the live domain serves the
@@ -233,25 +268,22 @@ has to be undone — which is the property that made this option the right one.
 - **Keeping `robots.txt` `Disallow: /` alongside `noindex`** — rejected on Google's documentation; see
   §4.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-07-18)
 
-- **O1 — Where does the preview live before cutover?** Default is the project URL
-  `nanatsusaya.github.io/iris-sunshine-oase/`, which serves the site from a **subpath**; the live site
-  will serve from the root. That difference has to be carried in the build configuration and is a
-  classic source of broken asset links at exactly the wrong moment.
-  **Recommendation:** attach `preview.iris-sunshine-oase.de` (one `CNAME` at netcup, the live site
-  untouched) so the preview also serves from the root and the cutover changes nothing about paths. The
-  trade-off is that the draft becomes reachable under the studio's own domain — behind `noindex`, but
-  publicly. If that is unwelcome, the subpath is perfectly workable and the configuration difference is
-  simply something Phase 2 must handle deliberately.
-- **O2 — May `CLAUDE.md`'s indexing rule be corrected?** §4 contradicts a standing rule in `CLAUDE.md`.
-  The evidence is Google's own documentation, but the rule protects a live business's search ranking and
-  changing it is not something to do quietly.
-  **Recommendation:** yes — change it to require `noindex` and to require that `robots.txt` *not* block
-  the crawl, in the same PR that accepts this ADR, so the two never disagree.
-- **O3 — Is "merge publishes" acceptable after go-live?** §3 accepts it.
-  **Recommendation:** accept for now and revisit only if it actually bites. The alternative costs a
-  second deployment target permanently to guard against a class of error that has not yet occurred once.
+- **R1 — The preview gets `preview.iris-sunshine-oase.de`.** Chosen over the default project URL so
+  that both states serve from the root and no `base` path has to change at cutover. The accepted cost
+  is that the draft is publicly reachable under the studio's own domain; §4's `noindex` is what makes
+  that acceptable, and it is the reason §4 had to be right before §2 could be safe. Folded into §2,
+  which now separates the record added now from the records added at cutover.
+- **R2 — `CLAUDE.md`'s indexing rule is corrected**, in the same change that introduces this ADR rather
+  than as a follow-up. The rule required `robots.txt` `Disallow: /` *and* `noindex`; on Google's
+  documentation those cancel. Leaving the correction for later would have meant a standing rule and a
+  normative ADR contradicting each other in the interim, which is the worst of the available states.
+  Folded into §4.
+- **R3 — "Merge publishes" is accepted for the period after go-live.** No staging step is built now.
+  The revisit condition is written into §3 so it is a trigger rather than a hope: the first change that
+  reaches the live site looking wrong is the evidence that buys a staging deployment, and it becomes a
+  ticket then.
 
 ## References
 

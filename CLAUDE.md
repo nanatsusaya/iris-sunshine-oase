@@ -84,9 +84,13 @@ an assertion.
   submissions in content, fixtures, tests or logs. The business's own contact details are public by
   law (Impressum) and are fine; anything belonging to a third party is not.
 - **The preview must not be indexed until go-live.** The GitHub Pages preview shows a real business's
-  name, address and prices. Until the owner cuts over, it carries `robots.txt` `Disallow: /` **and** a
-  `noindex` meta tag, so a half-finished draft cannot compete with the live site in search results.
-  Removing them is an explicit go-live gate, never a side effect of another change.
+  name, address and prices, and it is reachable under the studio's own domain, so a half-finished draft
+  must not compete with the live site in search results. The mechanism is **`noindex` on every page,
+  and a `robots.txt` that does not block crawling** — deliberately not both belts (ADR 0006 §4).
+  Blocking the crawl stops the crawler from ever reading the `noindex`, and a URL nobody may fetch can
+  still be indexed by name; the two together are weaker than `noindex` alone. Removing the `noindex` is
+  an explicit go-live gate, never a side effect of another change — and **adding a `Disallow` is not a
+  safety improvement**, it defeats the gate.
 
 ## Delivery workflow & PRs
 
