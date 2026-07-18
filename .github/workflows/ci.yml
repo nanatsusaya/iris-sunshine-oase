@@ -64,6 +64,12 @@ jobs:
       - name: Documentation conformance
         run: npm run check:docs
 
+      # ADR 0004 §10: the token system's own rules — no raw colour, no off-scale spacing, and the
+      # contrast figures hold. Reads the source rather than the build, because the point is to name
+      # the file and line that introduced the value.
+      - name: Design tokens
+        run: npm run check:tokens
+
       # ADR 0009 §6 as a check rather than a rule to remember: the built output must fetch nothing
       # from a third party. Reads dist/, so it has to follow the build.
       - name: No external resources
