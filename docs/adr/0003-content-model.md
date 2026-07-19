@@ -1,6 +1,6 @@
 # ADR 0003 — Content model: structured data and where authority lives
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-07-19
 - **Depends on:** [ADR 0002](0002-tech-stack-and-tooling.md) §1 (Astro 7, static, no adapter — which is
   why everything below happens at build time) and §5 (the precedent that a check blocks rather than
@@ -133,12 +133,28 @@ pattern. Multiple sets coexist; the build selects. Public holidays and closures 
 dated exceptions rather than a note in the prose, because a closure that lives in prose cannot suppress
 anything.
 
-**`„Jetzt geöffnet"` is not computed.** A static page is generated once and read later, so it cannot
-know the time it is being read; computing it in the browser means shipping JavaScript to make a claim
-that is wrong on every holiday the exception list has not anticipated. **A wrong "open now" badge sends
-someone to a locked door** — which is a worse failure than a wrong price, because it costs the visitor a
-journey. The hours are rendered; the state is not asserted. See **O2** — the badge is in the owner's
-design, so the owner decides whether to lose it.
+**The status badge is built, and it may never claim „geöffnet" from data nobody has confirmed** (**R2**).
+
+The problem it has to survive: a static page is generated once and read later, so it cannot know the
+time it is being read. Computing the state in the browser means making a claim that is wrong on every
+holiday the exception list has not anticipated — and **a wrong "open now" badge sends someone to a
+locked door**, which is a worse failure than a wrong price, because it costs the visitor a journey
+rather than a correction.
+
+The owner's resolution is the asymmetry, and it is the right one: the two errors are not equally bad.
+Claiming *„geschlossen"* when the studio is open costs a visitor a telephone call. Claiming
+*„geöffnet"* when it is closed costs them the drive. So the badge fails in the safe direction by
+construction:
+
+- With **unconfirmed** hours (§8) the badge renders the closed state and never computes anything. It is
+  present, so the layout is real, and it cannot lie in the expensive direction.
+- With **confirmed** hours it may compute the current state — against the dated exception list above,
+  which is what makes the computation honest. Without that list it would be a weekday clock pretending
+  to be a calendar.
+
+The residual is recorded rather than solved: the exception list has to be *maintained*, and a badge
+computed against a stale list is exactly the failure this section is about. That maintenance is the
+price of the feature, and it falls due at go-live, not now.
 
 ### 5. Prose is Markdown; facts are never prose
 
@@ -190,15 +206,34 @@ There is a third. **Every entry carries its confirmation as data:**
 
 `confirmed` is **required**, so a new entry cannot omit it by accident, and `false` is a legitimate,
 recordable state. Templates never call `getCollection` directly; a single module `src/content/query.ts`
-exports accessors that return confirmed entries only, and check 4 asserts that `astro:content` is
-imported nowhere else.
+exports the accessors, and check 4 asserts that `astro:content` is imported nowhere else.
 
-The distinction that makes this worth the machinery: it is the difference between an unverified price
+**The gate is the existing state flag, not a second one** (**R1**). ADR 0006 §5 already splits the build
+into `preview` and `live`, and that split is exactly the right seam:
+
+| Build state | Unconfirmed entry |
+|---|---|
+| `preview` | **renders**, visibly marked as a placeholder |
+| `live` | **fails the build** |
+
+The live build *fails* rather than hiding the entry, and the difference matters. Hiding would produce a
+price list that is silently incomplete — a page that looks finished and is missing three services is
+worse than one that never shipped. Failing means an unconfirmed figure cannot reach the public site by
+any route, including forgetting about it.
+
+This is what makes the mechanism worth its machinery: it is the difference between an unverified price
 being *unlikely* to render and being *unable* to. `CLAUDE.md` puts it as "an empty field is recoverable,
-a wrong price is not" — this is that rule with a mechanism under it.
+a wrong price is not" — this is that rule with something under it.
 
-It also unblocks work. The whole price list can be transcribed now, reviewed as a diff, and confirmed by
-the owner row by row, without any of it being one careless template away from a public page.
+**Placeholders are obviously false on sight, by construction.** While a value is unconfirmed it is not
+merely unverified, it is *invented*, and an invented figure that looks plausible is the most dangerous
+thing in this repository. So placeholder amounts are repdigits — 11,11 €, 22,22 €, 33,33 € — and
+placeholder times are implausible clock values, never a tidy `10:00 – 18:00` that would survive a
+screenshot as if it were real. In the preview they additionally carry a visible marker, so a page shared
+as an image still says what it is.
+
+It also unblocks work: the whole price list can be transcribed now, reviewed as a diff, and confirmed by
+the owner row by row, while the site is built against placeholders that cannot escape the preview.
 
 ### 9. `docs/business-facts.md` folds in and stops being interim
 
@@ -268,30 +303,46 @@ rationale — *why* these facts may be published at all — is not lost.
   "not finished yet"; the real state is "nobody has vouched for this figure", and inverting it makes
   omission fail safe.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-07-19)
 
-Two shape this ADR. The rest are content facts that block Phase 3, not this decision — they are
-listed on #41 and repeated here only so the PR shows the whole picture.
+- **R1 — The confirmation gate stays, and the owner's own constraint improved it.** The answer did not
+  arrive as a yes: it arrived as *"I do not know the current values yet, I will supply them during the
+  day — use obviously dummy values."*
 
-- **O1 — Is the confirmation gate (§8) worth its friction?** It means a transcribed price stays
-  invisible until you have said "yes, that is still the price", row by row, for roughly 40 items.
-  *Recommendation: yes.* The alternative is publishing figures whose own source document says they are
-  unconfirmed and presumably five years old, and a wrong price is the one defect this project treats as
-  a production incident. The one-off cost buys a standing guarantee.
+  That is a stronger requirement than the question anticipated, because it makes invented figures a
+  *deliberate, temporary state of the repository* rather than an accident to be prevented. §8 was
+  rewritten around it. The gate is no longer "unconfirmed cannot render" — it is **unconfirmed renders
+  in `preview` and fails the build in `live`**, riding on the state flag ADR 0006 §5 already defines
+  rather than inventing a second one.
 
-- **O2 — Does the *„Jetzt geöffnet"* badge survive?** It is in your design, and §4 argues against it: a
-  static page cannot know when it is being read, so the badge would be computed in the browser and
-  would be confidently wrong on any holiday nobody entered. Being told a studio is open when it is
-  closed costs a visitor a journey. *Recommendation: drop the live badge, render the hours plainly, and
-  keep the „Happy Hour" line, which is a schedule rather than a claim about right now.* If you want it,
-  it is buildable — the exception list has to be maintained, and that maintenance becomes the price of
-  the feature.
+  Two properties follow, and both are better than what was proposed:
 
-**Content facts still needed (Phase 3, tracked on #41):** the prices are unconfirmed and undated; both
-Freundinnen packages cost 115,00 € although Paket 2 contains more; the opening hours have two
+  1. **Work is unblocked without lowering the bar.** The homepage can be built today against
+     placeholders, and no route exists by which one reaches the public site — not even forgetting.
+  2. **The live build fails rather than hiding.** A silently incomplete price list looks finished and is
+     wrong, which is worse than one that never shipped.
+
+  And a rule the original §8 did not have: **a placeholder must be false on sight.** An invented figure
+  that looks plausible is the most dangerous object in this repository, so placeholder amounts are
+  repdigits and placeholder times are implausible clock values. Not `10:00 – 18:00`, which would survive
+  a screenshot as though it were real.
+
+- **R2 — The badge is built, and it shows the closed state while the hours are unconfirmed.** The owner
+  overruled the recommendation to drop it, and the reasoning is better than the recommendation: the two
+  possible errors are not symmetrical. A wrongly-shown *„geschlossen"* costs a visitor a telephone call;
+  a wrongly-shown *„geöffnet"* costs them a journey to a locked door.
+
+  So the badge exists — the layout is real, the design survives — and it fails in the cheap direction by
+  construction. It computes nothing from unconfirmed data. Once the hours are confirmed it may compute
+  the live state against the dated exception list, and the maintenance of that list becomes the price of
+  the feature. Folded into §4.
+
+**Content facts still outstanding (Phase 3, tracked on #41):** the prices are unconfirmed and undated;
+both Freundinnen packages cost 115,00 € although Paket 2 contains more; the opening hours have two
 conflicting 2024 summer sets; Fußreflexzonen-Massage is *„zZ. vergriffen"*; the Honigmassage is
 described but unpriced; proWIN's status is unclear; and the blog is 19 expired promotions that
-`02-inhaltsinventar.md` recommends not carrying over.
+`02-inhaltsinventar.md` recommends not carrying over. The owner will supply the current prices and
+opening hours; until then the repository holds placeholders under R1.
 
 ## References
 

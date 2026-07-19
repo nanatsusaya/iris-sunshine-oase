@@ -54,13 +54,18 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   netcup so the studio's `MX` and `SPF` records are never touched; the preview lives at
   `preview.iris-sunshine-oase.de`; `noindex` is the indexing gate and `robots.txt` must **not** block
   the crawl that delivers it. State: **designed** — nothing deployed.
-- ▶ [ADR 0003](adr/0003-content-model.md) — content model (#41) — **Proposed** (2026-07-19): Astro
+- ✅ [ADR 0003](adr/0003-content-model.md) — content model (#41) — **Accepted** (2026-07-19): Astro
   content collections at build time, YAML with comments, money as integer cents, a price as a
   discriminated union that expresses all six of the old site's special cases, opening hours as intervals
   with a validity period, and a **confirmation gate** so an unverified price is *unable* to render rather
   than merely unlikely to. Four of Astro's behaviours were measured against the scaffold rather than
   assumed — including the finding that a duplicate id only *warns* and the build still exits 0, which is
-  why id integrity becomes a blocking check.
+  why id integrity becomes a blocking check. **R1** turned the owner's own constraint — *"I do not know
+  the current values yet, use dummy ones"* — into the gate's shape: unconfirmed content renders in
+  `preview` and **fails the build** in `live`, and a placeholder must be false on sight. **R2** keeps the
+  status badge but makes it fail in the cheap direction: it shows the closed state while the hours are
+  unconfirmed, because a wrong *„geschlossen"* costs a telephone call and a wrong *„geöffnet"* costs a
+  journey. State: **designed** — no data files yet.
 - ▶ ADRs 0005, 0007 and 0008 outstanding.
 - ✅ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Accepted**
   (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
@@ -157,25 +162,37 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**Get ADR 0003 answered and Accepted** (#41) — then the homepage.
+**Build the content model, then the homepage** (Phase 2, #4 — ADR 0003 is now `Accepted`).
 
 **The order changed on 2026-07-19, and the reason is worth reading.** This file previously said the
-homepage came next. It does not: the homepage as drawn needs opening hours and four price teasers, and
-neither has an authority. Building it first would have meant typing an opening time into a template —
-the exact defect this project exists to remove, on day one of the implementation. ADR 0003 is what
-unblocks it, and it was the missing decision all along.
+homepage came next after the token layer. It did not: the homepage as drawn needs opening hours and four
+price teasers, and neither had an authority. Building it first would have meant typing an opening time
+into a template — the exact defect this project exists to remove, on day one of the implementation.
 
-Then, in order:
+In order:
 
-1. **The homepage** from the draft's turn 6 — mobile-first, built out of the tokens (#40) and the
-   content model.
-2. **Self-host the two fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses,
+1. **The content model** — collections, the schemas of ADR 0003 §3 and §4, the accessor module, and the
+   five checks of §7. As with the tokens, the checks land with the thing they govern, not after it.
+2. **The homepage** from the draft's turn 6 — mobile-first, out of the tokens (#40) and the model.
+3. **Self-host the two fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses,
    `woff2`, self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs its
    provenance recorded like any other asset. Until this lands the page renders in system fallbacks —
    which is also the `font-display: swap` state, so it has to look acceptable regardless.
 
-Phase 3's content itself stays blocked on the owner either way: the prices are undated and unconfirmed
-and the opening hours have two conflicting 2024 sets (#41).
+### The repository currently contains invented prices and opening hours, on purpose
+
+The owner does not yet have the current values and will supply them (2026-07-19). Under ADR 0003 **R1**
+the repository holds placeholders until then, and the arrangement that makes this safe rather than
+reckless is:
+
+- every placeholder entry is `confirmed: false`;
+- the **`live` build fails** if any rendered entry is unconfirmed — so no placeholder can reach the
+  public site by any route, including being forgotten about;
+- placeholders are **false on sight** — repdigit amounts (11,11 €) and implausible clock times, never a
+  tidy `10:00 – 18:00` that would survive a screenshot as though it were real.
+
+**Nothing here may be read as a price or an opening time of the studio.** `docs/analyse/` remains the
+record of the *old* site, itself undated and unconfirmed.
 
 **Two owner actions still gate the preview URL** and neither blocks the work above:
 
