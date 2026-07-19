@@ -1,0 +1,60 @@
+---
+/**
+ * The visible mark on invented content (ADR 0003 §8, R1).
+ *
+ * The owner does not yet have the current prices and opening hours, so the repository holds
+ * placeholders. Three things make that safe rather than reckless, and this component is the third:
+ *
+ *   1. every placeholder entry is `confirmed: false`;
+ *   2. the `live` build **fails** on any unconfirmed entry — the gate sits on the `confirmed` field in
+ *      `src/content.config.ts`, so it runs during schema validation for every entry in every
+ *      collection, whether or not a page renders it;
+ *   3. **a placeholder is false on sight.** The amounts are repdigits and the clock times are
+ *      impossible, and this mark says so in words as well.
+ *
+ * The third matters because the first two protect the *site* and not the *screenshot*. A preview page
+ * gets photographed, pasted into a message and forwarded, and at that point nothing but the pixels
+ * travels with it. A tidy invented figure would survive that journey looking exactly like a fact.
+ */
+
+interface Props {
+  /** What is invented here — shown to a screen reader, so it is a sentence rather than a word. */
+  what: string;
+}
+
+const { what } = Astro.props;
+---
+
+<span class="mark">
+  <span aria-hidden="true">Platzhalter</span>
+  <span class="sr">{what} — erfunden, kein Wert des Studios.</span>
+</span>
+
+<style>
+  .mark {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-flat);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--colour-brand);
+    /* Dashed, because a solid badge reads as a designed label and this is meant to read as scaffolding
+       somebody forgot to remove — which is exactly what it is. */
+    border: 1px dashed var(--colour-brand);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-2);
+    white-space: nowrap;
+  }
+
+  .sr {
+    /* Clipped rather than `display: none`, which would take it out of the accessibility tree too — the
+       warning is most needed by the reader who cannot see the dashed border. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+</style>

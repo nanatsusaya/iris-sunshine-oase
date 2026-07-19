@@ -1,0 +1,172 @@
+---
+/**
+ * The site header (ADR 0004, draft turn 6).
+ *
+ * **Every link here points somewhere that exists.** The draft's navigation lists Home · Leistungen &
+ * Preise · Über uns · Kontakt, and four of those pages have not been built. Rendering them now would
+ * write `M-28` — *"jump anchors that point nowhere"*, one of the 28 inherited defects
+ * (`docs/analyse/05-maengelliste.md`) — into the first page of the rebuild.
+ *
+ * So the navigation is the homepage's own section anchors, which are real. It grows into the draft's
+ * page navigation in the change that adds those pages, and until then a visitor cannot be sent to a
+ * 404 by this component. A missing link is recoverable; a broken one is what the analysis found nine
+ * years' worth of.
+ *
+ * The theme and language toggles the draft carries are also absent, and for different reasons: the
+ * language switch belongs to ADR 0005 (`Planned`), and a dark theme is not decided anywhere — ADR 0004
+ * §2 defines one palette. Neither is a thing to invent in a layout component.
+ */
+import { telHref } from '../content/format';
+import { businessFact } from '../content/query';
+import Icon from './Icon.astro';
+import Wordmark from './Wordmark.astro';
+
+const telephone = await businessFact('telephone');
+
+const sections = [
+  { href: '#leistungen', label: 'Leistungen' },
+  { href: '#oeffnungszeiten', label: 'Öffnungszeiten' },
+  { href: '#kontakt', label: 'Kontakt' },
+];
+---
+
+<header class="header">
+  <div class="bar">
+    {/*
+      The home link points at the current page rather than being omitted, because a wordmark that is
+      not a link is the thing every visitor clicks anyway. `aria-current` makes a screen reader say
+      so, instead of offering a journey to where the reader already is.
+    */}
+    <a class="home" href="/" aria-current="page">
+      <Wordmark size="strong" />
+    </a>
+
+    <nav class="nav" aria-label="Abschnitte dieser Seite">
+      {sections.map(({ href, label }) => <a href={href}>{label}</a>)}
+    </nav>
+
+    {/*
+      **Document order is visual order here, at every width, and that is why the call button comes
+      last.** An earlier draft of this component put it second and used flexbox `order` to move it to
+      the right of the navigation on wide screens. It looked identical and it was wrong: a keyboard
+      user tabbed from the wordmark to the far-right call button and then back to the navigation in
+      the middle (WCAG 2.2 SC 2.4.3 Focus Order, SC 1.3.2 Meaningful Sequence). `order` decouples the
+      two sequences, and nothing on the rendered page shows that it has.
+
+      Below 48rem the button is not in the header at all, which is also what the draft's own mobile
+      header does. The hero's „Jetzt anrufen" sits immediately beneath it and the footer carries the
+      number again, so no route to the telephone is lost — and the alternative, a full international
+      number beside the wordmark, does not fit at the 320px reflow floor.
+    */}
+    <a class="call" href={telHref(telephone)}>
+      <Icon name="phone" />
+      <span>{telephone}</span>
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    /*
+      A translucent panel over the page gradient, as the draft has it. The contrast check composites
+      exactly this surface over every gradient stop, so the text tokens used inside are guaranteed
+      against the surface's *actual* colour rather than against an assumed one.
+    */
+    background: var(--surface-card-strong);
+    border-bottom: 1px solid var(--surface-card-border);
+    padding: var(--space-4) var(--gutter);
+    /* `backdrop-filter` is an enhancement: where it is unsupported the panel is simply less glassy,
+       and the 86% white behind it keeps every contrast figure valid either way. */
+    backdrop-filter: blur(14px);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-4);
+    max-width: var(--container);
+    margin: 0 auto;
+  }
+
+  .home {
+    text-decoration: none;
+    /* The mark must not shrink below its own width when the number beside it is long. */
+    flex: none;
+  }
+
+  .call {
+    /* Absent below 48rem — see the note in the markup. */
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    /*
+      The accent as a surface with brand text on it. This pairing is one the contrast check knows
+      about: as a surface `--colour-accent` admits only the two darkest text tokens, because the muted
+      and cool ones land below AA on it (ADR 0004 §3, and check 4 in tools/check-tokens.mjs).
+    */
+    background: var(--colour-accent);
+    color: var(--colour-brand);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    box-shadow: 0 12px 24px -12px var(--shadow-colour);
+    /* A telephone number is one object; breaking it across two lines makes it unreadable and
+       unusable in the same stroke. */
+    white-space: nowrap;
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--space-4);
+    /* The full width of its own row below 48rem — the draft's mobile header is two rows. */
+    flex-basis: 100%;
+    font-size: var(--text-sm);
+    /*
+      Deliberately scrollable rather than wrapping, which is what the draft's 320px check settled on
+      for its chip rows. The alternative at that width is a second line of navigation pushing the
+      content down on every small screen.
+    */
+    overflow-x: auto;
+    /* Without this, `overflow-x` would clip the focus ring vertically as well. */
+    padding-bottom: var(--space-1);
+  }
+
+  .nav a {
+    color: var(--colour-brand);
+    text-decoration: none;
+    font-weight: var(--weight-body-dense);
+    white-space: nowrap;
+  }
+
+  .nav a:hover,
+  .nav a:focus-visible {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 48rem) {
+    .header {
+      padding: var(--space-4) var(--space-6);
+    }
+
+    /*
+      One row: mark, navigation, call — the draft's desktop header, and the same sequence the markup
+      is written in. No `order` anywhere in this component, deliberately: see the note in the markup.
+    */
+    .nav {
+      flex-basis: auto;
+      flex: 1;
+      justify-content: center;
+      overflow-x: visible;
+      padding-bottom: 0;
+      font-size: var(--text-base);
+    }
+
+    .call {
+      display: inline-flex;
+    }
+  }
+</style>

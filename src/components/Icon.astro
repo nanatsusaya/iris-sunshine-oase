@@ -1,0 +1,76 @@
+---
+/**
+ * The site's icons, as inline SVG (ADR 0004 §8).
+ *
+ * The draft sets its interface icons as emoji — ☎ 📍 ✉ ☀ — and that is corrected here rather than
+ * carried over, because it is a defect rather than a style:
+ *
+ *   - every operating system draws a different picture, so the design is not reproducible;
+ *   - a screen reader announces them by their Unicode name, so 📍 is read aloud as "round pushpin"
+ *     next to a postal address;
+ *   - they are text, so they take the text colour and cannot carry a two-tone mark.
+ *
+ * Inline, not an icon font and not a sprite: a font would be a third-party file and a fetch, which
+ * ADR 0009 §6 forbids outright, and a sprite earns its indirection at a scale this site does not have.
+ *
+ * Geometry is drawn on a 24×24 grid and scales with the surrounding text (`1em`), so an icon beside a
+ * label stays the size of that label rather than of the label it was first drawn against.
+ */
+
+interface Props {
+  name: keyof typeof PATHS;
+  /**
+   * The accessible name, for an icon that carries meaning on its own.
+   *
+   * Omit it — the default — and the icon is marked decorative, which is correct wherever a visible
+   * label sits beside it. Naming it there would make a screen reader read the same thing twice.
+   */
+  label?: string;
+  /** Extra classes, so a caller can size or colour the icon without reaching inside this file. */
+  class?: string;
+}
+
+const PATHS = {
+  /* A handset, filled — the one icon that has to read at 16px, where a stroked outline turns to mush. */
+  phone:
+    'M6.6 10.9a15.2 15.2 0 0 0 6.5 6.5l2.2-2.2a1 1 0 0 1 1-.24c1.1.37 2.3.57 3.5.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.57 3.5a1 1 0 0 1-.25 1z',
+  mail: 'M3.5 6.5h17v11h-17zM3.5 7l8.5 6 8.5-6',
+  pin: 'M12 21.5s7-6.4 7-11.5a7 7 0 1 0-14 0c0 5.1 7 11.5 7 11.5zM12 12.6a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2z',
+  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7.2V12l3.3 2',
+  sun: 'M12 16.2a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4zM12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6',
+} as const;
+
+const { name, label, class: className } = Astro.props;
+const decorative = label === undefined;
+---
+
+<svg
+  class:list={['icon', className]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden={decorative ? 'true' : undefined}
+  role={decorative ? undefined : 'img'}
+  focusable="false"
+>
+  {label && <title>{label}</title>}
+  <path d={PATHS[name]} fill={name === 'phone' ? 'currentColor' : 'none'} stroke-width={name === 'phone' ? '0' : '1.6'} />
+</svg>
+
+<style>
+  .icon {
+    /*
+      Sized in `em` rather than `rem` or pixels, so the icon tracks the text it labels. The draft sets
+      its emoji at the surrounding font size by definition — this keeps that relationship once they
+      stop being text.
+    */
+    width: 1.15em;
+    height: 1.15em;
+    flex: none;
+    /* Optical alignment against a lowercase baseline; a glyph sits slightly below the box. */
+    vertical-align: -0.18em;
+  }
+</style>

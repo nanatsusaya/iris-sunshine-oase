@@ -1,50 +1,651 @@
 ---
-import { SITE_STATE } from '../config/site';
-import { businessFact } from '../content/query';
+/**
+ * The homepage, built from the design draft's turn 6 (ADR 0004 §1 — turns 6–10 are canonical; turn 5's
+ * „Finale Version" label is superseded by turn 6's accessibility rework).
+ *
+ * **Every figure on this page is read from the content model, and not one of them is typed here**
+ * (ADR 0003 §9). That is the whole point of the model: the old site carried the same price in an
+ * Elementor block, a pricing-table widget and a text paragraph, and over nine years they drifted apart
+ * (`docs/analyse/05-maengelliste.md`). `tools/check-content.mjs` rejects a price or a clock time
+ * written into a template, so this cannot quietly stop being true.
+ *
+ * **The prices and opening hours are placeholders and are marked as such.** See `PlaceholderMark`.
+ *
+ * What the draft has and this page does not, each for a stated reason:
+ *
+ *   - **photographs.** None exist yet, and none of the old site's may be reused: those rights are
+ *     undocumented (`docs/analyse/06-medien-inventar.md`). The frames are drawn at their aspect ratio
+ *     regardless, which is precisely what ADR 0004 §9's ratio tokens are for — the layout is already
+ *     the shape it will be, so arriving photographs cannot reflow it.
+ *   - **the map.** An embedded Google Maps, as the old site had, is a third-party request and personal
+ *     data leaving the page on load. ADR 0009 §6 forbids external resources outright, and this is not a
+ *     workflow detail to decide in a template.
+ *   - **links onward to the other pages.** They do not exist yet; see `SiteHeader`.
+ */
+import Icon from '../components/Icon.astro';
+import PlaceholderMark from '../components/PlaceholderMark.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { badgeState, formatDays, formatPrice, lowestCents, telHref } from '../content/format';
+import {
+  businessFact,
+  categories,
+  currentHours,
+  isPlaceholder,
+  SHOWS_PLACEHOLDERS,
+  servicesIn,
+} from '../content/query';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const tradingName = await businessFact('trading-name');
+const [telephone, email, street, postcodeTown] = await Promise.all([
+  businessFact('telephone'),
+  businessFact('email'),
+  businessFact('street'),
+  businessFact('postcode-town'),
+]);
+
+/*
+ * A category's teaser price is **derived, never stored**: the cheapest amount among the services in
+ * it. Storing „ab 3,00" beside the category would be a second copy of a price that already has an
+ * authority — and the copy that goes stale is always the one nobody is looking at.
+ *
+ * A category whose services carry no amount at all (a voucher, „zZ. vergriffen") gets no teaser price
+ * rather than a zero, because those are different statements.
+ */
+const teasers = await Promise.all(
+  (await categories()).map(async (category) => {
+    const services = await servicesIn(category.id);
+    const amounts = services
+      .map((service) => lowestCents(service.data.price))
+      .filter((c) => c !== null);
+    return {
+      category,
+      from: amounts.length > 0 ? Math.min(...amounts) : null,
+      invented: services.some(isPlaceholder) || isPlaceholder(category),
+    };
+  }),
+);
+
+const hours = await currentHours();
+const hoursAreInvented = isPlaceholder(hours);
+
+/*
+ * The status badge fails in the cheap direction by construction (ADR 0003 R2). The two possible errors
+ * are not symmetrical: a wrongly shown „geschlossen" costs a visitor a telephone call, a wrongly shown
+ * „geöffnet" costs them the drive to a locked door. While the hours are unconfirmed this is always
+ * `'closed'` — which is what makes it safe to render invented times at all.
+ */
+const state = badgeState(!hoursAreInvented);
 ---
 
-<BaseLayout title="Vorschau">
+{/*
+  `title` and `description` take a plain `&`, never `&amp;`. Both are passed as *strings* and rendered
+  as text, so an entity here would be escaped a second time and the browser tab would read
+  „Kosmetik &amp;amp; Solarium" — which it did, until this was looked at rather than assumed. Markup
+  escaping belongs in markup; these are data.
+*/}
+<BaseLayout
+  title="Kosmetik & Solarium in Herxheim bei Landau"
+  description="Naturkosmetik, Solarium und Massage in Herxheim bei Landau (Pfalz) — im Kosmetik- und Sonnenstudio Iris’ Sunshine Oase."
+>
+  <SiteHeader />
+
+  {
+    SHOWS_PLACEHOLDERS && (
+      <div class="notice-wrap">
+        <p class="preview-notice">
+          <strong>Vorschau.</strong> Preise und Öffnungszeiten auf dieser Seite sind{' '}
+          <strong>erfunden</strong> und keine Angaben des Studios. Die aktuellen Werte liegen noch nicht
+          vor; bis dahin verweigert der Live-Build diese Seite.
+        </p>
+      </div>
+    )
+  }
+
   <main>
-    <h1>{tradingName}</h1>
+    <section class="hero">
+      {/* Decorative light, not content — hidden from assistive technology and from the tab order. */}
+      <div class="glow glow-warm" aria-hidden="true"></div>
+      <div class="glow glow-cool" aria-hidden="true"></div>
 
-    <p>
-      Diese Seite ist der <strong>Neubau</strong> der Website und noch nicht fertig. Die
-      Studio-Website erreichen Sie weiterhin unter <a
-        href="https://iris-sunshine-oase.de">iris-sunshine-oase.de</a>.
-    </p>
+      <div class="hero-copy">
+        <p class="eyebrow">Kosmetik &amp; Solarium · Herxheim bei Landau</p>
+        <h1>Ein bisschen Sonne.<br />Zu jeder Jahreszeit.</h1>
+        <p class="lead">
+          Naturkosmetik, Solarium &amp; Massage in gemütlichem Wohlfühl-Ambiente — mit aufmerksamer,
+          persönlicher Beratung.
+        </p>
 
-    {/*
-      Deliberately no address, telephone number, opening hours or prices. Those are facts about a
-      real business, they have exactly one authority each, and the pages that carry them are built
-      in Phase 3 once ADR 0003 has given them a typed home. A holding page is not a reason to make
-      a second copy — an empty field is recoverable, a wrong price is not (`CLAUDE.md`).
-    */}
+        <div class="actions">
+          <a class="button" href={telHref(telephone)}>
+            <Icon name="phone" />
+            Jetzt anrufen
+          </a>
+          {/*
+            The draft's second button is „Termin anfragen" and it is deliberately absent. It needs a
+            destination — a booking page or a form — and ADR 0007 (contact) has already recorded the
+            decision that there is no contact form: telephone and e-mail only. So the mail link is the
+            honest version of that button.
+          */}
+          <a class="button quiet" href={`mailto:${email}`}>
+            <Icon name="mail" />
+            Termin per E-Mail
+          </a>
+        </div>
 
-    <p class="state">
-      Build-Status: <code>{SITE_STATE}</code>
-    </p>
+        {
+          state === 'closed' && (
+            <p class="status">
+              <span class="dot" aria-hidden="true" />
+              <span>Zurzeit geschlossen</span>
+            </p>
+          )
+        }
+      </div>
+
+      {/*
+        The photograph's frame, held open at 16/9 (ADR 0004 §9). It is drawn now and filled later, so
+        that the arriving image cannot push the page around — the old site's "generous photo heroes"
+        were among its few good ideas and also its layout instability.
+      */}
+      <div class="frame hero-frame">
+        <span class="frame-label">Foto folgt</span>
+      </div>
+    </section>
+
+    <section id="leistungen" class="band">
+      <h2>Leistungen &amp; Preise</h2>
+      <p class="lead">Von der Sonnenbank bis zur Naturkosmetik — alles für Ihre Wohlfühlzeit.</p>
+
+      <ul class="cards">
+        {
+          teasers.map(({ category, from, invented }) => (
+            <li class="card">
+              <div class="frame card-frame">
+                <span class="frame-label">Foto folgt</span>
+              </div>
+              <div class="card-body">
+                <h3>{category.data.name}</h3>
+                <p class="card-teaser">{category.data.teaser}</p>
+                {from !== null && (
+                  <p class="price">
+                    <span class:list={['amount', invented && 'invented']}>
+                      {formatPrice({ kind: 'from', cents: from })}
+                    </span>
+                    {invented && <PlaceholderMark what={`Preis für ${category.data.name}`} />}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="oeffnungszeiten" class="band">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>
+            <Icon name="clock" />
+            Öffnungszeiten
+          </h2>
+          {hoursAreInvented && <PlaceholderMark what="Öffnungszeiten" />}
+        </div>
+
+        {
+          state === 'closed' && (
+            <p class="status">
+              <span class="dot" aria-hidden="true" />
+              <span>Zurzeit geschlossen</span>
+            </p>
+          )
+        }
+
+        <dl class:list={['hours', hoursAreInvented && 'invented']}>
+          {
+            hours.data.intervals.map((interval) => (
+              <div class="row">
+                <dt>{formatDays(interval.days)}</dt>
+                <dd>
+                  {interval.opens} – {interval.closes} Uhr
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </section>
+
+    <section id="kontakt" class="band">
+      <div class="panel">
+        <h2>
+          <Icon name="pin" />
+          Kontakt &amp; Anfahrt
+        </h2>
+
+        <div class="contact">
+          <address>
+            {street}<br />
+            {postcodeTown}
+          </address>
+
+          <div class="contact-links">
+            <a class="line" href={telHref(telephone)}>
+              <Icon name="phone" />
+              {telephone}
+            </a>
+            <a class="line" href={`mailto:${email}`}>
+              <Icon name="mail" />
+              {email}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <SiteFooter />
 </BaseLayout>
 
 <style>
-  /*
-    Still a holding page — the design from ADR 0004's draft arrives with the homepage itself. What
-    changed here is only that the two values it did carry now come from the token layer, so this file
-    stops being the one place on the site with numbers of its own.
-  */
-  main {
-    max-width: var(--measure);
-    margin: 0 auto;
+  /* ---------------------------------------------------------------------------
+   * Layout bands
+   *
+   * Mobile-first throughout: every unprefixed rule is the small-screen case and the two `min-width`
+   * queries add to it (ADR 0004 §7). That is what makes `M-09` — the old site's two-column layout that
+   * never wrapped — unexpressible here rather than merely discouraged: a multi-column grid can only
+   * exist inside a query.
+   * ------------------------------------------------------------------------ */
+
+  .notice-wrap {
+    /* The banner sits outside `main`, which carries the page gutter, so it needs its own. */
+    padding: var(--space-5) var(--gutter) 0;
   }
 
-  .state {
-    margin-top: var(--space-7);
+  .preview-notice {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--space-4);
+    border: 1px dashed var(--colour-brand);
+    border-radius: var(--radius-md);
+    background: var(--surface-card-strong);
+    color: var(--colour-text);
     font-size: var(--text-sm);
-    /* A muted token rather than `opacity`, because opacity would also fade the colour out of the
-       contrast the check guarantees — 4.56:1 at 70% opacity is not 4.56:1. */
+    line-height: var(--leading-body);
+  }
+
+  .band {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--space-8) 0 0;
+    /* The section is a jump target from the header; without this the heading lands hard against the
+       top edge of the viewport. */
+    scroll-margin-top: var(--space-5);
+  }
+
+  main {
+    padding: 0 var(--gutter) var(--space-9);
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    /*
+      One step down below 48rem, and this is measured rather than tasteful: „Öffnungszeiten" is a
+      single 14-letter word, and at `--text-3xl` beside its icon it is wider than the panel it sits in
+      at 320px — the heading pushed the whole section sideways. German compounds do this routinely, so
+      the small-screen case takes the smaller step and `--text-3xl` arrives with the room for it.
+    */
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-3);
+  }
+
+  .lead {
+    margin: 0 0 var(--space-5);
+    max-width: var(--measure);
     color: var(--colour-text-muted);
+    font-size: var(--text-lg);
+  }
+
+  /* ---------------------------------------------------------------------------
+   * Hero
+   * ------------------------------------------------------------------------ */
+
+  .hero {
+    position: relative;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: var(--space-7) 0 0;
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .glow {
+    position: absolute;
+    /*
+      A blurred disc of light, as the draft has it. Sized off the layout rather than the spacing scale
+      because it is not spacing — it is a shape, and the scale governs gaps between things.
+
+      `min()` rather than a bare `20rem`, and that is a bug fix rather than caution: an absolutely
+      positioned element still contributes to scroll overflow, so a 320px-wide disc anchored inside a
+      272px-wide hero pushed the page 24px sideways at the draft's own 320px reflow floor (turn 10) —
+      a horizontal scrollbar on every small screen, caused by decoration nobody can even click.
+    */
+    width: min(20rem, 100%);
+    height: 20rem;
+    border-radius: 50%;
+    pointer-events: none;
+    /* Behind the content, and never able to intercept a click or a tap. */
+    z-index: -1;
+  }
+
+  .glow-warm {
+    top: 0;
+    right: 0;
+    background: radial-gradient(circle, var(--glow-warm), transparent 70%);
+  }
+
+  .glow-cool {
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(circle, var(--glow-cool), transparent 70%);
+  }
+
+  .hero-copy {
+    position: relative;
+  }
+
+  .eyebrow {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-heading);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--colour-brand);
+  }
+
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-5xl);
+    /*
+      The tightest of the three line heights, because a two-line display headline at 1.6 falls apart.
+      `clamp()` in the token is what replaces the draft's separate desktop and mobile headline sizes —
+      and it fixes a named old-site defect in passing, where the hero title kept one size however long
+      it was and ran to the edge.
+    */
+    line-height: var(--leading-tight);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--colour-accent);
+    color: var(--colour-brand);
+    font-weight: var(--weight-heading);
+    font-size: var(--text-base);
+    text-decoration: none;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    box-shadow: 0 16px 32px -14px var(--shadow-colour);
+  }
+
+  .button.quiet {
+    background: var(--surface-card-strong);
+    border: 1px solid var(--surface-card-border);
+    box-shadow: none;
+    /* Long addresses must not push the page sideways at 320px, the draft's own reflow floor. */
+    overflow-wrap: anywhere;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--colour-text);
+  }
+
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    /*
+      Muted, not green. The draft's badge is „Jetzt geöffnet" with a green dot; this one can currently
+      only ever say „geschlossen" (ADR 0003 R2), so the palette needs no open-state colour and none is
+      invented. The token for it belongs to the change that first makes the open state reachable.
+    */
+    background: var(--colour-text-muted);
+  }
+
+  /* ---------------------------------------------------------------------------
+   * Image frames (ADR 0004 §9)
+   * ------------------------------------------------------------------------ */
+
+  .frame {
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--colour-rule);
+    /* A hatch, so an empty frame reads as "nothing here yet" rather than as a picture that failed to
+       load — which is precisely how the old site's gradient hero read. */
+    background: repeating-linear-gradient(
+      45deg,
+      var(--colour-rule) 0 1px,
+      transparent 1px 0.75rem
+    );
+    overflow: hidden;
+  }
+
+  .hero-frame {
+    aspect-ratio: var(--ratio-hero);
+  }
+
+  .card-frame {
+    aspect-ratio: var(--ratio-card);
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px dashed var(--colour-rule);
+  }
+
+  .frame-label {
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--colour-text-muted);
+  }
+
+  /* ---------------------------------------------------------------------------
+   * Service teasers
+   * ------------------------------------------------------------------------ */
+
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .card {
+    background: var(--surface-card);
+    border: 1px solid var(--surface-card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 36px -24px var(--shadow-colour);
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+
+  .card-body {
+    padding: var(--space-5);
+  }
+
+  .card h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-2xl);
+  }
+
+  .card-teaser {
+    margin: 0 0 var(--space-4);
+    color: var(--colour-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    font-weight: var(--weight-heading);
+    color: var(--colour-brand);
+  }
+
+  /*
+    Invented figures are struck through as well as labelled. Two independent signals, because the
+    label can be cropped out of a screenshot and the strike-through travels with the number itself.
+  */
+  .invented .amount,
+  .amount.invented {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+
+  /* ---------------------------------------------------------------------------
+   * Panels — opening hours and contact
+   * ------------------------------------------------------------------------ */
+
+  .panel {
+    background: var(--surface-card);
+    border: 1px solid var(--surface-card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 18px 40px -26px var(--shadow-colour);
+    padding: var(--space-5);
+    backdrop-filter: blur(10px);
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .panel-head h2 {
+    margin: 0;
+  }
+
+  .hours {
+    margin: var(--space-4) 0 0;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--colour-rule);
+  }
+
+  .row:last-child {
+    border-bottom: 0;
+  }
+
+  .hours dt {
+    color: var(--colour-text);
+  }
+
+  .hours dd {
+    margin: 0;
+    font-weight: var(--weight-heading);
+    color: var(--colour-brand);
+    white-space: nowrap;
+  }
+
+  .hours.invented dd {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+
+  .contact {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .contact address {
+    font-style: normal;
+    line-height: var(--leading-body);
+    margin: 0;
+  }
+
+  .contact-links {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .line {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--colour-text);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .line:hover,
+  .line:focus-visible {
+    color: var(--colour-brand);
+    text-decoration: underline;
+  }
+
+  /* ---------------------------------------------------------------------------
+   * ≥ 48rem — stacks become columns (ADR 0004 §7, `--bp-wide`)
+   * ------------------------------------------------------------------------ */
+
+  @media (min-width: 48rem) {
+    h2 {
+      font-size: var(--text-3xl);
+    }
+
+    .hero {
+      grid-template-columns: 1.05fr 1fr;
+      align-items: center;
+      gap: var(--space-7);
+      padding-top: var(--space-8);
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .panel {
+      padding: var(--space-6);
+    }
+
+    .contact {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* ---------------------------------------------------------------------------
+   * ≥ 64rem — the widest band (ADR 0004 §7, `--bp-full`)
+   * ------------------------------------------------------------------------ */
+
+  @media (min-width: 64rem) {
+    .cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 </style>

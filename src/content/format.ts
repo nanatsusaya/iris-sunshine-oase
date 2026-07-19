@@ -71,6 +71,24 @@ export function lowestCents(price: Price): number | null {
   }
 }
 
+// --- contact ----------------------------------------------------------------
+
+/**
+ * The `tel:` target for a telephone number, derived from how the number is written.
+ *
+ * Stored once, in `src/content/business.yaml`, in the form a human reads:
+ * `+49 (0)7276 50 50 550`. A dialable URI needs the same number without the spacing and **without the
+ * national trunk prefix** — the `(0)` is what a caller inside Germany dials *instead of* `+49`, so
+ * leaving it in produces a number that fails from abroad and, on some networks, at home too.
+ *
+ * Derived rather than stored beside the readable form, because a second copy of a telephone number is
+ * the same defect as a second copy of a price: it survives every review until the day the number
+ * changes and only one of them is updated.
+ */
+export function telHref(telephone: string): string {
+  return `tel:${telephone.replace(/\(0\)/, '').replace(/[^\d+]/g, '')}`;
+}
+
 // --- opening hours ----------------------------------------------------------
 
 /** ISO weekday 1–7. Provisional German, see the file header. */
