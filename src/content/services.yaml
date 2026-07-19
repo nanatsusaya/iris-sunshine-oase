@@ -1,0 +1,123 @@
+# ⚠️  EVERY PRICE IN THIS FILE IS INVENTED. NONE OF THEM IS A PRICE OF THE STUDIO.
+#
+# The owner does not yet have the current figures and will supply them (2026-07-19). Under ADR 0003 R1
+# the repository holds placeholders until then, and three things make that safe rather than reckless:
+#
+#   1. every entry is `confirmed: false`;
+#   2. the `live` build FAILS on any unconfirmed entry — the gate is on the `confirmed` field in
+#      src/content.config.ts, so it runs for every entry whether or not a page renders it. It fails
+#      rather than hides: a price list that silently drops three services looks finished and is wrong;
+#   3. the amounts are repdigits — 11,11 € / 22,22 € / 33,33 € — so they are false on sight. A plausible
+#      invented figure is the most dangerous object in this repository, because it survives a screenshot
+#      as though it were real.
+#
+# The service NAMES are not invented: they are the old site's, extracted verbatim to
+# docs/inhalte/ and listed in docs/analyse/03-leistungen-und-preise.md. They are recorded there, not
+# confirmed — that document's own header says so.
+#
+# This is a representative set, not the full ~40 items. It exists to exercise every price shape the
+# schema must survive; transcribing the rest is Phase 3 content work and waits for the owner's figures
+# (#41), since transcribing 2019 prices the owner is about to replace would be waste.
+#
+# NOTE — `id` must be the first key of every entry (see business.yaml).
+
+# --- Solarium ---------------------------------------------------------------
+- id: einsteiger
+  category: sunshine
+  name: Einsteiger
+  description: Einsteiger- und Tiefenbräuner für die sonnenentwöhnte Haut, Mittelmeer-Kabine.
+  price: { kind: from, cents: 1111 } # PLACEHOLDER
+  order: 1
+  confirmed: false
+
+- id: tiefenbraeuner
+  category: sunshine
+  name: Tiefenbräuner
+  description: Zum Erhalt der Bräune, mit OxyTAN-Röhren in der Ostsee-Kabine.
+  price: { kind: from, cents: 1111 } # PLACEHOLDER
+  order: 2
+  confirmed: false
+
+- id: super-power
+  category: sunshine
+  name: Super Power
+  description: Die Powerbank in der Afrika-Kabine, für die bereits gebräunte Haut.
+  price: { kind: from, cents: 2222 } # PLACEHOLDER
+  order: 3
+  confirmed: false
+
+# --- Naturkosmetik ----------------------------------------------------------
+- id: anti-aging-gesichtsbehandlung
+  category: naturkosmetik
+  name: Anti-Aging-Gesichtsbehandlung
+  description: Reinigung mit Peeling, Tonerde- und Königs-Honig-Maske, Finish mit Gesichtsmassage.
+  price: { kind: fixed, cents: 3333 } # PLACEHOLDER
+  order: 1
+  confirmed: false
+
+# The range exists because the cosmetics page distinguishes Jugend- from Erwachsenen-Problemhaut.
+- id: problemhaut
+  category: naturkosmetik
+  name: Problemhaut
+  description: Reinigung mit Peeling, bis zu zwei Tonerde-Masken, Finish mit Gesichtsmassage.
+  price: { kind: range, from: 2222, to: 4444 } # PLACEHOLDER
+  order: 2
+  confirmed: false
+
+- id: wimpern-faerben
+  category: naturkosmetik
+  name: Wimpern färben
+  price: { kind: fixed, cents: 1111 } # PLACEHOLDER
+  order: 3
+  confirmed: false
+
+# --- Massagen ---------------------------------------------------------------
+# Two durations, one item — the reason `variants` exists rather than two separate services.
+- id: relax-massage
+  category: massagen
+  name: Relax-Massage
+  description: Körpermassage mit ägyptischem Spezialöl.
+  price:
+    kind: variants # PLACEHOLDER
+    variants:
+      - { label: bis 30 min, cents: 3333 }
+      - { label: bis 60 min, cents: 5555 }
+  order: 1
+  confirmed: false
+
+- id: hotstone-rueckenmassage
+  category: massagen
+  name: Hotstone-Rückenmassage
+  description: Behandlung mit warmen Basaltsteinen.
+  price: { kind: fixed, cents: 5555 } # PLACEHOLDER
+  order: 2
+  confirmed: false
+
+# No price, and not a missing one. The old site lists this with the status „zZ. vergriffen" instead of
+# an amount — which is why the schema has a `status` variant at all rather than an optional price field.
+# Whether it returns is an open question for the owner (#41).
+- id: fussreflexzonen-massage
+  category: massagen
+  name: Fußreflexzonen-Massage
+  description: Grifftechniken an den Reflexzonen des Fußes, mit vorbereitendem Gespräch und Fußbad.
+  price: { kind: status, status: zZ. vergriffen }
+  order: 3
+  confirmed: false
+
+# --- Wellness-Pakete --------------------------------------------------------
+- id: wellness-paket-1
+  category: pakete
+  name: Wellness-Paket 1
+  description: Sonnenbank nach Wahl mit Solarkosmetik, Kosmetikbehandlung nach Hauttyp, ägyptischer Tee.
+  price: { kind: fixed, cents: 4444 } # PLACEHOLDER
+  order: 1
+  confirmed: false
+
+# Genuinely priceless rather than unpriced: a voucher is bought at whatever value the buyer chooses.
+- id: gutschein
+  category: pakete
+  name: Wert-Gutschein
+  description: Ein liebevoll verpackter Gutschein, im Wert frei wählbar.
+  price: { kind: none }
+  order: 2
+  confirmed: false

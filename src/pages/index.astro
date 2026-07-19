@@ -1,12 +1,14 @@
 ---
-import { TRADING_NAME } from '../config/business';
 import { SITE_STATE } from '../config/site';
+import { businessFact } from '../content/query';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const tradingName = await businessFact('trading-name');
 ---
 
 <BaseLayout title="Vorschau">
   <main>
-    <h1>{TRADING_NAME}</h1>
+    <h1>{tradingName}</h1>
 
     <p>
       Diese Seite ist der <strong>Neubau</strong> der Website und noch nicht fertig. Die

@@ -97,6 +97,10 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   - **The fonts are not self-hosted yet.** `--font-heading` and `--font-body` name Cormorant Garamond
     and Mulish and fall through to a system serif and sans, so the page is correct but not yet as
     drawn. The font files are their own change, because each one enters under the provenance rule.
+- ✅ **The content model** (2026-07-19): five collections, the discriminated-union price schema, the
+  accessor module and the five checks of ADR 0003 §7. `docs/business-facts.md` folded into
+  `src/content/business.yaml` and became a pointer; `src/config/business.ts` and its regex parsing of a
+  Markdown table are gone. State: **draft** — the shape is complete, the values are placeholders.
 - ✅ **The indexing gate**, as one build-time flag defaulting to `preview` (ADR 0006 §5). Verified in
   both directions locally: `preview` emits `noindex` and no sitemap; `live` emits neither the tag nor
   a `Disallow`, and does emit the sitemap.
@@ -162,7 +166,7 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**Build the content model, then the homepage** (Phase 2, #4 — ADR 0003 is now `Accepted`).
+**The homepage** (Phase 2, #4). The content model it needs now exists.
 
 **The order changed on 2026-07-19, and the reason is worth reading.** This file previously said the
 homepage came next after the token layer. It did not: the homepage as drawn needs opening hours and four
@@ -171,10 +175,8 @@ into a template — the exact defect this project exists to remove, on day one o
 
 In order:
 
-1. **The content model** — collections, the schemas of ADR 0003 §3 and §4, the accessor module, and the
-   five checks of §7. As with the tokens, the checks land with the thing they govern, not after it.
-2. **The homepage** from the draft's turn 6 — mobile-first, out of the tokens (#40) and the model.
-3. **Self-host the two fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses,
+1. **The homepage** from the draft's turn 6 — mobile-first, out of the tokens (#40) and the model.
+2. **Self-host the two fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses,
    `woff2`, self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs its
    provenance recorded like any other asset. Until this lands the page renders in system fallbacks —
    which is also the `font-display: swap` state, so it has to look acceptable regardless.

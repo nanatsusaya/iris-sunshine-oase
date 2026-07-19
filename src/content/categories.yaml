@@ -1,0 +1,32 @@
+# Service categories — the spine services hang from (ADR 0003 §6).
+#
+# The names and groupings come from the old site's price list
+# (docs/analyse/03-leistungen-und-preise.md). They are recorded, not confirmed: that document's own
+# header says its contents are "to be confirmed by the owner before being carried over".
+#
+# Teasers are prose written for the rebuild, not extracted. They contain no facts on purpose — a teaser
+# that names a price is a second copy of that price.
+
+- id: sunshine
+  name: Solarium
+  teaser: Fünf Sonnenbänke, abgestimmt auf den Hauttyp.
+  order: 1
+  confirmed: false
+
+- id: naturkosmetik
+  name: Naturkosmetik
+  teaser: Gesichtsbehandlung und Anti-Aging in Ruhe.
+  order: 2
+  confirmed: false
+
+- id: massagen
+  name: Massagen
+  teaser: Vom Alltag weg — Relax und Hotstone.
+  order: 3
+  confirmed: false
+
+- id: pakete
+  name: Wellness-Pakete
+  teaser: Zeit für sich, oder zu zweit.
+  order: 4
+  confirmed: false
