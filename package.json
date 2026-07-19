@@ -17,6 +17,7 @@
     "check:tokens": "node tools/check-tokens.mjs",
     "check:content": "node tools/check-content.mjs",
     "check:external": "node tools/check-external-resources.mjs",
+    "check:fonts": "node tools/check-fonts.mjs",
     "format": "biome check --write ."
   },
   "dependencies": {

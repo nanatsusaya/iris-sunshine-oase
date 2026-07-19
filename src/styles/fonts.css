@@ -1,0 +1,66 @@
+/*
+ * Self-hosted webfonts (ADR 0004 §4, ADR 0009 §6).
+ *
+ * **This file exists because of a privacy rule, not a performance one.** The design draft loads four
+ * families from `fonts.googleapis.com`, which means every visitor to a small studio's website opens a
+ * connection to Google before a single word is drawn — including their IP address, and including
+ * visitors who never asked anything of Google. ADR 0009 §6 forbids third-party resources outright, so
+ * self-hosting is a consequence of that decision rather than a preference within it.
+ *
+ * Two families ship, not the draft's four. Kaushan Script and Yellowtail existed there to set the two
+ * words of the wordmark and nothing else; ADR 0004 §4 makes that a drawn mark instead.
+ *
+ * Provenance, licence, checksums and how to reproduce these files: `docs/fonts.md`. Both are under the
+ * SIL Open Font License 1.1, whose text ships beside them in `public/fonts/` — the licence requires
+ * that, and `CLAUDE.md`'s provenance rule would require it anyway.
+ *
+ * **Only the `latin` subset is shipped.** Every character the built site actually renders was measured
+ * against the subset's `unicode-range` — all 78 of them fall inside it, so `latin-ext` would be bytes
+ * nobody downloads a glyph from. That measurement is not a one-off: `tools/check-fonts.mjs` re-runs it
+ * against the built HTML on every check, so a future page that introduces a character outside the
+ * range fails the build instead of silently falling back to a system font for that one letter.
+ */
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  /*
+    A single static instance at 500, not the variable font. `--weight-heading` is the only weight this
+    family is ever asked for (`tools/check-fonts.mjs` asserts that too), and the variable file carries
+    the whole 300–700 axis to render one of them.
+  */
+  font-weight: 500;
+  /*
+    `swap`: text is painted immediately in the fallback and re-painted when the webfont arrives, rather
+    than being invisible for up to three seconds. The cost is a visible reflow; the alternative is a
+    page whose content is missing while the network decides. `docs/fonts.md` records why the fallback
+    stacks are chosen to keep that reflow small.
+  */
+  font-display: swap;
+  src: url("/fonts/cormorant-garamond-500-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Mulish";
+  font-style: normal;
+  /*
+    A weight *range*, because this one is a variable font — and it is variable for a reason rather than
+    by preference: the body text uses three weights (300 body, 400 dense, 500 marks and labels), and
+    upstream serves the identical file for all three. One 30 kB download covers the whole axis, where
+    three static instances would be three requests.
+  */
+  font-weight: 200 1000;
+  font-display: swap;
+  /*
+    Plain `format("woff2")`, not the `woff2-variations` hint that older guides pair with it. That hint
+    is deprecated, every browser that supports variable fonts reads the axis from the file itself, and
+    listing the same URL twice risks a second request from a parser that treats them as alternatives.
+  */
+  src: url("/fonts/mulish-variable-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
