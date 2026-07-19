@@ -9,6 +9,37 @@ reliable the finding is:
 - **verified** — machine-checked against the WordPress export
 - **observed** — read off screenshots, visual assessment
 
+## Quotations in this file
+
+**Anything inside quotation marks or a blockquote here is verbatim.** Where the
+old site's wording is shortened, emphasised or tidied, the quotation marks come
+off and the paraphrase is open about being one.
+
+That rule had to be written down because it was broken: `M-15` quoted the
+Impressum's image-rights sentence in a form nobody had ever published — words
+dropped, others silently changed — while the entry was tagged **verified** and
+argued a legal point about what that sentence says. `M-02` carried editorial
+`**bold**` inside its quotation marks, and `M-27` replaced the site's three full
+stops with a typographic ellipsis. Small on their own; together they meant the
+**verified** tag could not be trusted to mean what it says.
+
+Every quotation in this file was re-checked against
+[`../inhalte/`](../inhalte/README.md) on 2026-07-19. All of them match except
+three, which are **not** in that extract for a reason — recorded here so the next
+spot-check does not re-open them as though they were findings:
+
+| Entry | Quotation | Why it is not in `../inhalte/` |
+|---|---|---|
+| `M-08` | "Mo.. – Mi..", "Sa.." | rendered widget output. The export stores the opening hours as data; this is what the plugin drew from them, and the doubled full stops are the bug. |
+| `M-10` | "Email", "Message", "Absenden" | form field attributes. The extract records the contact form only as a widget, not its markup. |
+| `M-20` | "Hestia \| Entwickelt von ThemeIsle" | theme chrome, not page content. |
+
+`M-08` and `M-20` are tagged `observed`, which is exactly the distinction the
+Source column exists to draw. **`M-10` is tagged `verified` and cannot be
+re-checked from this repository**: it was machine-checked against the WordPress
+export, and the export lives in `Archive/`, which is excluded on purpose. That is
+a limit of this re-check, not a finding against the entry.
+
 ---
 
 ## Content
@@ -24,12 +55,19 @@ BfS certification.
 **To do:** Write the texts editorially. Affects above all the Moments area;
 the services and prices are known, what is missing are the explanatory texts.
 
-### M-02 — "Im Aufbau" notices with date stamp
+### M-02 — "im Aufbau" notices with date stamp
 **Source:** verified · **Priority:** high
 
-Six pages carry a construction notice, two of them with a date:
-"Diese Seite befindet sich **seit Januar 2018** im Aufbau" (`/zertifizierung`)
-and "**seit Juli 2019** im Umbau" (`/moments`). That exposes the standstill.
+Six pages carry a construction notice, two of them with a date — **the dates are
+the point**, and they are the site's own:
+
+> Diese Seite befindet sich seit Januar 2018 im Aufbau.
+
+on `/zertifizierung`, and
+
+> Diese Seite befindet sich seit Juli 2019 im Umbau.
+
+on `/moments`. That exposes the standstill.
 
 On `/honig` the notice appears even though the page has complete content.
 
@@ -73,7 +111,7 @@ wrong IDs. 20 anchor links were checked; only 5 have a target.
 | `#wellness` (1×) | no |
 | `#freundinnen-wellness-paket` (3×) | no — it is called `#moments-freundinnen-wellness-pakete` |
 
-Within a tile only the text link "Zu den Preisen…" works; image and title of
+Within a tile only the text link "Zu den Preisen..." works; image and title of
 the same tile lead nowhere.
 
 **To do:** In the rebuild, generate anchors from the category IDs so that
@@ -208,8 +246,13 @@ click.
 ### M-15 — Image rights not documented
 **Source:** verified · **Priority:** high
 
-The Impressum says all images either came "entweder von pixabay und somit unter
-CC0" or are own photos. Which image belongs to which category is recorded
+The Impressum states, verbatim:
+
+> Alle auf dieser Webseite präsentierten Bilder sind entweder von der Webseite
+> https://pixabay.com/ und somit unter dem CC0 veröffentlicht oder eigene Fotos.
+
+So: every image is either from Pixabay and therefore published under CC0, or one
+of the owner's own photos. Which image belongs to which category is recorded
 nowhere.
 
 **To do:** Clarify before reuse. See
