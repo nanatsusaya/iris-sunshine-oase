@@ -6,6 +6,10 @@ import { businessFact } from '../content/query';
 // asserts this import exists — a token file nothing loads passes every other check and styles
 // nothing.
 import '../styles/tokens.css';
+// The `@font-face` rules for the two self-hosted families (ADR 0004 §4). Separate from tokens.css on
+// purpose: that file is the *value* layer, and a font-face rule is a resource declaration, not a value.
+// `tools/check-fonts.mjs` asserts this import exists — declared fonts that nothing loads style nothing.
+import '../styles/fonts.css';
 
 interface Props {
   /** Page title, without the site name — the layout appends that. */
@@ -63,6 +67,31 @@ const tradingName = await businessFact('trading-name');
       only noticed because ADR 0004 R5 changed the apostrophe and one of the two copies would have
       silently kept the old one. A duplicated fact does not announce itself; it waits.
     */}
+    {/*
+      Both webfonts are preloaded. A `@font-face` inside a stylesheet is only discovered once that
+      stylesheet has been fetched and parsed, and only requested once a character that needs it is laid
+      out — so without this the fonts start downloading late and `font-display: swap` repaints the page
+      under the reader. Both are used above the fold on every page, headings and body copy, so neither
+      is speculative.
+
+      `crossorigin` is required even though these are same-origin: fonts are fetched in CORS mode, and
+      a preload without it is simply fetched a second time. The two files are 23 kB and 30 kB.
+    */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/cormorant-garamond-500-latin.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/mulish-variable-latin.woff2"
+      crossorigin
+    />
+
     <title>{title} — {tradingName}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />

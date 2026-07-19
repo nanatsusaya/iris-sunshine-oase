@@ -79,3 +79,10 @@ jobs:
       # from a third party. Reads dist/, so it has to follow the build.
       - name: No external resources
         run: npm run check:external
+
+      # ADR 0004 §4. Also reads dist/, and for the same kind of reason: the question it answers is
+      # which characters a *visitor* is shown, which no source file knows on its own because most of
+      # the text comes from the content model. A character outside the shipped subset renders in a
+      # system font while everything around it does not — a defect that produces no error anywhere.
+      - name: Self-hosted fonts
+        run: npm run check:fonts

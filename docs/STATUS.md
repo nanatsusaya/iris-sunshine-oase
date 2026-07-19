@@ -94,9 +94,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   no off-scale spacing, contrast holds, `--colour-accent` is never text, and `@media` uses only the two
   sanctioned breakpoints with no `max-width`. State: **draft** — the tokens exist and the holding page
   uses them; the designed homepage does not exist yet.
-  - **The fonts are not self-hosted yet.** `--font-heading` and `--font-body` name Cormorant Garamond
-    and Mulish and fall through to a system serif and sans, so the page is correct but not yet as
-    drawn. The font files are their own change, because each one enters under the provenance rule.
+  - ✅ **The fonts are self-hosted** (2026-07-19). Cormorant Garamond 500 and the Mulish variable
+    font, `latin` subset, 52 kB together, under the SIL Open Font License with its text shipped
+    beside them. Provenance, checksums and how to reproduce the download:
+    [`docs/fonts.md`](fonts.md). `tools/check-fonts.mjs` asserts six properties, of which one is the
+    reason the check exists: **every character the built pages render must lie inside a shipped
+    `unicode-range`**, so a future page containing a letter outside `latin` fails the build instead
+    of rendering that one letter in a system font.
 - ✅ **The content model** (2026-07-19): five collections, the discriminated-union price schema, the
   accessor module and the five checks of ADR 0003 §7. `docs/business-facts.md` folded into
   `src/content/business.yaml` and became a pointer; `src/config/business.ts` and its regex parsing of a
@@ -193,20 +197,30 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**Self-host the two fonts** (Phase 2, #4). Cormorant Garamond and Mulish, subset to the Latin glyphs the
-site uses, `woff2`, self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs
-its provenance recorded like any other asset. Until this lands the homepage renders in system
-fallbacks — Georgia for the headings, the platform sans for body copy — which is also the
-`font-display: swap` state, so it has to look acceptable regardless, and it does.
+**The preview URL** (Phase 2, #4) — and it is the owner's move, not an agent's. The homepage, the
+token layer, the content model and the fonts are all in place; what is missing is the two netcup and
+GitHub Pages actions listed below. Until they happen the epic's Definition of Done — *a URL the owner
+can open* — stays unmet no matter what else ships, which is worth saying plainly rather than letting
+the work drift on around it.
 
-**The homepage shipped on 2026-07-19** and the ordering note that used to stand here is spent: the
-homepage waited for the content model rather than following the token layer directly, because as drawn
-it needs opening hours and four price teasers and neither had an authority. Building it first would
-have meant typing an opening time into a template — the exact defect this project exists to remove, on
-day one of the implementation. That worked; nothing on the page carries a figure of its own.
+**The homepage and the fonts shipped on 2026-07-19**, and the ordering note that used to stand here is
+spent: the homepage waited for the content model rather than following the token layer directly,
+because as drawn it needs opening hours and four price teasers and neither had an authority. Building
+it first would have meant typing an opening time into a template — the exact defect this project exists
+to remove, on day one of the implementation. That worked; nothing on the page carries a figure of its
+own.
 
-After the fonts, in rough order: the sun as a vector (#39), then the pages the homepage cannot yet link
-to — Leistungen & Preise, Über uns, Kontakt — which is Phase 3 and needs the owner's figures.
+Decision-free work still available while the preview is blocked, in rough order:
+
+1. **The sun as a vector** (#39), which also unblocks the SVG wordmark ADR 0004 §4 decided — the
+   homepage currently sets the studio's name as text instead.
+2. **Phase 0's remainder** — #17 (issue templates), #18 (`SECURITY.md`, which must **not** copy
+   grimora's five-working-day response promise), #19, #11.
+3. **ADRs 0005, 0007 and 0008**, each as its own two-PR cycle. These are not decision-free: they exist
+   to put questions to the owner.
+
+The pages the homepage cannot yet link to — Leistungen & Preise, Über uns, Kontakt — are Phase 3 and
+wait on the owner's figures.
 
 ### The repository currently contains invented prices and opening hours, on purpose
 
