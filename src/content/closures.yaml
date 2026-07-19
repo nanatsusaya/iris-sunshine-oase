@@ -1,0 +1,16 @@
+# ⚠️  INVENTED. This is not a closure the studio has announced.
+#
+# Dated exceptions — holidays and closures (ADR 0003 §4). Separate from hours.yaml and deliberately not
+# a sentence somewhere in the prose, because a closure that lives in prose cannot suppress anything.
+#
+# This list is what the status badge must consult before it is allowed to claim anything (ADR 0003 R2).
+# Without it the badge would be a weekday clock pretending to be a calendar — confidently open on
+# Christmas Day. Maintaining it is the price of having the badge at all, and that falls due at go-live.
+#
+# One placeholder entry, so the shape is exercised rather than merely declared.
+
+- id: placeholder-betriebsferien
+  from: 2099-01-01
+  until: 2099-01-02
+  reason: Platzhalter — Betriebsferien
+  confirmed: false

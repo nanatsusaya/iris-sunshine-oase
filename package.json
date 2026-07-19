@@ -10,11 +10,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "npm run check:types && npm run check:lint && npm run check:docs && npm run check:tokens",
+    "check": "npm run check:types && npm run check:lint && npm run check:docs && npm run check:tokens && npm run check:content",
     "check:types": "astro check",
     "check:lint": "biome check .",
     "check:docs": "node tools/check-docs.mjs",
     "check:tokens": "node tools/check-tokens.mjs",
+    "check:content": "node tools/check-content.mjs",
     "check:external": "node tools/check-external-resources.mjs",
     "format": "biome check --write ."
   },

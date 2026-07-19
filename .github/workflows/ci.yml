@@ -70,6 +70,11 @@ jobs:
       - name: Design tokens
         run: npm run check:tokens
 
+      # ADR 0003 §7. Covers what Astro does not: a duplicate id is only a *warning* there and the
+      # build still exits 0, silently overwriting one entry with another.
+      - name: Content model
+        run: npm run check:content
+
       # ADR 0009 §6 as a check rather than a rule to remember: the built output must fetch nothing
       # from a third party. Reads dist/, so it has to follow the build.
       - name: No external resources

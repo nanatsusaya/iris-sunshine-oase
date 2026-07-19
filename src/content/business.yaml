@@ -1,0 +1,54 @@
+# Identity and contact details — the one authoritative copy (ADR 0003 §9).
+#
+# This replaces the table in docs/business-facts.md, which held these under an explicit "interim
+# location" notice until a content model existed. That file is now a pointer to this one.
+#
+# These are the business's own details and § 5 TMG requires a German commercial website to state them
+# publicly, so publishing them here is fine. Nothing belonging to a third party is in this repository.
+#
+# NOTE — `id` must be the first key of every entry. tools/check-content.mjs asserts it, because its
+# duplicate-id scan reads these files as text: Astro's own loader only *warns* on a duplicate id and
+# the build still exits 0, silently overwriting one entry with another.
+
+- id: trading-name
+  value: Kosmetik- & Sonnenstudio Iris’ Sunshine Oase
+  # Two authorities, deliberately: the extract for the wording, the owner for the apostrophe. The old
+  # site spelled the name both ways — a straight ' in the header, a typographic ’ in the hero — and the
+  # 2026 design draft reproduced exactly that split, 39 times one way and 18 the other.
+  source: docs/inhalte/seiten/impressum.md (wording); owner 2026-07-19, ADR 0004 R5 (apostrophe)
+  confirmed: { by: owner, on: 2026-07-19 }
+
+- id: proprietor
+  value: Iris Zellner
+  source: docs/inhalte/seiten/impressum.md
+  confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
+
+- id: street
+  value: Offenbacher Str. 2
+  source: docs/inhalte/seiten/impressum.md
+  confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
+
+- id: postcode-town
+  value: 76863 Herxheim bei Landau (Pfalz)
+  source: docs/inhalte/seiten/impressum.md
+  confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
+
+- id: telephone
+  value: +49 (0)7276 50 50 550
+  source: docs/inhalte/seiten/impressum.md
+  confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
+
+- id: email
+  # This one could not come from the extract. The PII cleaning of the WordPress export replaced *every*
+  # e-mail address with a placeholder under example.invalid and did not distinguish a customer's address
+  # from the studio's own — so impressum.md and kontakt.md both show studio@example.invalid, which is a
+  # redaction artefact and not a value to copy. The blanket rule was right: the export held 2,216
+  # contact-form submissions. The studio's own address was collateral, and the owner supplied it.
+  value: IrisSunshineOase@online.de
+  source: owner, 2026-07-18
+  confirmed: { by: owner, on: 2026-07-18 }
+
+- id: vat-id
+  value: DE276633210
+  source: docs/inhalte/seiten/impressum.md
+  confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
