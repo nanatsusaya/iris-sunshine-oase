@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-07-18**.
+> Living handoff note between working sessions. Last updated: **2026-07-19**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -101,6 +101,25 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   accessor module and the five checks of ADR 0003 §7. `docs/business-facts.md` folded into
   `src/content/business.yaml` and became a pointer; `src/config/business.ts` and its regex parsing of a
   Markdown table are gone. State: **draft** — the shape is complete, the values are placeholders.
+- ✅ **The homepage** (2026-07-19): built from the design draft's turn 6, mobile-first, out of the
+  tokens (#40) and the content model (#41). Header, hero, four service teasers, opening hours, contact
+  and footer. Every figure on it is read from the model — `tools/check-content.mjs` rejects a price or
+  a clock time typed into a template — and every invented one is struck through and labelled.
+  State: **draft** — the layout is complete, the values and the photographs are not.
+  - **Three defects were found by measuring the rendered page rather than by trusting the build**, and
+    all three are fixed: a decorative glow disc 320 px wide inside a 272 px hero added a horizontal
+    scrollbar at the reflow floor; „Öffnungszeiten" at `--text-3xl` was wider than its own panel at
+    320 px; and the header used flexbox `order`, so a keyboard user tabbed from the wordmark to the
+    far-right call button and back to the middle (WCAG 2.2 SC 2.4.3). None of them is visible in a
+    passing build.
+  - **The wordmark is text, not the inline SVG ADR 0004 §4 decided.** It needs two things that do not
+    exist here: the sun as a vector (#39 — the draft ships a PNG) and the glyph outlines, which can
+    only come from the two script fonts the ADR deliberately does not ship. Recorded in
+    `src/components/Wordmark.astro`; a smaller wrong than a raster mark that does not scale.
+  - **No photographs.** The frames are drawn at their aspect ratio and marked „Foto folgt", so
+    arriving images cannot reflow the page (ADR 0004 §9). None of the old site's may be reused.
+  - **No Impressum, and that is a go-live gate.** § 5 TMG attaches at cutover, not to a `noindex`
+    preview that is not the studio's live site. Listed under Phase 5 below.
 - ✅ **The indexing gate**, as one build-time flag defaulting to `preview` (ADR 0006 §5). Verified in
   both directions locally: `preview` emits `noindex` and no sitemap; `live` emits neither the tag nor
   a `Disallow`, and does emit the sitemap.
@@ -123,6 +142,14 @@ keep them from recurring.
 
 **Phase 5 — go-live** (#7)**:** planned. Domain cutover from netcup, redirects for the 32 old URLs, removal of
 the `noindex` gate. Every step here is owner-approved.
+
+> **Two legal gates belong to this phase and are named here so they are not discovered on the day.**
+> § 5 TMG requires a German commercial site to carry an **Impressum**, and § 13 TMG / Art. 13 DSGVO a
+> **Datenschutzerklärung**; the preview carries neither, because it is `noindex`, unlinked and not the
+> site being served to the public. Both attach at cutover. Separately,
+> `docs/analyse/02-inhaltsinventar.md` records the *old* site's Impressum as **legally outdated**, so
+> the address, telephone and VAT rows in `src/content/business.yaml` need an explicit pre-go-live
+> confirmation from the owner rather than one inherited from a page written in 2017.
 
 ## Security controls — decided vs. in force
 
@@ -166,20 +193,20 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**The homepage** (Phase 2, #4). The content model it needs now exists.
+**Self-host the two fonts** (Phase 2, #4). Cormorant Garamond and Mulish, subset to the Latin glyphs the
+site uses, `woff2`, self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs
+its provenance recorded like any other asset. Until this lands the homepage renders in system
+fallbacks — Georgia for the headings, the platform sans for body copy — which is also the
+`font-display: swap` state, so it has to look acceptable regardless, and it does.
 
-**The order changed on 2026-07-19, and the reason is worth reading.** This file previously said the
-homepage came next after the token layer. It did not: the homepage as drawn needs opening hours and four
-price teasers, and neither had an authority. Building it first would have meant typing an opening time
-into a template — the exact defect this project exists to remove, on day one of the implementation.
+**The homepage shipped on 2026-07-19** and the ordering note that used to stand here is spent: the
+homepage waited for the content model rather than following the token layer directly, because as drawn
+it needs opening hours and four price teasers and neither had an authority. Building it first would
+have meant typing an opening time into a template — the exact defect this project exists to remove, on
+day one of the implementation. That worked; nothing on the page carries a figure of its own.
 
-In order:
-
-1. **The homepage** from the draft's turn 6 — mobile-first, out of the tokens (#40) and the model.
-2. **Self-host the two fonts.** Cormorant Garamond and Mulish, subset to the Latin glyphs the site uses,
-   `woff2`, self-hosted because ADR 0009 §6 forbids fetching them from Google. Each file needs its
-   provenance recorded like any other asset. Until this lands the page renders in system fallbacks —
-   which is also the `font-display: swap` state, so it has to look acceptable regardless.
+After the fonts, in rough order: the sun as a vector (#39), then the pages the homepage cannot yet link
+to — Leistungen & Preise, Über uns, Kontakt — which is Phase 3 and needs the owner's figures.
 
 ### The repository currently contains invented prices and opening hours, on purpose
 

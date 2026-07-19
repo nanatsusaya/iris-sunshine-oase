@@ -110,7 +110,12 @@ const tradingName = await businessFact('trading-name');
 
   :global(body) {
     margin: 0;
-    padding: var(--space-7) var(--gutter);
+    /*
+      No page padding here. The header and footer are full-bleed panels that must reach the viewport
+      edge, so the gutter belongs to the content bands inside a page rather than to the document. A
+      padded `body` would leave a strip of gradient down both sides of every panel.
+    */
+    padding: 0;
     font-size: var(--text-base);
     min-height: 100vh;
   }
@@ -125,9 +130,34 @@ const tradingName = await businessFact('trading-name');
     /* Headings use the fluid top steps of the scale, so a long one reflows rather than running to
        the edge — the old site's hero title kept its size whatever its length. */
     text-wrap: balance;
+    /*
+      German sets long compound nouns — „Öffnungszeiten", „Fußreflexzonen-Massage" — and a single
+      unbreakable word wider than its container does not wrap, it overflows, and takes the page's
+      horizontal scroll with it. `hyphens: auto` needs the document language, which `<html lang="de">`
+      above supplies; without that attribute it silently does nothing.
+    */
+    hyphens: auto;
   }
 
   :global(a) {
     color: var(--colour-brand);
+  }
+
+  /*
+    One focus indicator for the whole site, set here so no component can quietly remove it.
+
+    The draft draws this ring in `--colour-accent`. It is set in `--colour-brand` instead, and the
+    reason is arithmetic rather than taste: WCAG 2.2 SC 1.4.11 asks a focus indicator to reach 3:1
+    against what surrounds it, and #FFC000 scores 1.07–1.60 against everything in this palette — the
+    same measurement that makes it unusable as text (ADR 0004 §3). A focus ring nobody can see is the
+    accessibility defect that the check in `tools/check-tokens.mjs` cannot catch, because an outline
+    is not a `color`.
+
+    `:focus-visible`, not `:focus`, so a mouse click does not leave a ring behind on a button.
+  */
+  :global(:focus-visible) {
+    outline: 3px solid var(--colour-brand);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
   }
 </style>

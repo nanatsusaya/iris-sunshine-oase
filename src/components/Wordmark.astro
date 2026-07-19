@@ -1,0 +1,67 @@
+---
+/**
+ * The studio's name as a brand mark.
+ *
+ * **This is not yet what ADR 0004 §4 decided, and the gap is deliberate rather than overlooked.**
+ * §4 makes the wordmark an inline SVG, for two good reasons: the draft sets it in Kaushan Script and
+ * Yellowtail, two webfont families that exist in the entire design to render two words, and the „O" of
+ * „Oase" is replaced by the studio's sun. Drawing the lockup once removes both font families and makes
+ * it render identically everywhere instead of depending on two fonts loading.
+ *
+ * Two things it needs do not exist yet:
+ *
+ *   - **the sun as a vector.** ADR 0004 R4 records the sun as the owner's own work, which clears the
+ *     provenance gate, but the draft ships `assets/sun-orange.png` — a raster. The old site's
+ *     `Logo-Sun.svg` was also a PNG in an SVG wrapper and therefore did not scale
+ *     (`docs/analyse/04-design-system.md`); shipping a raster sun beside a vector wordmark would
+ *     repeat that exactly. Tracked as #39.
+ *   - **the glyph outlines**, which can only come from the two script fonts. They are not in this
+ *     repository, and adding two font families in order to trace two words and then delete them again
+ *     is a licence and provenance exercise of its own.
+ *
+ * So the name is set as text in the heading family until then. That is a smaller wrong than either
+ * alternative: a raster mark that does not scale, or a blocked homepage. It reads correctly, it is
+ * selectable and translatable, and it costs nothing to replace.
+ *
+ * The name itself is read from the content model and never typed here — `src/content/business.yaml`
+ * is its one authority, and ADR 0004 R5's change of apostrophe is exactly the kind of edit that finds
+ * a forgotten second copy.
+ */
+import { businessFact } from '../content/query';
+
+interface Props {
+  /** `strong` is the header's larger setting; `quiet` is the footer's. */
+  size?: 'strong' | 'quiet';
+}
+
+const { size = 'strong' } = Astro.props;
+const tradingName = await businessFact('trading-name');
+
+/*
+ * The mark shows only the studio's name, not the „Kosmetik- & Sonnenstudio" trade prefix that the
+ * legal trading name carries. Slicing it off the authoritative string rather than storing a second,
+ * shorter name keeps one definition: rename the business and both forms follow.
+ */
+const displayName = tradingName.replace(/^.*?&\s*Sonnenstudio\s+/u, '');
+---
+
+<span class:list={['wordmark', size]}>{displayName}</span>
+
+<style>
+  .wordmark {
+    font-family: var(--font-heading);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-flat);
+    color: var(--colour-brand);
+    /* The name is a mark, so it never breaks across lines mid-word the way a sentence may. */
+    text-wrap: balance;
+  }
+
+  .strong {
+    font-size: var(--text-xl);
+  }
+
+  .quiet {
+    font-size: var(--text-lg);
+  }
+</style>
