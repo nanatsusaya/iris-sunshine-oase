@@ -23,9 +23,11 @@ in an Elementor layout block, a pricing-table widget and a text paragraph, and o
 drifted apart. So here, **content is structured data rather than markup**: prices, opening hours and
 services have exactly one authoritative definition each, and templates render them.
 
-The repository currently contains **documentation only** — the survey of the old site, the decision
-records, and the tooling that extracted the old content. The scaffold ships once the tech-stack
-decision is recorded.
+The repository holds the documentation — the survey of the old site, the decision records, and the
+tooling that extracted the old content — **and the site itself, in draft**: an Astro scaffold, the
+design-token layer, the content model, and a homepage built from both. Nothing is deployed yet, and
+every price and opening time in it is a deliberate placeholder. [`docs/STATUS.md`](docs/STATUS.md)
+tracks what is actually built, as against what is merely decided.
 
 ## Documentation
 
@@ -39,7 +41,7 @@ everything else.
 | [`docs/STATUS.md`](docs/STATUS.md) | Where the rebuild currently stands |
 | [`docs/analyse/`](docs/analyse/README.md) | What the old site is, and its 28 documented defects |
 | [`docs/inhalte/`](docs/inhalte/README.md) | Every text of the old site, extracted verbatim |
-| [`docs/business-facts.md`](docs/business-facts.md) | The studio's address and contact details — the one authoritative copy |
+| [`docs/business-facts.md`](docs/business-facts.md) | Why the studio's contact details may be published at all. The values themselves live in [`src/content/business.yaml`](src/content/business.yaml) |
 | [`docs/meta/`](docs/meta/agent-collaboration-log.md) | Why the way we work looks the way it does |
 
 Two things are deliberately *not* here. The **archive** of the old site — roughly 600 MB of image
@@ -77,6 +79,6 @@ This repository holds two different kinds of material, licensed differently. See
 - **The software** — code, templates, build configuration, the scripts under `tools/`, and the
   project's own process documentation — is © 2026 Daniel Wagner, under the **MIT licence**.
 - **The business content** — page copy, service descriptions, prices, opening hours, the business
-  name, the logo and all image material — is © 2026 Iris Zellner, Kosmetik- & Sonnenstudio Iris'
+  name, the logo and all image material — is © 2026 Iris Zellner, Kosmetik- & Sonnenstudio Iris’
   Sunshine Oase. **All rights reserved.** It is public here because the rebuild is developed in the
   open, not to grant any right of use. [`LICENSE`](LICENSE) says where to write to ask for it.
