@@ -6,7 +6,7 @@
 # Beides gehoert nicht in ein oeffentliches Repository. Der Ausschluss ist
 # bewusst pauschal gehalten: eine Regel statt einer Einzelfallpruefung je Datei.
 #
-# Die Texte des Altauftritts sind nach docs/inhalte/ extrahiert und dort
+# Die Texte des Altauftritts sind nach docs/content/ extrahiert und dort
 # versioniert - erzeugt mit tools/extract-wp-content.mjs.
 # Das Bildmaterial wird ausserhalb des Repositorys archiviert.
 Archive/

@@ -43,8 +43,8 @@ above covers only one of them.
    The content of the website itself and everything describing the business:
    page copy, service descriptions, prices, opening hours, the business name,
    the logo, and all photographs and image material — including the extracted
-   texts of the previous website under docs/inhalte/ and the price and content
-   material under docs/analyse/.
+   texts of the previous website under docs/content/ and the price and content
+   material under docs/analysis/.
 
    All rights to this material are reserved. It is published here because the
    rebuild is developed in the open, NOT to grant any right of use. It may not
@@ -60,4 +60,4 @@ MIT licence applies to the surrounding code.
 NOTE ON IMAGES: no image is added to this repository without documented source,
 licence and evidence. Nothing in this file should be read as a warranty that any
 particular image may be reused; the rights situation of the previous website's
-image material is explicitly undocumented (see docs/analyse/06-medien-inventar.md).
+image material is explicitly undocumented (see docs/analysis/06-media-inventory.md).

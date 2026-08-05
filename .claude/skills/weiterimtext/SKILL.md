@@ -86,7 +86,7 @@ re-verify before writing:
   (`git log --grep="Merge pull request" -5`) and open PRs, to see whether the state is **already**
   reflected. If another change got there first, do not duplicate it — note it and move on.
 - Only if genuinely stale, update `docs/STATUS.md` and any other affected living doc: the ADR index, a
-  README, `docs/analyse/05-maengelliste.md` if a defect was closed. This is a normal branch-and-PR
+  README, `docs/analysis/05-defect-list.md` if a defect was closed. This is a normal branch-and-PR
   change, kept to one concern; a doc-sync PR is its own PR.
 - `docs/meta/agent-collaboration-log.md` — only if a genuinely methodological moment occurred: an owner
   correction and its rationale, a workflow experiment, a mistake worth not repeating. Not routine task
@@ -105,7 +105,7 @@ treat the plan you formed earlier as a **hypothesis**, because the world may hav
   decision, never evidence that it already was.
 - **Owner decision open?** Check it against the stop-and-ask list in the guardrails above. The most
   frequent trigger on this project is a **business fact with no source** — if the task needs a price, an
-  opening time or a wording that is not in `docs/inhalte/`, that is the gate, not a detail to resolve
+  opening time or a wording that is not in `docs/content/`, that is the gate, not a detail to resolve
   along the way.
 
 ## 5. Start clean, or stop

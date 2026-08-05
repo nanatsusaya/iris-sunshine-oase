@@ -38,7 +38,7 @@ decided this, and re-adding them would be a second answer:
 ## Content sources
 
 <!-- Only for changes that touch prices, opening hours, address, contact details or page copy.
-     Where does each fact come from — docs/inhalte/, an ADR, or the owner? A fact with no source
+     Where does each fact come from — docs/content/, an ADR, or the owner? A fact with no source
      does not ship. Write "none" if this change touches no business content. -->
 
 ## Verified

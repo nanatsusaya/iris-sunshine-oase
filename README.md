@@ -39,8 +39,8 @@ everything else.
 | [`CLAUDE.md`](CLAUDE.md) | How work is done here — the standing operating rules |
 | [`docs/adr/`](docs/adr/README.md) | What was decided, and why. Normative. |
 | [`docs/STATUS.md`](docs/STATUS.md) | Where the rebuild currently stands |
-| [`docs/analyse/`](docs/analyse/README.md) | What the old site is, and its 28 documented defects |
-| [`docs/inhalte/`](docs/inhalte/README.md) | Every text of the old site, extracted verbatim |
+| [`docs/analysis/`](docs/analysis/README.md) | What the old site is, and its 28 documented defects |
+| [`docs/content/`](docs/content/README.md) | Every text of the old site, extracted verbatim |
 | [`docs/business-facts.md`](docs/business-facts.md) | Why the studio's contact details may be published at all. The values themselves live in [`src/content/business.yaml`](src/content/business.yaml) |
 | [`docs/meta/`](docs/meta/agent-collaboration-log.md) | Why the way we work looks the way it does |
 

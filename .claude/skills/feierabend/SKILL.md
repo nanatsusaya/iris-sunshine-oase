@@ -59,7 +59,7 @@ calling anything done, and two project specifics that decide most cases here:
   says the thing compiles, not that the page is right. Three real defects on the homepage were found
   this way and none of them was visible in a passing build.
 - **Every business fact that was touched has a source.** A price, an opening time, an address or an
-  Impressum detail comes from `docs/inhalte/` or from the owner. If a value could not be sourced it is
+  Impressum detail comes from `docs/content/` or from the owner. If a value could not be sourced it is
   left out and raised — never guessed. An empty field is recoverable; a wrong price is not.
 - **Any image added has documented provenance** — source, licence and evidence, written down. If it
   does not, it does not ship.

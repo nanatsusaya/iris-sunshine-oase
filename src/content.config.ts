@@ -4,7 +4,7 @@
  * Every fact about the studio that a page shows — a price, an opening time, the address — is defined
  * exactly once, here, and rendered from that definition. The old site did the opposite: the same price
  * lived in an Elementor layout block, a pricing-table widget and a text paragraph, and over nine years
- * they drifted apart (`docs/analyse/05-maengelliste.md`). A fact duplicated away from its authority
+ * they drifted apart (`docs/analysis/05-defect-list.md`). A fact duplicated away from its authority
  * degrades into an assertion.
  *
  * The property that makes this worth doing is measured, not hoped for: **a schema violation fails the
@@ -162,7 +162,7 @@ const services = defineCollection({
 /**
  * Opening hours as intervals with a validity period (ADR 0003 §4).
  *
- * `docs/analyse/02-inhaltsinventar.md` records that the export holds **two conflicting summer sets with
+ * `docs/analysis/02-content-inventory.md` records that the export holds **two conflicting summer sets with
  * differing Sunday hours**. A model that can only hold one gets resolved by somebody deleting the other,
  * and the wrong one is exactly as likely as the right one. So sets coexist and carry their own validity;
  * the build selects.

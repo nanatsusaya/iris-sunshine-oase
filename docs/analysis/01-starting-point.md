@@ -85,7 +85,7 @@ construction — it is therefore the most reliable source for the content.
 ### 2. Media Holdings
 
 Two separate collections, around 750 MB in total. Details and recommendation on
-storage in [06-medien-inventar.md](06-medien-inventar.md).
+storage in [06-media-inventory.md](06-media-inventory.md).
 
 ### 3. Screenshots
 

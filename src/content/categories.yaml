@@ -1,7 +1,7 @@
 # Service categories — the spine services hang from (ADR 0003 §6).
 #
 # The names and groupings come from the old site's price list
-# (docs/analyse/03-leistungen-und-preise.md). They are recorded, not confirmed: that document's own
+# (docs/analysis/03-services-and-prices.md). They are recorded, not confirmed: that document's own
 # header says its contents are "to be confirmed by the owner before being carried over".
 #
 # Teasers are prose written for the rebuild, not extracted. They contain no facts on purpose — a teaser

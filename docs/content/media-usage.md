@@ -2,7 +2,7 @@
 
 # Images in use
 
-Which image file appeared on which page, determined from the export. The files themselves live in the excluded archive (see the [media inventory](../analyse/06-medien-inventar.md)) and are **not** part of this repository.
+Which image file appeared on which page, determined from the export. The files themselves live in the excluded archive (see the [media inventory](../analysis/06-media-inventory.md)) and are **not** part of this repository.
 
 > **Image rights are undocumented.** Establish provenance before reusing any of these — see defect M-15. No image enters the repository without its source, licence and evidence recorded.
 

@@ -1,5 +1,5 @@
 /**
- * Extracts every text of the old WordPress export to Markdown under docs/inhalte/.
+ * Extracts every text of the old WordPress export to Markdown under docs/content/.
  *
  * Why this exists: the Archive/ folder is excluded from the repository by .gitignore
  * (undocumented image rights, third-party personal data). Extracting the texts here is
@@ -22,7 +22,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const XML_PATH = 'Archive/iris-sujnshine-oase-backup/iris039sunshineoase.WordPress.2026-07-18.xml';
-const OUT = 'docs/inhalte';
+const OUT = 'docs/content';
 
 if (!fs.existsSync(XML_PATH)) {
   console.error(`Export not found: ${XML_PATH}`);
@@ -282,7 +282,7 @@ for (const it of items) {
   byType[t].push(it);
 }
 
-fs.mkdirSync(path.join(OUT, 'seiten'), { recursive: true });
+fs.mkdirSync(path.join(OUT, 'pages'), { recursive: true });
 
 const written = [];
 function write(rel, content) {
@@ -325,7 +325,7 @@ for (const it of pages) {
       : '';
 
   const fileSlug = slug && slug !== '/' ? slugify(slug) : slugify(title);
-  const rel = `seiten/${fileSlug}.md`;
+  const rel = `pages/${fileSlug}.md`;
 
   // null = an optional row that is dropped. Empty strings are intentional blank lines.
   const head = [
@@ -374,7 +374,7 @@ for (const it of posts) {
       : htmlToMd(tag(it, 'content:encoded'))
   }\n`;
 }
-write('beitraege.md', postsMd);
+write('posts.md', postsMd);
 
 // --------------------------------------------------------- 3. Opening hours
 
@@ -419,7 +419,7 @@ for (const it of sets.sort((a, b) =>
     if (names.length) ozMd += `\nHolidays: ${names.join(', ')}\n`;
   }
 }
-write('oeffnungszeiten.md', ozMd);
+write('opening-hours.md', ozMd);
 
 // ------------------------------------------------------------------- 4. URLs
 
@@ -443,7 +443,7 @@ for (const p of published) {
   urlMd += `| \`/${p.slug}/\` | ${p.title} | ${p.type === 'page' ? 'Page' : 'Post'} | _open_ |\n`;
 }
 urlMd += `\n**${published.length} published addresses.**\n`;
-write('urls-und-redirects.md', urlMd);
+write('urls-and-redirects.md', urlMd);
 
 // ------------------------------------------------------------------ 5. Media
 
@@ -469,7 +469,7 @@ let medMd =
   '\n# Images in use\n\n' +
   'Which image file appeared on which page, determined from the export. The files ' +
   'themselves live in the excluded archive (see the ' +
-  '[media inventory](../analyse/06-medien-inventar.md)) and are **not** part of this ' +
+  '[media inventory](../analysis/06-media-inventory.md)) and are **not** part of this ' +
   'repository.\n\n' +
   '> **Image rights are undocumented.** Establish provenance before reusing any of ' +
   'these — see defect M-15. No image enters the repository without its source, licence ' +
@@ -481,7 +481,7 @@ let medMd =
 for (const [file, pagesSet] of [...usage].sort((a, b) => a[0].localeCompare(b[0]))) {
   medMd += `| \`${file}\` | ${[...pagesSet].join(', ')} |\n`;
 }
-write('medien-verwendung.md', medMd);
+write('media-usage.md', medMd);
 
 // ------------------------------------------------------------------ 6. Index
 
@@ -512,10 +512,10 @@ for (const p of pageIndex.sort((a, b) => a.title.localeCompare(b.title))) {
 idx +=
   '\n## Other captures\n\n' +
   '| File | Contents |\n|---|---|\n' +
-  '| [beitraege.md](beitraege.md) | All 19 blog posts (expired, not for reuse) |\n' +
-  '| [oeffnungszeiten.md](oeffnungszeiten.md) | Every seasonal record, decoded |\n' +
-  '| [urls-und-redirects.md](urls-und-redirects.md) | The URL inventory behind the redirects |\n' +
-  '| [medien-verwendung.md](medien-verwendung.md) | Which image appeared on which page |\n\n' +
+  '| [posts.md](posts.md) | All 19 blog posts (expired, not for reuse) |\n' +
+  '| [opening-hours.md](opening-hours.md) | Every seasonal record, decoded |\n' +
+  '| [urls-and-redirects.md](urls-and-redirects.md) | The URL inventory behind the redirects |\n' +
+  '| [media-usage.md](media-usage.md) | Which image appeared on which page |\n\n' +
   '## Notes\n\n' +
   '- Texts are reproduced **unchanged**, including the typos and grammatical errors ' +
   'recorded in the defect list. Fix them when the content is carried over, not here.\n' +

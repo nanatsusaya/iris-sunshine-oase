@@ -24,11 +24,11 @@ stops with a typographic ellipsis. Small on their own; together they meant the
 **verified** tag could not be trusted to mean what it says.
 
 Every quotation in this file was re-checked against
-[`../inhalte/`](../inhalte/README.md) on 2026-07-19. All of them match except
+[`../content/`](../content/README.md) on 2026-07-19. All of them match except
 three, which are **not** in that extract for a reason — recorded here so the next
 spot-check does not re-open them as though they were findings:
 
-| Entry | Quotation | Why it is not in `../inhalte/` |
+| Entry | Quotation | Why it is not in `../content/` |
 |---|---|---|
 | `M-08` | "Mo.. – Mi..", "Sa.." | rendered widget output. The export stores the opening hours as data; this is what the plugin drew from them, and the doubled full stops are the bug. |
 | `M-10` | "Email", "Message", "Absenden" | form field attributes. The extract records the contact form only as a widget, not its markup. |
@@ -116,7 +116,7 @@ the same tile lead nowhere.
 
 **To do:** In the rebuild, generate anchors from the category IDs so that
 target and reference cannot drift apart. See
-[03-leistungen-und-preise.md](03-leistungen-und-preise.md).
+[03-services-and-prices.md](03-services-and-prices.md).
 
 ### M-28 — Four links to pages that never existed
 **Source:** verified · **Priority:** high
@@ -256,7 +256,7 @@ of the owner's own photos. Which image belongs to which category is recorded
 nowhere.
 
 **To do:** Clarify before reuse. See
-[06-medien-inventar.md](06-medien-inventar.md).
+[06-media-inventory.md](06-media-inventory.md).
 
 ---
 

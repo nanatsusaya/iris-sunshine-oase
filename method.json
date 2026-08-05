@@ -20,7 +20,7 @@
     "allow": []
   },
 
-  "ignore": ["docs/inhalte/", "Archive/"],
+  "ignore": ["docs/content/", "Archive/"],
 
   "adaptations": []
 }

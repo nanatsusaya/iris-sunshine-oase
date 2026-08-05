@@ -27,13 +27,13 @@ written down because they look like errors otherwise.
 
 **The e-mail address** could not come from the extract. The PII cleaning replaced **every** e-mail
 address with a placeholder under `example.invalid` and did not distinguish a customer's address from the
-studio's own, so `inhalte/seiten/impressum.md` and `inhalte/seiten/kontakt.md` both show
+studio's own, so `content/pages/impressum.md` and `content/pages/kontakt.md` both show
 `studio@example.invalid`. That is a redaction artefact, **not a value to copy.** The blanket rule was
 right — a rule with an exception is a rule that gets applied wrongly under time pressure — and the
 studio's own address was collateral. It comes from the owner instead.
 
 **The trading name's apostrophe** is the owner's decision, not the extract's. The old site spelled the
-name both ways (`analyse/04-design-system.md` records a straight `'` in the header and a typographic `’`
+name both ways (`analysis/04-design-system.md` records a straight `'` in the header and a typographic `’`
 in the hero), and the 2026 design draft reproduced exactly that split, 39 times one way and 18 the
 other. The owner settled it on 2026-07-19 ([ADR 0004](adr/0004-styling-and-design-tokens.md) R5) on the
 typographic form, and `tools/check-docs.mjs` asserts it — because a brand name spelled two ways is
@@ -44,7 +44,7 @@ twice, across nine years and one complete redesign.
 
 **A fact has exactly one definition.** The old site carried the same price in an Elementor block, a
 pricing-table widget and a text paragraph, and over nine years they drifted apart
-(`analyse/05-maengelliste.md`). Contact details are the same class of fact: a business moves, changes its
+(`analysis/05-defect-list.md`). Contact details are the same class of fact: a business moves, changes its
 number, switches mail provider — and every copy made by hand is a copy that will be missed.
 
 So the test for adding anything to the model is not "is it true?" but **"is this the only place it is
@@ -54,7 +54,7 @@ written?"**
 
 **Confirmed prices and opening hours.** The model holds the *shape* of both and, at present, invented
 placeholder values that the `live` build refuses to publish (ADR 0003 §8, R1). The real figures come
-from the owner. `analyse/03-leistungen-und-preise.md` remains a record of the **old** site, undated and
+from the owner. `analysis/03-services-and-prices.md` remains a record of the **old** site, undated and
 unconfirmed by its own header.
 
 **Anything not yet confirmed by the owner.** An empty field is recoverable; a plausible guess that gets

@@ -12,7 +12,7 @@
       "!.astro/",
       "!node_modules/",
       "!Archive/",
-      "!docs/inhalte/",
+      "!docs/content/",
       "!package-lock.json"
     ]
   },

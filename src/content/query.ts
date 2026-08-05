@@ -103,7 +103,7 @@ export async function servicesIn(categoryId: string) {
  * The hour set in force, selected by validity.
  *
  * **Ambiguity is an error, not a coin toss.** The WordPress export holds two conflicting summer sets
- * (`docs/analyse/02-inhaltsinventar.md`), and the tempting behaviour — take the first match — is how
+ * (`docs/analysis/02-content-inventory.md`), and the tempting behaviour — take the first match — is how
  * one of them silently wins. If two sets are valid at once, that is a content defect and the build says
  * so.
  *

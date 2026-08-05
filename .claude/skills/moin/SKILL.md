@@ -114,7 +114,7 @@ name it in step 2. Today there are none, which is itself worth knowing.
   the roadmap — plus any owner-domain decision that must be settled *before* it can start. Do not
   implement ahead of a decision, and surface owner-domain questions rather than resolving them quietly.
 - If the next step touches a business fact — a price, an opening time, the address, the Impressum — and
-  the source for it is not in `docs/inhalte/`, name that as the blocking question here. It is the most
+  the source for it is not in `docs/content/`, name that as the blocking question here. It is the most
   common way this project can go wrong.
 
 ## 7. Coffee and go-ahead — the close

@@ -11,7 +11,7 @@ commit, and CI has a single step today because asserting a build chain would pre
 
 The owner has set **Astro** as the static site generator. Everything around it was open.
 
-The relevant history is in [`docs/analyse/01-ausgangslage.md`](../analyse/01-ausgangslage.md). The old
+The relevant history is in [`docs/analysis/01-starting-point.md`](../analysis/01-starting-point.md). The old
 site accumulated WordPress, Hestia, Elementor, Orbit Fox, an opening-hours plugin, Google Analytics and
 **two competing SEO plugins**, with no record of why any of them was chosen. Each was a defensible local
 decision that nobody wrote down; together they became a stack nobody could reason about, and one that
@@ -73,7 +73,7 @@ properties are the mechanism ADR 0004 needs for design tokens.
 
 Rejecting a utility framework here is not a matter of taste. The old site's central defect was that
 presentation and content were welded together in Elementor layout blocks, so the same price existed in
-three places and drifted (`docs/analyse/05-maengelliste.md`). Utility classes in markup are a milder
+three places and drifted (`docs/analysis/05-defect-list.md`). Utility classes in markup are a milder
 version of the same coupling, and this project's whole thesis is the separation. Nesting and variables,
 the historical reasons to reach for Sass, are native CSS today.
 
@@ -123,7 +123,7 @@ The set is deliberately one package.
   down, because assuming an image integration is the obvious wrong guess. **This decides how images are
   processed, not which images exist**: no image enters this repository without documented source,
   licence and evidence (`CLAUDE.md`), and the old site's image rights are explicitly undocumented
-  (`docs/analyse/06-medien-inventar.md`). A build pipeline that can optimise an image is not permission
+  (`docs/analysis/06-media-inventory.md`). A build pipeline that can optimise an image is not permission
   to add one.
 - **i18n — no integration needed.** Astro's routing has built-in i18n with `defaultLocale` and `locales`,
   and `prefixDefaultLocale: false` yields exactly the shape ADR 0005 needs: German unprefixed at `/…`,
@@ -220,8 +220,8 @@ framework is the right answer then. It is not one now.
 
 - Issue #10 — the owning ticket
 - [ADR 0001](0001-record-architecture-decisions.md) — the ADR workflow
-- [`docs/analyse/01-ausgangslage.md`](../analyse/01-ausgangslage.md) — the old site's stack
-- [`docs/analyse/05-maengelliste.md`](../analyse/05-maengelliste.md) — `M-28`, dead links on the old site
+- [`docs/analysis/01-starting-point.md`](../analysis/01-starting-point.md) — the old site's stack
+- [`docs/analysis/05-defect-list.md`](../analysis/05-defect-list.md) — `M-28`, dead links on the old site
 - [Astro i18n guide](https://docs.astro.build/en/guides/internationalization/)
 - [Astro images guide](https://docs.astro.build/en/guides/images/)
 - [Astro TypeScript guide](https://docs.astro.build/en/guides/typescript/)
