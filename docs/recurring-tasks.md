@@ -18,7 +18,7 @@ handled by [Dependabot](../.github/dependabot.yml).
 |---|---|
 | **What** | Bump `node-version` in `.github/workflows/ci.yml` **and** `.github/workflows/deploy.yml`, and the `engines.node` floor in `package.json`. |
 | **When** | When the pinned line leaves *active LTS*. Node promotes a new line each October. |
-| **Currently pinned** | **24** (Krypton), set 2026-07-19 with the scaffold. |
+| **Currently pinned** | **24** (Krypton), set 2026-07-19 with the scaffold. Still **Active LTS**; it enters maintenance on **2026-10-20**, so nothing is due before then (checked against `schedule.json` 2026-08-05). |
 | **Check against** | [nodejs/Release — schedule.json](https://github.com/nodejs/Release/blob/main/schedule.json), the primary source. Not a blog post, and not memory. |
 | **Owning decision** | [ADR 0002 §2](adr/0002-tech-stack-and-tooling.md) |
 
