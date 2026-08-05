@@ -49,7 +49,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 - ✅ `Archive/` cleaned up: 749.7 MB → 594.0 MB, protocol in `Archive/AUFRAEUMPROTOKOLL.md`.
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
-  forms (#17), labels, CI. Outstanding: `SECURITY.md` (#18) and the contributor files (#19).
+  forms (#17), `SECURITY.md` (#18), labels, CI. Outstanding: the contributor files (#19).
   - **The chooser was checked by the owner on the rendered page** (2026-08-05), not inferred from a
     passing parse: all four forms appear with their descriptions, the blank box is reduced to
     *"Maintainers only"* as `blank_issues_enabled: false` is documented to do, and the security
@@ -198,7 +198,7 @@ protects nothing, so this table tracks the gap explicitly; the ADR's status neve
 | Explicit `permissions:` block per workflow | 0009 §3 | ✅ in force (2026-07-19) |
 | External-resources fitness function | 0009 §6 | ✅ in force (2026-07-19) |
 | CSP via `<meta http-equiv>` | 0009 §7 | ✅ in force (2026-07-19) |
-| `SECURITY.md` | 0009 §9 (#18) | ⏳ not written |
+| `SECURITY.md` | 0009 §9 (#18) | ✅ in force (2026-08-05) — best-effort wording, no invented service level |
 
 ## Decisions taken (not yet ADRs)
 
@@ -237,10 +237,7 @@ own.
 
 Decision-free work still available while the preview is blocked, in rough order:
 
-1. **`SECURITY.md`** (#18). Its one risky part is settled inside the ticket itself: best-effort
-   wording rather than grimora's five-working-day promise, and Private Vulnerability Reporting rather
-   than an e-mail address — verified enabled on this repository, so the file points somewhere real.
-2. **`docs/` paths renamed to English** (#11) — `analyse` → `analysis`, `inhalte` → `content`.
+1. **`docs/` paths renamed to English** (#11) — `analyse` → `analysis`, `inhalte` → `content`.
 
 **Owner-gated, despite the `agent-ready` label** — the label means the ticket is ready to be *worked*,
 not that working it needs no answers:
@@ -288,5 +285,5 @@ the build:
   reused: those rights are undocumented (`docs/analyse/06-medien-inventar.md`). Each new one needs who
   took it, when, and confirmation that the studio holds the rights.
 
-Phase 0's remainder (#11, #18, #19) is low-priority tidying and does not block anything. #12 and #17
+Phase 0's remainder (#11, #19) is low-priority tidying and does not block anything. #12, #17 and #18
 are closed.
