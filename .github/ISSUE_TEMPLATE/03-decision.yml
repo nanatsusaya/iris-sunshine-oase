@@ -1,0 +1,66 @@
+# ADR 0001 makes significant decisions written artefacts rather than things that happen in a commit.
+# This form is the ticket that *precedes* the ADR, so its fields are the ADR's inputs — above all
+# "what is actually being decided", which is the question a half-formed ADR ticket always leaves out
+# and which the author then has to invent.
+name: Architecture decision (ADR)
+description: A decision that must be recorded before it is built — see ADR 0001.
+title: '[ADR] '
+labels: ['type:architecture']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Under [ADR 0001](https://github.com/nanatsusaya/iris-sunshine-oase/blob/main/docs/adr/0001-record-architecture-decisions.md) a significant
+        decision is written down before it is implemented, and an ADR PR exists in order to **put
+        questions to the owner** — so an ADR ticket with no open question in it is usually a chore
+        wearing a costume.
+
+        `Accepted` means *decided*, never *built*. Implementation is tracked separately, in
+        `docs/STATUS.md`.
+
+  - type: textarea
+    id: decision
+    attributes:
+      label: What has to be decided?
+      description: >-
+        The decisions themselves, listed. Not the area — "how we do i18n" is a topic; "which locale
+        the site serves at the root, and whether German URLs stay German" are decisions.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Why does this need deciding now?
+      description: >-
+        What is blocked, or what would be settled silently in a commit if nobody wrote it down. A
+        decision nothing waits on can wait.
+    validations:
+      required: true
+
+  - type: textarea
+    id: options
+    attributes:
+      label: Which options are on the table?
+      description: The alternatives worth weighing, and what each costs. "None yet — that is part of the work" is a valid answer.
+    validations:
+      required: false
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: What constrains the answer?
+      description: >-
+        Existing ADRs it must not contradict, legal obligations, the fact that this is a real
+        business's public site, anything already decided elsewhere.
+    validations:
+      required: false
+
+  - type: input
+    id: related
+    attributes:
+      label: Related epic, ADRs and issues
+      placeholder: '#3, ADR 0002, ADR 0006'
+    validations:
+      required: false

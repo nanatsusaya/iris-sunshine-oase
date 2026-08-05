@@ -1,0 +1,79 @@
+# For defects in the site or the build. A *wrong fact* is not this form — it is
+# 01-content-correction.yml, which asks the extra question that one needs (where the right value
+# comes from) and which no amount of reproduction steps substitutes for.
+name: Bug
+description: Something is broken — a page that will not load, a layout that breaks, a link that goes nowhere, a check that fails.
+title: '[Bug] '
+labels: ['type:bug']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Is a price, an opening time or an address simply *wrong*?** That is a different form —
+        [Wrong content](https://github.com/nanatsusaya/iris-sunshine-oase/issues/new?template=01-content-correction.yml)
+        — because a corrected fact needs a source, and this form does not ask for one.
+
+        **Please do not include personal data.** This repository is public. No names, e-mail
+        addresses or telephone numbers, and check any screenshot before attaching it: a browser
+        window shows bookmarks, tabs and account names.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you saw, in your own words. An exact error message helps if there was one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+      description: >-
+        Worth writing even when it feels obvious — it is often the sentence that shows the
+        disagreement is about what the page is *for*, not about what it does.
+    validations:
+      required: true
+
+  - type: input
+    id: where
+    attributes:
+      label: Where?
+      description: The page, or the build step if this is a check or deployment failure.
+      placeholder: /leistungen — or "npm run check:tokens"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How can it be reproduced?
+      description: >-
+        The steps that bring it back, numbered. A defect that cannot be reproduced can only be
+        guessed at, so this is the difference between a fix and a plausible change.
+      placeholder: |
+        1. Open /leistungen on a phone
+        2. Scroll to the price table
+        3. The page scrolls sideways
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Device and browser
+      description: Only what is needed to reproduce it. Layout defects are frequently specific to one of them.
+      placeholder: iPhone, Safari — or Windows, Firefox
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: no-personal-data
+    attributes:
+      label: Before you file this
+      options:
+        - label: >-
+            This report contains no personal data — in the text, in the steps, or in any attached
+            image.
+          required: true

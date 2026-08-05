@@ -48,7 +48,8 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   real e-mail address removed); `Archive/` is excluded from the repository entirely.
 - ✅ `Archive/` cleaned up: 749.7 MB → 594.0 MB, protocol in `Archive/AUFRAEUMPROTOKOLL.md`.
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
-- ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, labels, CI.
+- ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
+  forms (#17), labels, CI. Outstanding: `SECURITY.md` (#18) and the contributor files (#19).
 - ✅ **The method is declared** (2026-08-05): [`method.json`](../method.json) binds this repository's
   four artefacts to the roles of [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules)
   catalogue 0.5, with **no adaptations** — all 32 rules are in force, which its coherence check
@@ -201,6 +202,7 @@ Recorded here so they are not lost before the owning ADR is written:
 | Site content German by default, English as an additional locale | 2026-07-18 | 0005 |
 | No contact form — telephone and e-mail only | 2026-07-18 | 0007 |
 | `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analyse/06`) |
+| Issue forms are English, like every other repository artefact — **no** exception for the two aimed at non-developers | 2026-08-05 | — (`CLAUDE.md` language rule, unchanged) |
 
 ## Open questions for the owner
 

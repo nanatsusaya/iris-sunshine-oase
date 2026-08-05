@@ -1,0 +1,22 @@
+# The blank issue box is disabled on purpose.
+#
+# The people most likely to open an issue here are not developers — the studio owner reporting that a
+# price is wrong, or a customer noticing that the opening hours do not match the door. A blank box
+# collects "the price is wrong" with no page, no value and no source, which nobody can act on. The
+# forms exist to make the unactionable report impossible to file, and leaving the blank box beside
+# them would simply route around that.
+#
+# It does not lock anyone out who has real work to file: GitHub keeps the blank option visible to
+# accounts with write access, marked "Maintainers only", so the owner and the agents working this
+# repository still have it. What disappears is the blank box offered to a passing reporter.
+blank_issues_enabled: false
+
+contact_links:
+  # A vulnerability filed as a public issue is disclosed the moment it is written. Private
+  # vulnerability reporting is enabled on this repository (ADR 0009 §9), so the report has somewhere
+  # non-public to go — this link is what makes that route discoverable at the moment it is needed.
+  - name: Security vulnerability
+    url: https://github.com/nanatsusaya/iris-sunshine-oase/security/advisories/new
+    about: >-
+      Found a security problem? Report it privately here, never as a public issue — a public issue
+      discloses it to everyone the moment you submit it.

@@ -1,0 +1,82 @@
+# The most important form in this repository.
+#
+# CLAUDE.md: "A wrong price is a production defect, not a typo." This form is therefore labelled
+# `type:bug`, and its shape follows from one rule — a corrected value without a source is not an
+# improvement, it only replaces one unverified figure with another. So "where does this come from"
+# is a required field, not a nicety.
+name: Wrong content (price, opening hours, address, wording)
+description: A fact on the site does not match reality — a price, an opening time, the address, a service name or its wording.
+title: '[Content] '
+labels: ['type:bug', 'area:content']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thank you — this is the most useful report this project can receive.** A wrong price or
+        opening time is something a customer acts on, so it is treated as a defect rather than a
+        detail.
+
+        **Please do not include personal data.** This repository is public and everything you write
+        here stays readable. No names, e-mail addresses, telephone numbers or messages belonging to
+        anyone — not yours, not a customer's. Nothing below asks for contact details, and nothing
+        here needs them.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of fact is wrong?
+      options:
+        - Price
+        - Opening hours
+        - Address or contact details
+        - Service or treatment — its name, description, or what it includes
+        - Other wording
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: Which page?
+      description: Its address or its heading — whichever you have.
+      placeholder: /leistungen — or "Leistungen & Preise"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: What does the site say now?
+      description: Copy the wrong value exactly as it appears, so it can be found and not guessed at.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct
+    attributes:
+      label: What should it say instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Where does the correct value come from?
+      description: >-
+        The field this form exists for. Say what establishes the value: the studio owner, the price
+        list on the studio door, an invoice, the till system, a photograph of the sign. "I am fairly
+        sure, but check with Iris" is a genuinely useful answer — a stated uncertainty can be
+        resolved, an unmarked guess cannot.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: no-personal-data
+    attributes:
+      label: Before you file this
+      options:
+        - label: >-
+            This report contains no personal data — no names, e-mail addresses, telephone numbers or
+            customer details, in the text or in any attached image.
+          required: true
