@@ -22,7 +22,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 
 | Phase | Epic | State |
 |---|---|---|
-| 0 — Analysis & foundation | [#2](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2) | ▶ one ticket left (#67) |
+| 0 — Analysis & foundation | [#2](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2) | ✅ complete |
 | 1 — Decisions (ADRs 0002–0008) | [#3](https://github.com/nanatsusaya/iris-sunshine-oase/issues/3) | ▶ in progress |
 | 2 — Scaffold & first preview | [#4](https://github.com/nanatsusaya/iris-sunshine-oase/issues/4) | planned |
 | 3 — Content | [#5](https://github.com/nanatsusaya/iris-sunshine-oase/issues/5) | planned |
@@ -37,7 +37,8 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 > PR that raises the version can clear it. #52 did (`fast-uri` → 3.1.5) and was therefore the merge
 > that had to go first. `main` is green again.
 
-**Phase 0 — analysis and foundation** (#2)**:** ▶ one ticket left, #67.
+**Phase 0 — analysis and foundation** (#2)**:** ✅ complete. The epic itself is still open; closing it
+is a judgement about a phase rather than about a ticket, so it is the owner's.
 
 - ✅ The old WordPress site is analysed and documented (`docs/analysis/`): stack and data situation,
   content inventory, the full price list, the design system, a media inventory, and 28 defects as work
@@ -72,6 +73,11 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   - **The rename had to edit four `Accepted` ADRs, and the owner ruled that this is maintenance
     rather than an amendment** (see *Decisions taken*). Nothing an ADR decides changed; only link
     targets moved.
+- ✅ **`.gitignore` is English too** (#67, 2026-08-05) — the last German prose outside the two
+  documented exceptions, found while working #11. Comment lines only: every pattern is byte-identical
+  and `git check-ignore` resolves the same paths to the same rules. The block matters more than a
+  comment usually does, because it is the written reason the `Archive/` exclusion is **blanket**, and
+  a rule whose justification cannot be read is a rule the next session treats as arbitrary.
 
 **Phase 1 — decisions** (#3)**:** ▶ in progress. ADRs 0002–0008, one PR each (see the
 [ADR index](adr/README.md) for the set and its rationale).
@@ -244,13 +250,10 @@ it first would have meant typing an opening time into a template — the exact d
 to remove, on day one of the implementation. That worked; nothing on the page carries a figure of its
 own.
 
-Decision-free work still available while the preview is blocked:
-
-1. **`.gitignore`'s comments translated to English** (#67) — the last German prose outside the two
-   documented exceptions, found while working #11. Low priority, blocks nothing, and the comment it
-   translates is the written reason the `Archive/` exclusion is blanket.
-
-That is the whole list, and it is worth reading as such: everything else open needs the owner.
+**There is no decision-free work left.** That list ran through the whole of Phase 0 and is now empty:
+#67 was the last entry on it. Saying so plainly is the point of this section — an agent arriving here
+should stop and ask rather than go looking for something to pick up, because everything still open
+needs the owner.
 
 **Owner-gated.** Note that `agent-ready` means a ticket is ready to be *worked*, not that working it
 needs no answers — #17 and #19 both carried the label and both contained a question only the owner
@@ -296,6 +299,6 @@ the build:
   reused: those rights are undocumented (`docs/analysis/06-media-inventory.md`). Each new one needs who
   took it, when, and confirmation that the studio holds the rights.
 
-**Phase 0's remainder is #67 alone**, low-priority tidying that blocks nothing; #11, #12, #17, #18 and
-#19 are closed. Epic **#2** stays open until #67 does — and closing an epic is a judgement about a
-phase rather than about a ticket, so it is the owner's, not an agent's.
+**Phase 0 has no open work left** — #11, #12, #17, #18, #19 and #67 are all closed. Epic **#2** is
+therefore complete against its own Definition of Done and can be closed, which is left to the owner
+because closing an epic is a judgement about a phase rather than about a ticket.

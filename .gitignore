@@ -1,17 +1,24 @@
-# --- Altbestand: komplett ausgeschlossen ---------------------------------
-# Der Ordner Archive/ enthaelt das Backup des alten WordPress-Auftritts:
-# rund 750 MB Bildmaterial mit ungeklaerten Nutzungsrechten sowie den
-# vollstaendigen Datenbank-Export mit personenbezogenen Daten Dritter.
+# --- The old site: excluded wholesale ------------------------------------
+# Archive/ holds the backup of the old WordPress site: roughly 600 MB of image
+# material whose usage rights are undocumented, and the full database export,
+# which contained third parties' personal data.
 #
-# Beides gehoert nicht in ein oeffentliches Repository. Der Ausschluss ist
-# bewusst pauschal gehalten: eine Regel statt einer Einzelfallpruefung je Datei.
+# Neither belongs in a public repository — and release assets of a public
+# repository are public too, so uploading it to one is not a way round this.
 #
-# Die Texte des Altauftritts sind nach docs/content/ extrahiert und dort
-# versioniert - erzeugt mit tools/extract-wp-content.mjs.
-# Das Bildmaterial wird ausserhalb des Repositorys archiviert.
+# The exclusion is deliberately blanket: one rule, rather than a per-file
+# judgement about what is safe to add. CLAUDE.md states that rule and forbids
+# weakening it with exceptions; this comment records why it is written that way.
+#
+# Excluding it costs nothing, and that is the point. Every text of the old site
+# is extracted to docs/content/ and versioned there by
+# tools/extract-wp-content.mjs, so the record survives without the 600 MB. The
+# image material is archived outside the repository — the owner's
+# responsibility, deliberately not this repository's. This repository is
+# therefore not a backup of the old site.
 Archive/
 
-# --- Betriebssystem ------------------------------------------------------
+# --- Operating system ----------------------------------------------------
 Thumbs.db
 ehthumbs.db
 Desktop.ini
