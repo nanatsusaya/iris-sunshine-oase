@@ -12,7 +12,7 @@
 #      as though it were real.
 #
 # The service NAMES are not invented: they are the old site's, extracted verbatim to
-# docs/inhalte/ and listed in docs/analyse/03-leistungen-und-preise.md. They are recorded there, not
+# docs/content/ and listed in docs/analysis/03-services-and-prices.md. They are recorded there, not
 # confirmed — that document's own header says so.
 #
 # This is a representative set, not the full ~40 items. It exists to exercise every price shape the

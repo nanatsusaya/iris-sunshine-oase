@@ -86,7 +86,7 @@ repository are public too** — downloadable by anyone, without signing in. It w
 precisely what the `.gitignore` exclusion exists to prevent, while looking like a safe archival step.
 
 **Impact:** The recommendation was withdrawn and the reasoning corrected in
-`docs/analyse/06-medien-inventar.md`, which now names the ruling-out explicitly rather than leaving it
+`docs/analysis/06-media-inventory.md`, which now names the ruling-out explicitly rather than leaving it
 unsaid. Backup and versioning of the archive are now the **owner's** responsibility, deliberately
 outside this repository. `CLAUDE.md` gained the rule that the blanket `Archive/` exclusion must not be
 weakened by per-file exceptions or a release attachment.
@@ -145,12 +145,12 @@ left it inside quotation marks.
 **Action / method:** The German original was restored, with an English gloss beside it. The reasoning:
 a translated passage presented as a quote asserts that the source said something it did not, and this
 particular passage is the entire documentary basis for the site's image-rights position. The same fix
-was applied to a second quoted passage. `CLAUDE.md` already carried the rule that `docs/inhalte/` stays
+was applied to a second quoted passage. `CLAUDE.md` already carried the rule that `docs/content/` stays
 German; the gap was that **quotations elsewhere in the documentation** were not covered by it.
 
 **Impact:** Verbatim quotes now stay in the source language throughout the documentation, with a gloss
 where the meaning carries an argument. The related defect — an entry in
-`docs/analyse/05-maengelliste.md` that presents a *paraphrase* inside quotation marks — was filed as
+`docs/analysis/05-defect-list.md` that presents a *paraphrase* inside quotation marks — was filed as
 #12 rather than fixed in passing (see the next entry).
 
 **Lessons learned:** Evidence and prose have different rules. Prose is translated; evidence is
@@ -185,7 +185,7 @@ of each other by the same session, alongside `prioritize`, `Internationalization
 They were corrected, the rule was written into `CLAUDE.md` — and then made **machine-enforced** as check
 5 in `tools/check-docs.mjs`: a short list of irregular forms plus a general `-ise` rule, with an
 allowlist for English words that legitimately end in `-ize`, and exclusions for code spans (identifiers
-mirror their API's spelling), for `docs/inhalte/`, and for `CLAUDE.md` itself, which necessarily
+mirror their API's spelling), for `docs/content/`, and for `CLAUDE.md` itself, which necessarily
 contains examples of what it forbids. The check was counter-tested against four deliberate
 Americanisms before being trusted.
 
@@ -434,3 +434,31 @@ merging it — the editing race, already paid once. A shape is not ceremony when
 measurable in your own last ten descriptions. Worth noting for the next adoption of something from
 upstream: the reason to check the local evidence first is not to decide whether the rule is right, but
 to know whether it is *needed here*, which is what makes an agent apply it rather than perform it.
+
+## 2026-08-05 — Moving a file is not amending the decision that links to it
+
+**Trigger:** #11 renamed the German `docs/` paths to English — `analyse/` → `analysis/`, `inhalte/` →
+`content/`, `seiten/` → `pages/`. Fifteen of the relative links that would break live in **four
+`Accepted` ADRs** (0002, 0003, 0004, 0009), and `CLAUDE.md` says an `Accepted` ADR is immutable
+*"except with explicit owner authorisation, recorded in that ADR's Amendments section"*. There was no
+version of the rename that left those files untouched: `tools/check-docs.mjs` check 4 fails on a
+relative link that does not resolve, so leaving them alone was not an option either.
+
+**Action / method:** The work stopped before it started and the choice went to the owner as three
+options — treat it as maintenance, treat it as a real amendment with four *Amendments* entries, or
+drop #11 and keep the German paths. The recommendation was the first, on the grounds that the
+decision text changes by not one word: what moved is a link target, and a link to a file that no
+longer exists is a defect rather than a new decision. The owner chose it.
+
+**Impact:** The four ADRs carry no *Amendments* entry for this. The authorisation is instead one row
+in `STATUS.md`'s *Decisions taken*, which is what makes it a record rather than an agent's private
+reading — the row is deliberately worded as the authorisation itself, so a future session finds the
+permission rather than the conclusion.
+
+**Lessons learned:** The immutability rule protects the *decision*, and the test that separates the
+two cases is whether a reader who had already acted on the ADR would now act differently. A moved link
+fails that test; a changed constraint passes it. Keeping the distinction matters in both directions —
+four *Amendments* entries about a directory rename would devalue the section where genuine changes to
+a decision are recorded, which is exactly the C2 dilution the immutability rule exists to prevent. The
+gate was still worth tripping: it cost one question, and the alternative was an agent quietly editing
+four `Accepted` ADRs and calling it a path fix.

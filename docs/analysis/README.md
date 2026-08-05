@@ -6,12 +6,12 @@ A record of the existing WordPress site, as the basis for the rebuild with Astro
 
 | File | Purpose |
 |---|---|
-| [01-ausgangslage.md](01-ausgangslage.md) | Technical state of the old site, the data in the backup, the privacy cleanup |
-| [02-inhaltsinventar.md](02-inhaltsinventar.md) | Every page and post, rated: keep, rework or drop |
-| [03-leistungen-und-preise.md](03-leistungen-und-preise.md) | The full price list — the most valuable content asset |
+| [01-starting-point.md](01-starting-point.md) | Technical state of the old site, the data in the backup, the privacy cleanup |
+| [02-content-inventory.md](02-content-inventory.md) | Every page and post, rated: keep, rework or drop |
+| [03-services-and-prices.md](03-services-and-prices.md) | The full price list — the most valuable content asset |
 | [04-design-system.md](04-design-system.md) | Colours, typography and layout of the old site; what carries over and what does not |
-| [05-maengelliste.md](05-maengelliste.md) | Concrete defects, written as work packages |
-| [06-medien-inventar.md](06-medien-inventar.md) | Image inventory, volume breakdown, storage decision |
+| [05-defect-list.md](05-defect-list.md) | Concrete defects, written as work packages |
+| [06-media-inventory.md](06-media-inventory.md) | Image inventory, volume breakdown, storage decision |
 
 ## How reliable each statement is
 
@@ -30,10 +30,10 @@ Tagged **observed**. Treat these as a starting point, not a specification.
 
 The `Archive/` folder holding the WordPress backup is **excluded entirely** via `.gitignore` —
 undocumented image rights and third parties' personal data. The reasoning and the volume
-breakdown are in [06-medien-inventar.md](06-medien-inventar.md).
+breakdown are in [06-media-inventory.md](06-media-inventory.md).
 
 The texts of the old site were extracted beforehand and are versioned under
-[`docs/inhalte/`](../inhalte/README.md). **That is the only versioned source of the old
+[`docs/content/`](../content/README.md). **That is the only versioned source of the old
 content.**
 
 If the archive is available locally, it holds two versions of the export:

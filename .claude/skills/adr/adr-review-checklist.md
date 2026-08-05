@@ -10,7 +10,7 @@ Run this before opening the ADR PR, and when reviewing one.
       business content, cost, hosting, legal exposure, third-party services.
 - [ ] Enforceable rules are flagged as candidates for `tools/check-docs.mjs`, so they survive as a check
       rather than as a convention nobody re-reads.
-- [ ] **Content correctness**: every business fact quoted has a source in `docs/inhalte/` or from the
+- [ ] **Content correctness**: every business fact quoted has a source in `docs/content/` or from the
       owner. No invented price, opening time, address or Impressum detail.
 - [ ] **Privacy and legal** considered, or explicitly N/A — no personal data of third parties anywhere;
       German legal obligations (Impressum, privacy, cookie consent) framed as a project checklist

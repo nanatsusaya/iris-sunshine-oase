@@ -13,7 +13,7 @@ This is the decision the rebuild exists for. [`docs/adr/README.md`](README.md) c
 load-bearing decision here", and the reason is a specific documented failure rather than a principle:
 on the old site the same price existed in an Elementor layout block, a pricing-table widget and a text
 paragraph, and over nine years they drifted apart
-([`05-maengelliste.md`](../analyse/05-maengelliste.md)). Content welded into markup has no authority, so
+([`05-defect-list.md`](../analysis/05-defect-list.md)). Content welded into markup has no authority, so
 every copy is equally plausible and none is correct.
 
 ### It is also what is currently blocking Phase 2
@@ -28,11 +28,11 @@ exists to remove, committed on day one of the implementation. So the order chang
 
 ### What already exists to build on
 
-- **The full price list**, [`03-leistungen-und-preise.md`](../analyse/03-leistungen-und-preise.md),
+- **The full price list**, [`03-services-and-prices.md`](../analysis/03-services-and-prices.md),
   extracted from the WordPress export. Its closing section is unusually useful: it enumerates the
   **special cases any schema must survive**, which is the part of a content model that is normally
   discovered too late.
-- **Every page text**, verbatim, in [`docs/inhalte/`](../inhalte/README.md).
+- **Every page text**, verbatim, in [`docs/content/`](../content/README.md).
 - **[`docs/business-facts.md`](../business-facts.md)**, holding identity and contact details under an
   explicit *"Interim location"* notice that names this ADR. That notice is a promissory note; §8 redeems
   it.
@@ -123,7 +123,7 @@ field, and §7's check keeps a currency symbol out of it.
 
 ### 4. Opening hours are intervals with a validity, not a paragraph
 
-[`02-inhaltsinventar.md`](../analyse/02-inhaltsinventar.md) records that the export holds **two
+[`02-content-inventory.md`](../analysis/02-content-inventory.md) records that the export holds **two
 conflicting summer sets with differing Sunday hours**. A model that cannot hold two sets at once will be
 resolved by someone deleting one of them, and the wrong one is as likely as the right one.
 
@@ -248,13 +248,13 @@ rationale — *why* these facts may be published at all — is not lost.
 
 ### 10. What this ADR does not decide
 
-- **The values.** Every figure in `docs/analyse/` is unconfirmed. This ADR decides the shape and the
+- **The values.** Every figure in `docs/analysis/` is unconfirmed. This ADR decides the shape and the
   gate; the content itself is Phase 3 and needs the owner (#41).
 - **Locale.** ADR 0005 owns German/English. The schema must not foreclose it, which is why prose is a
   separate collection from facts — an amount in cents does not translate, and a description does.
 - **URLs and redirects.** ADR 0008.
 - **Which pages exist**, beyond the keep/rework/drop assessment already in
-  [`02-inhaltsinventar.md`](../analyse/02-inhaltsinventar.md), which still needs owner confirmation.
+  [`02-content-inventory.md`](../analysis/02-content-inventory.md), which still needs owner confirmation.
 
 ## Consequences
 
@@ -341,7 +341,7 @@ rationale — *why* these facts may be published at all — is not lost.
 both Freundinnen packages cost 115,00 € although Paket 2 contains more; the opening hours have two
 conflicting 2024 summer sets; Fußreflexzonen-Massage is *„zZ. vergriffen"*; the Honigmassage is
 described but unpriced; proWIN's status is unclear; and the blog is 19 expired promotions that
-`02-inhaltsinventar.md` recommends not carrying over. The owner will supply the current prices and
+`02-content-inventory.md` recommends not carrying over. The owner will supply the current prices and
 opening hours; until then the repository holds placeholders under R1.
 
 ## References
@@ -351,11 +351,11 @@ opening hours; until then the repository holds placeholders under R1.
 - [ADR 0002](0002-tech-stack-and-tooling.md) — §1 static build, §5 blocking checks
 - [ADR 0004](0004-styling-and-design-tokens.md) — §10, the check-not-rule precedent this ADR follows
 - [ADR 0005](README.md) — internationalisation (`Planned`), which owns locale
-- [`docs/analyse/02-inhaltsinventar.md`](../analyse/02-inhaltsinventar.md) — the page inventory and the
+- [`docs/analysis/02-content-inventory.md`](../analysis/02-content-inventory.md) — the page inventory and the
   two conflicting summer hour sets
-- [`docs/analyse/03-leistungen-und-preise.md`](../analyse/03-leistungen-und-preise.md) — the price list
+- [`docs/analysis/03-services-and-prices.md`](../analysis/03-services-and-prices.md) — the price list
   and its enumeration of the special cases §3 must survive
-- [`docs/analyse/05-maengelliste.md`](../analyse/05-maengelliste.md) — `M-05` duplicated opening hours,
+- [`docs/analysis/05-defect-list.md`](../analysis/05-defect-list.md) — `M-05` duplicated opening hours,
   `M-28` dead jump anchors
 - [`docs/business-facts.md`](../business-facts.md) — the interim location §9 resolves
 - [Astro — Content collections](https://docs.astro.build/en/guides/content-collections/) and the

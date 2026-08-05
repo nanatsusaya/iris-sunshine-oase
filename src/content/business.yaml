@@ -15,27 +15,27 @@
   # Two authorities, deliberately: the extract for the wording, the owner for the apostrophe. The old
   # site spelled the name both ways — a straight ' in the header, a typographic ’ in the hero — and the
   # 2026 design draft reproduced exactly that split, 39 times one way and 18 the other.
-  source: docs/inhalte/seiten/impressum.md (wording); owner 2026-07-19, ADR 0004 R5 (apostrophe)
+  source: docs/content/pages/impressum.md (wording); owner 2026-07-19, ADR 0004 R5 (apostrophe)
   confirmed: { by: owner, on: 2026-07-19 }
 
 - id: proprietor
   value: Iris Zellner
-  source: docs/inhalte/seiten/impressum.md
+  source: docs/content/pages/impressum.md
   confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
 
 - id: street
   value: Offenbacher Str. 2
-  source: docs/inhalte/seiten/impressum.md
+  source: docs/content/pages/impressum.md
   confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
 
 - id: postcode-town
   value: 76863 Herxheim bei Landau (Pfalz)
-  source: docs/inhalte/seiten/impressum.md
+  source: docs/content/pages/impressum.md
   confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
 
 - id: telephone
   value: +49 (0)7276 50 50 550
-  source: docs/inhalte/seiten/impressum.md
+  source: docs/content/pages/impressum.md
   confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }
 
 - id: email
@@ -50,5 +50,5 @@
 
 - id: vat-id
   value: DE276633210
-  source: docs/inhalte/seiten/impressum.md
+  source: docs/content/pages/impressum.md
   confirmed: { by: owner, on: 2026-07-18, source: docs/business-facts.md }

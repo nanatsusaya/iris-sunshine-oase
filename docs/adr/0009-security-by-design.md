@@ -192,7 +192,7 @@ This one rule pays three ways, which is why it is worth stating as an invariant 
   of that entire category of question.
 - **Legal simplicity** — with no third-party processing and no tracking, the consent-banner question
   does not arise. The old site loaded Google Analytics and declared it with a broken cookie notice
-  (`docs/inhalte/seiten/impressum.md` shows unresolved `[delete_cookies]` shortcodes). Not reproducing
+  (`docs/content/pages/impressum.md` shows unresolved `[delete_cookies]` shortcodes). Not reproducing
   that is worth more than any banner.
 
 **This is a fitness function, not a rule to remember.** The check chain gains a step that scans the
@@ -337,6 +337,6 @@ collaboration log entry for 2026-07-18 on why that is worth noticing.
 - [ADR 0002](0002-tech-stack-and-tooling.md) — §1, §5, §7
 - [ADR 0006](0006-deployment-preview-hosting.md) — §2 the preview subdomain, §4 the indexing gate
 - [`docs/business-facts.md`](../business-facts.md) — the only personal data in scope
-- [`docs/analyse/01-ausgangslage.md`](../analyse/01-ausgangslage.md) — the old site's plugin accumulation
+- [`docs/analysis/01-starting-point.md`](../analysis/01-starting-point.md) — the old site's plugin accumulation
 - [GitHub — verifying your custom domain for GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)
 - [W3C Content Security Policy Level 3 — the `meta` element](https://www.w3.org/TR/CSP3/#meta-element)

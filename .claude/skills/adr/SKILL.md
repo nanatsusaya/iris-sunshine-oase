@@ -42,7 +42,7 @@ alternatives were not.
   criteria. The open questions the ticket lists are the ones the ADR must surface, never silently
   answer.
 - Every **`Accepted` ADR this one depends on or touches** — actually read them.
-- [`docs/analyse/`](../../../docs/analyse/README.md) for what the old site did and why it was wrong.
+- [`docs/analysis/`](../../../docs/analysis/README.md) for what the old site did and why it was wrong.
   Most decisions here react to a specific documented defect; cite it by its `M-NN` identifier rather
   than arguing from first principles.
 - `CLAUDE.md`, especially its stop-and-ask list and "do not implement ahead of a decision".
@@ -82,7 +82,7 @@ alternatives were not.
 1. **Context** — the forces, the current state of the repository, what an earlier ADR already settled
    versus what is genuinely open. State the problem so that a reader who disagrees with the outcome can
    still see it was the right problem. Where the old site is the reason, cite the defect from
-   `docs/analyse/05-maengelliste.md` by its `M-NN` identifier.
+   `docs/analysis/05-defect-list.md` by its `M-NN` identifier.
 2. **Decision** — numbered `### 1. …` subsections, each making an actual choice rather than surveying
    one. **Reuse** existing ADRs instead of re-deciding their territory, and cite them (`ADR 000X §Y`).
    **Prefer formulations something could check**: a choice phrased so a command can decide whether it

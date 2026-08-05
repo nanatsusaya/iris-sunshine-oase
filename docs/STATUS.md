@@ -22,7 +22,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 
 | Phase | Epic | State |
 |---|---|---|
-| 0 — Analysis & foundation | [#2](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2) | ▶ in progress |
+| 0 — Analysis & foundation | [#2](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2) | ✅ complete |
 | 1 — Decisions (ADRs 0002–0008) | [#3](https://github.com/nanatsusaya/iris-sunshine-oase/issues/3) | ▶ in progress |
 | 2 — Scaffold & first preview | [#4](https://github.com/nanatsusaya/iris-sunshine-oase/issues/4) | planned |
 | 3 — Content | [#5](https://github.com/nanatsusaya/iris-sunshine-oase/issues/5) | planned |
@@ -37,19 +37,20 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 > PR that raises the version can clear it. #52 did (`fast-uri` → 3.1.5) and was therefore the merge
 > that had to go first. `main` is green again.
 
-**Phase 0 — analysis and foundation** (#2)**:** ▶ in progress.
+**Phase 0 — analysis and foundation** (#2)**:** ✅ complete — the epic itself is still open, and
+closing it is the owner's call.
 
-- ✅ The old WordPress site is analysed and documented (`docs/analyse/`): stack and data situation,
+- ✅ The old WordPress site is analysed and documented (`docs/analysis/`): stack and data situation,
   content inventory, the full price list, the design system, a media inventory, and 28 defects as work
   packages `M-01`…`M-28`.
-- ✅ All texts of the old site extracted to [`docs/inhalte/`](inhalte/README.md) via
+- ✅ All texts of the old site extracted to [`docs/content/`](content/README.md) via
   `tools/extract-wp-content.mjs` — the only versioned source of the old content.
 - ✅ The WordPress export is PII-cleaned (2,216 contact-form submissions, 2 spam comments and every
   real e-mail address removed); `Archive/` is excluded from the repository entirely.
 - ✅ `Archive/` cleaned up: 749.7 MB → 594.0 MB, protocol in `Archive/AUFRAEUMPROTOKOLL.md`.
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
-- ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
-  forms (#17), `SECURITY.md` (#18), the contributor files (#19), labels, CI. Complete.
+- ✅ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
+  forms (#17), `SECURITY.md` (#18), the contributor files (#19), labels, CI.
   - **The chooser was checked by the owner on the rendered page** (2026-08-05), not inferred from a
     passing parse: all four forms appear with their descriptions, the blank box is reduced to
     *"Maintainers only"* as `blank_issues_enabled: false` is documented to do, and the security
@@ -65,6 +66,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   verifies. The way of working had been followed since 2026-07-18 and never written down as a named
   thing. The five session procedures are adapted copies of that method's plugin; what was changed in
   them is in [`.claude/skills/README.md`](../.claude/skills/README.md).
+- ✅ **The `docs/` paths are English** (#11, 2026-08-05): `analyse/` → `analysis/`, `inhalte/` →
+  `content/`, `seiten/` → `pages/`, and the German file names with them. The **page slugs under
+  [`content/pages/`](content/README.md) deliberately stay German** — they are identifiers of old-site
+  URLs, and renaming them would break the mapping the redirect table exists to record.
+  - **The rename had to edit four `Accepted` ADRs, and the owner ruled that this is maintenance
+    rather than an amendment** (see *Decisions taken*). Nothing an ADR decides changed; only link
+    targets moved.
 
 **Phase 1 — decisions** (#3)**:** ▶ in progress. ADRs 0002–0008, one PR each (see the
 [ADR index](adr/README.md) for the set and its rationale).
@@ -175,7 +183,7 @@ the `noindex` gate. Every step here is owner-approved.
 > § 5 TMG requires a German commercial site to carry an **Impressum**, and § 13 TMG / Art. 13 DSGVO a
 > **Datenschutzerklärung**; the preview carries neither, because it is `noindex`, unlinked and not the
 > site being served to the public. Both attach at cutover. Separately,
-> `docs/analyse/02-inhaltsinventar.md` records the *old* site's Impressum as **legally outdated**, so
+> `docs/analysis/02-content-inventory.md` records the *old* site's Impressum as **legally outdated**, so
 > the address, telephone and VAT rows in `src/content/business.yaml` need an explicit pre-go-live
 > confirmation from the owner rather than one inherited from a page written in 2017.
 
@@ -210,15 +218,16 @@ Recorded here so they are not lost before the owning ADR is written:
 | Repository artefacts in English; conversation in German | 2026-07-18 | — (`CLAUDE.md`) |
 | Site content German by default, English as an additional locale | 2026-07-18 | 0005 |
 | No contact form — telephone and e-mail only | 2026-07-18 | 0007 |
-| `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analyse/06`) |
+| `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analysis/06`) |
 | Issue forms are English, like every other repository artefact — **no** exception for the two aimed at non-developers | 2026-08-05 | — (`CLAUDE.md` language rule, unchanged) |
 | Code-of-conduct enforcement contact is the owner's **GitHub account** plus GitHub's abuse form — no e-mail address, and never the studio's | 2026-08-05 | — (#19, `.github/CODE_OF_CONDUCT.md`) |
+| Repairing a link inside an `Accepted` ADR because a file moved is **maintenance, not an amendment** — no *Amendments* entry, and this row is the authorisation | 2026-08-05 | — (ADR 0001's immutability rule, unchanged) |
 
 ## Open questions for the owner
 
 - **Image material** — no image can be used until its provenance is documented. Whether to re-shoot
   the studio or re-license stock is an owner call with cost implications.
-- **Content scope** — `docs/analyse/02-inhaltsinventar.md` rates each old page as keep, rework or
+- **Content scope** — `docs/analysis/02-content-inventory.md` rates each old page as keep, rework or
   drop. The drops need confirmation.
 
 ## Next step
@@ -236,9 +245,9 @@ it first would have meant typing an opening time into a template — the exact d
 to remove, on day one of the implementation. That worked; nothing on the page carries a figure of its
 own.
 
-Decision-free work still available while the preview is blocked, in rough order:
-
-1. **`docs/` paths renamed to English** (#11) — `analyse` → `analysis`, `inhalte` → `content`.
+**There is no decision-free work left.** That list stood here through the whole of Phase 0 and is now
+empty: #11 was the last entry on it, and everything still open needs the owner. Saying so plainly is
+the point of this section — an agent arriving here should not go looking for something to do.
 
 **Owner-gated.** Note that `agent-ready` means a ticket is ready to be *worked*, not that working it
 needs no answers — #17 and #19 both carried the label and both contained a question only the owner
@@ -264,7 +273,7 @@ reckless is:
 - placeholders are **false on sight** — repdigit amounts (11,11 €) and implausible clock times, never a
   tidy `10:00 – 18:00` that would survive a screenshot as though it were real.
 
-**Nothing here may be read as a price or an opening time of the studio.** `docs/analyse/` remains the
+**Nothing here may be read as a price or an opening time of the studio.** `docs/analysis/` remains the
 record of the *old* site, itself undated and unconfirmed.
 
 **Two owner actions still gate the preview URL** and neither blocks the work above:
@@ -281,8 +290,9 @@ the build:
   the draft ships a PNG. §4 puts an inline-SVG wordmark beside it and the old site's `Logo-Sun.svg` was a
   PNG in an SVG wrapper — repeating that would be the same defect twice.
 - **Photographs and their provenance.** R3 confirms photographs are coming. None of the old site's may be
-  reused: those rights are undocumented (`docs/analyse/06-medien-inventar.md`). Each new one needs who
+  reused: those rights are undocumented (`docs/analysis/06-media-inventory.md`). Each new one needs who
   took it, when, and confirmation that the studio holds the rights.
 
-Phase 0's remainder is #11 alone, low-priority tidying that blocks nothing. #12, #17, #18 and #19 are
-closed.
+**Phase 0 has no open work left.** #11 was the last of it; #12, #17, #18 and #19 closed before it.
+Epic **#2** is therefore complete against its own Definition of Done and can be closed — deliberately
+left for the owner, since closing an epic is a judgement about a phase rather than about a ticket.

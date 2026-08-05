@@ -94,7 +94,7 @@ For a complete new site, the following would have to be added editorially:
 
 1. **Moments area** — Kosmetik, Massage, Ton Erden need real
    descriptive texts. The services and prices are known (see
-   [03-leistungen-und-preise.md](03-leistungen-und-preise.md)), what is missing is the
+   [03-services-and-prices.md](03-services-and-prices.md)), what is missing is the
    explanatory text around them.
 2. **Current opening hours** — the stored data sets are from 2024,
    and two summer sets exist with differing Sunday hours. Before
@@ -103,5 +103,5 @@ For a complete new site, the following would have to be added editorially:
    general paragraph, without any people.
 4. **Current prices** — the price list is complete, but its date is
    unknown. Have it confirmed before keeping it.
-5. **Privacy policy** — see [05-maengelliste.md](05-maengelliste.md);
+5. **Privacy policy** — see [05-defect-list.md](05-defect-list.md);
    the existing one predates the GDPR.

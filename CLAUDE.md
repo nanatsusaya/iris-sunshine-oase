@@ -79,7 +79,7 @@ an assertion.
 
 - **Content correctness outranks everything.** Prices, opening hours, the address, the phone number
   and the Impressum data are **facts about a real business**. Never invent, guess or "reasonably
-  assume" one. Take them from [`docs/inhalte/`](docs/inhalte/README.md) (the verbatim extract of the
+  assume" one. Take them from [`docs/content/`](docs/content/README.md) (the verbatim extract of the
   old site) or ask the owner. If a value cannot be sourced, leave it out and raise it — an empty field
   is recoverable, a wrong price is not.
 - **Bugs before features** — always prioritise fixing a defect over new work.
@@ -93,7 +93,7 @@ an assertion.
 - **`Accepted` means the decision is recorded and binding — not that it is built.** Implementation
   progress is tracked in `docs/STATUS.md`, never inferred from an ADR's status.
 - **No image enters this repository without documented provenance.** The old site's image rights are
-  undocumented (see `docs/analyse/06-medien-inventar.md`); Pixabay changed its licence terms in 2019,
+  undocumented (see `docs/analysis/06-media-inventory.md`); Pixabay changed its licence terms in 2019,
   so "it was CC0 when we downloaded it" is not a record. Every image under version control needs its
   source, licence and evidence written down. No "provisionally" — an unsourced image is not added.
 - **`Archive/` stays excluded.** It holds ~600 MB of rights-unclear images and a database export with
@@ -171,7 +171,7 @@ an assertion.
 
   Two deliberate exceptions:
 
-  1. **`docs/inhalte/`** is a verbatim extract of the old German site. The *framing* (headings, table
+  1. **`docs/content/`** is a verbatim extract of the old German site. The *framing* (headings, table
      headers, explanatory prose) is English; the **quoted page content stays German and unmodified**.
      It is source material, not documentation — translating it would destroy the record. The generator
      `tools/extract-wp-content.mjs` produces it; correct the generator, never the output.
@@ -218,12 +218,12 @@ Labels run on four axes — `type:` · `priority:` · `area:` · `phase:` — pl
 ## Agent guardrails
 
 - **Read before writing.** Before changing anything, check `docs/STATUS.md`, the owning ADR(s), and
-  `docs/analyse/` for what the old site did and why it was wrong. Do not invent folders, packages or
+  `docs/analysis/` for what the old site did and why it was wrong. Do not invent folders, packages or
   abstractions that no Accepted ADR covers.
 - **Do not implement ahead of a decision.** If a task would settle in code something a still-`Planned`
   ADR owns, write or update the ADR first; don't decide it silently in a commit.
 - **Do not restate a fact that has an authority.** A price, an opening time or a service name has
   exactly one definition in the content data. If you need it in a template, read it from there.
-- **The old site is a source, not a target.** `docs/analyse/05-maengelliste.md` lists 28 known defects
+- **The old site is a source, not a target.** `docs/analysis/05-defect-list.md` lists 28 known defects
   of the old site — reproducing its structure faithfully means reproducing those. Check the list
   before mirroring an old-site behaviour.

@@ -133,11 +133,11 @@ for (const [number, row] of rows) {
 
 // --- 4: relative links resolve --------------------------------------------
 for (const file of markdownFiles(ROOT)) {
-  // docs/inhalte/ is a verbatim extract of the old website. Its links are that site's own URLs
+  // docs/content/ is a verbatim extract of the old website. Its links are that site's own URLs
   // (/kontakt, tel:…), not repository cross-references — resolving them against the filesystem
   // would be a category error. Dead links *within* the old site are a content finding and are
-  // tracked in docs/analyse/05-maengelliste.md (M-28), not here.
-  if (rel(file).startsWith('docs/inhalte/')) continue;
+  // tracked in docs/analysis/05-defect-list.md (M-28), not here.
+  if (rel(file).startsWith('docs/content/')) continue;
 
   const body = readFileSync(file, 'utf8');
   // Strip fenced code blocks so example links inside them are not validated.
@@ -201,10 +201,10 @@ const IZE_ALLOWED = new Set([
 ]);
 
 for (const file of markdownFiles(ROOT)) {
-  // docs/inhalte/ is verbatim German source material; CLAUDE.md is where the rule is stated,
+  // docs/content/ is verbatim German source material; CLAUDE.md is where the rule is stated,
   // so it necessarily contains examples of what it forbids.
   const r = rel(file);
-  if (r.startsWith('docs/inhalte/') || r === 'CLAUDE.md') continue;
+  if (r.startsWith('docs/content/') || r === 'CLAUDE.md') continue;
 
   // Strip everything that is not prose before judging spelling.
   //
@@ -275,7 +275,7 @@ const WITHDRAWN = [
 // claim that it still holds, and `eachParagraph` keeps that exemption exact.
 for (const file of markdownFiles(ROOT)) {
   const r = rel(file);
-  if (r.startsWith('docs/inhalte/')) continue;
+  if (r.startsWith('docs/content/')) continue;
 
   eachParagraph(file, (text, startLine) => {
     for (const rule of WITHDRAWN) {
@@ -292,13 +292,13 @@ for (const file of markdownFiles(ROOT)) {
 // --- 7: the brand name is spelled one way ----------------------------------
 // The studio's name carries an apostrophe, and it has been written both ways for nine years: the old
 // site used a straight `'` in its header and a typographic `’` in its hero
-// (docs/analyse/04-design-system.md), and the 2026 design draft reproduced the same split, 39 times
+// (docs/analysis/04-design-system.md), and the 2026 design draft reproduced the same split, 39 times
 // one way and 18 the other. The owner settled it on 2026-07-19 (ADR 0004 R5) on the typographic form.
 //
 // A brand name spelled two ways reads as carelessness, and it is the kind of difference that survives
 // review because both forms look correct in isolation. So it is asserted rather than remembered.
 //
-// Excluded: docs/inhalte/ and docs/analyse/ are *records of the old site*, where the straight form is
+// Excluded: docs/content/ and docs/analysis/ are *records of the old site*, where the straight form is
 // the historical fact and correcting it would destroy the evidence. Code spans, fenced blocks and
 // blockquotes are excluded for the same reason everywhere else — they quote rather than assert.
 //
@@ -309,7 +309,7 @@ const STRAIGHT_BRAND = /Iris'\s*Sunshine/;
 
 for (const file of markdownFiles(ROOT)) {
   const r = rel(file);
-  if (r.startsWith('docs/inhalte/') || r.startsWith('docs/analyse/')) continue;
+  if (r.startsWith('docs/content/') || r.startsWith('docs/analysis/')) continue;
 
   eachParagraph(file, (text, startLine) => {
     if (STRAIGHT_BRAND.test(text.replace(/`[^`\n]*`/g, ''))) {

@@ -47,7 +47,7 @@ Then the rest of the declaration:
   reads, never something to fetch. A pointer nobody maintains rots and no check will catch it, so read
   them against reality: has the review boundary moved from branch protection to rulesets, for example.
 - **`language`** — `british`, which `tools/check-docs.mjs` also enforces locally.
-- **`ignore`** — `docs/inhalte/` is the verbatim German extract of the old site and `Archive/` is
+- **`ignore`** — `docs/content/` is the verbatim German extract of the old site and `Archive/` is
   excluded from the repository entirely. Both are **source material, not documentation**: their links
   are the old site's own URLs and their prose is quoted evidence, so scanning them would report
   findings about text that must not be changed (rule L2).

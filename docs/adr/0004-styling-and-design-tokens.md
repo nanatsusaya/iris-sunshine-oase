@@ -35,7 +35,7 @@ most of this ADR is naming and systematising what is there, not inventing it.
 
 ### A continuity worth recording
 
-`docs/analyse/04-design-system.md` notes that almost every colour of the old site is a visual estimate,
+`docs/analysis/04-design-system.md` notes that almost every colour of the old site is a visual estimate,
 with exactly one exception: the hero gradient `#c2d1f0 → #ffc000`, read out of the Custom CSS in the
 export. It is the only hard colour fact the old site left behind.
 
@@ -69,7 +69,7 @@ defect; it leaves the decision to whoever implements it, which is how `M-09` hap
 
 ### 1. The draft is the source of record, and turns 6–10 are canonical
 
-The design is treated the way `docs/inhalte/` treats the old site's text: **source material, quoted from
+The design is treated the way `docs/content/` treats the old site's text: **source material, quoted from
 rather than owned.** This ADR extracts a system from it; where the two disagree, this ADR governs,
 because a mockup cannot express a rule.
 
@@ -144,7 +144,7 @@ everywhere instead of depending on two fonts loading.
 That leaves **Cormorant Garamond** for headings and **Mulish** for body text — two families, subset to
 the Latin glyphs the site actually uses, `woff2`, `font-display: swap`, preloaded.
 
-`docs/analyse/04-design-system.md` lists the old site's *"serif style break"* among the things to
+`docs/analysis/04-design-system.md` lists the old site's *"serif style break"* among the things to
 discard: notice boxes and footer headings were serif while everything else was sans, *"without
 discernible intent"*. The draft's serif headings against sans body are the same contrast **with**
 intent, which is the distinction — the defect was arbitrariness, not serifs.
@@ -184,7 +184,7 @@ most need it a little more substance.
 
 ### 5. A spacing scale, because the old site had none
 
-`docs/analyse/04-design-system.md` records that the old site produced spacing with **Elementor spacer
+`docs/analysis/04-design-system.md` records that the old site produced spacing with **Elementor spacer
 widgets** — a full-width empty section between practically every block — and says plainly that this
 *"belongs in a spacing system in CSS"*. This is that system.
 
@@ -197,7 +197,7 @@ visual difference is under a pixel of perception and the gain is that the next p
 
 ### 6. Layout: one reading measure, one container
 
-`docs/analyse/04-design-system.md` lists *"Fluid without a maximum width"* as a defect, with the remedy
+`docs/analysis/04-design-system.md` lists *"Fluid without a maximum width"* as a defect, with the remedy
 already stated: *"Limit to a reading width of about 65–75 characters."*
 
 - `--measure` = **34rem** (≈ 544 px) — prose. At `--text-base` this is roughly 68 characters, and it is
@@ -251,7 +251,7 @@ is far cheaper to decide the frame now than to retrofit it around a finished des
 
 - **Aspect ratios are tokens, not per-image decisions.** `--ratio-hero` 16/9, `--ratio-card` 4/3,
   `--ratio-portrait` 3/4. Every image box declares one, so a slow-loading or missing photograph does not
-  reflow the page around it. `docs/analyse/04-design-system.md` lists *"generous photo heroes"* among the
+  reflow the page around it. `docs/analysis/04-design-system.md` lists *"generous photo heroes"* among the
   old site's few good ideas; this is what keeps them from also being its layout instability.
 - **`astro:assets` does the work**, which ADR 0002 §6 already decided: build-time transforms via sharp,
   `webp`/`avif` output, `width`/`height` emitted so the browser reserves space. No integration to add.
@@ -259,7 +259,7 @@ is far cheaper to decide the frame now than to retrofit it around a finished des
   visitor is waiting for delays the thing they came for.
 - **A photograph never carries text that matters.** Text over an image is set in HTML above it, so it
   stays selectable, translatable and legible when the image fails. The old site's hero title was baked
-  into the layout and did not scale (`docs/analyse/04-design-system.md`); §4's `clamp()` scale is what
+  into the layout and did not scale (`docs/analysis/04-design-system.md`); §4's `clamp()` scale is what
   replaces that, and it only works if the text is text.
 - **Contrast over a photograph is not assertable**, unlike §3's palette, because the background is
   unknown until the image exists. Text over a photograph therefore sits on a scrim or a solid panel —
@@ -268,7 +268,7 @@ is far cheaper to decide the frame now than to retrofit it around a finished des
 **The provenance gate is unchanged and is now live rather than hypothetical.** No image enters this
 repository without documented source, licence and evidence (`CLAUDE.md`). The old site's image rights are
 undocumented and its Pixabay claim is unverifiable after the 2019 licence change
-(`docs/analyse/06-medien-inventar.md`), so **no photograph from the old site may be reused** on the
+(`docs/analysis/06-media-inventory.md`), so **no photograph from the old site may be reused** on the
 strength of having been there before. New photographs need their own record: who took them, when, and
 that the studio holds the rights.
 
@@ -296,10 +296,10 @@ guarantee.
 - **Which images exist.** §4, §8 and §9 decide how images arrive and how the layout holds space for
   them, not which ones may be added. No image enters without documented source, licence and evidence
   (`CLAUDE.md`), and the old site's image rights are explicitly undocumented
-  (`docs/analyse/06-medien-inventar.md`). See **R3** and **R4**.
+  (`docs/analysis/06-media-inventory.md`). See **R3** and **R4**.
 - **Page structure and content.** Which pages exist, and where prices and opening hours live, is ADR 0003.
   **The draft's price and opening-hours strings are illustration.** They were checked against
-  `docs/analyse/03-leistungen-und-preise.md` on 2026-07-19 and all 32 match — but matching today is not a
+  `docs/analysis/03-services-and-prices.md` on 2026-07-19 and all 32 match — but matching today is not a
   reason to copy them; the built site reads them from the content model.
 - **Locale-specific typography.** ADR 0005.
 - **Anything about the `noindex` gate.** ADR 0006 §4 and §5 are untouched by this ADR.
@@ -398,14 +398,14 @@ content, but a token system does not need to know what text it will style. `Acce
 
   **The provenance gate is therefore live, not hypothetical.** No photograph from the old site may be
   reused on the strength of having been there: those rights are undocumented and the Pixabay claim is
-  unverifiable after the 2019 licence change (`docs/analyse/06-medien-inventar.md`). New photographs need
+  unverifiable after the 2019 licence change (`docs/analysis/06-media-inventory.md`). New photographs need
   their own record — who took them, when, and that the studio holds the rights.
 
 - **R4 — The sun is the owner's own work.** Provenance: created by the owner, 2026-07. That is a
   documentable record and it clears `CLAUDE.md`'s gate for the one image the design needs.
 
   **One thing still to obtain: the vector source.** The draft ships `assets/sun-orange.png`, a raster.
-  `docs/analyse/04-design-system.md` records that the old site's `Logo-Sun.svg` was **not** a vector
+  `docs/analysis/04-design-system.md` records that the old site's `Logo-Sun.svg` was **not** a vector
   either — a 500 × 500 px PNG wrapped in an SVG container, which therefore did not scale. Shipping a
   raster sun beside §4's inline-SVG wordmark would repeat that exactly. Tracked as a Phase 2 follow-up
   rather than blocking this ADR.
@@ -415,7 +415,7 @@ content, but a token system does not need to know what text it will style. `Acce
   authorities — the extract for the wording, the owner for the apostrophe — and to `README.md`,
   `docs/README.md` and `CLAUDE.md`, which all carried the straight form.
 
-  **Asserted by `tools/check-docs.mjs`**, excluding `docs/inhalte/` and `docs/analyse/`, where the
+  **Asserted by `tools/check-docs.mjs`**, excluding `docs/content/` and `docs/analysis/`, where the
   straight form is the historical record of what the old site did and correcting it would destroy the
   evidence.
 
@@ -433,11 +433,11 @@ content, but a token system does not need to know what text it will style. `Acce
 - [ADR 0003](README.md) — the content model, which owns prices and opening hours (`Planned`)
 - [ADR 0006](0006-deployment-preview-hosting.md) — §4 and §5, untouched by this ADR
 - [ADR 0009](0009-security-by-design.md) — §6, which decides how fonts arrive
-- [`docs/analyse/04-design-system.md`](../analyse/04-design-system.md) — the old site's design system, the
+- [`docs/analysis/04-design-system.md`](../analysis/04-design-system.md) — the old site's design system, the
   documented `#c2d1f0 → #ffc000` gradient, and the defects §5 and §6 close
-- [`docs/analyse/05-maengelliste.md`](../analyse/05-maengelliste.md) — `M-09`, the layout that does not
+- [`docs/analysis/05-defect-list.md`](../analysis/05-defect-list.md) — `M-09`, the layout that does not
   wrap on mobile
-- [`docs/analyse/03-leistungen-und-preise.md`](../analyse/03-leistungen-und-preise.md) — the price
+- [`docs/analysis/03-services-and-prices.md`](../analysis/03-services-and-prices.md) — the price
   authority the draft's illustrative figures were checked against
 - [W3C — WCAG 2.2, Success Criterion 1.4.3 Contrast (Minimum)](https://www.w3.org/TR/WCAG22/#contrast-minimum)
 - [google/fonts](https://github.com/google/fonts) — the licence evidence for the four families

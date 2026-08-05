@@ -162,7 +162,7 @@ kategorien:
 
 This separates price maintenance from layout, the jump anchors are generated
 from the IDs (which makes the currently dead anchors impossible — see
-[05-maengelliste.md](05-maengelliste.md)), and a change is one line instead of a
+[05-defect-list.md](05-defect-list.md)), and a change is one line instead of a
 layout intervention. For the intended ticket workflow, this is the precondition
 for an agent being able to carry out a price change reliably at all.
 

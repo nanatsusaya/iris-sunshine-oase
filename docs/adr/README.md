@@ -27,7 +27,7 @@ Status values: `Proposed` · `Accepted` · `Superseded` · `Planned` (ticketed, 
 ## The planned set, and why it is short
 
 Eight ADRs is the whole expected architecture surface for this project. The list was derived from the
-analysis of the old site (`docs/analyse/`) — each entry corresponds to something that either went
+analysis of the old site (`docs/analysis/`) — each entry corresponds to something that either went
 wrong there or is irreversible once chosen:
 
 - **0002 / 0004** — the old site carried WordPress, Hestia, Elementor, Orbit Fox, two competing SEO
