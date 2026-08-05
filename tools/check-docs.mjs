@@ -13,6 +13,9 @@
  *   4. every relative Markdown link in the repository resolves to an existing file
  *   5. no American spelling in prose (CLAUDE.md fixes British spelling for this repository)
  *   6. no document still asserts a rule that has been withdrawn
+ *   7. the studio's name is spelled with the typographic apostrophe (ADR 0004 R5)
+ *
+ * Checks 6 and 7 read **paragraphs** rather than lines — see `eachParagraph` for why that matters.
  *
  * Run: node tools/check-docs.mjs
  * Exits non-zero on the first failing category, listing every violation found.
