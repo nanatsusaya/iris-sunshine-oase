@@ -37,8 +37,9 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 > PR that raises the version can clear it. #52 did (`fast-uri` → 3.1.5) and was therefore the merge
 > that had to go first. `main` is green again.
 
-**Phase 0 — analysis and foundation** (#2)**:** ✅ complete. The epic itself is still open; closing it
-is a judgement about a phase rather than about a ticket, so it is the owner's.
+**Phase 0 — analysis and foundation** (#2)**:** ✅ complete; the epic was closed by the owner on
+2026-08-05, with its Definition of Done checked clause by clause in the
+[closing comment](https://github.com/nanatsusaya/iris-sunshine-oase/issues/2#issuecomment-5197108173).
 
 - ✅ The old WordPress site is analysed and documented (`docs/analysis/`): stack and data situation,
   content inventory, the full price list, the design system, a media inventory, and 28 defects as work
@@ -299,6 +300,11 @@ the build:
   reused: those rights are undocumented (`docs/analysis/06-media-inventory.md`). Each new one needs who
   took it, when, and confirmation that the studio holds the rights.
 
-**Phase 0 has no open work left** — #11, #12, #17, #18, #19 and #67 are all closed. Epic **#2** is
-therefore complete against its own Definition of Done and can be closed, which is left to the owner
-because closing an epic is a judgement about a phase rather than about a ticket.
+**Phase 0 is finished and its epic is closed** — #1, #9, #11, #12, #17, #18, #19 and #67, and #2 with
+them on 2026-08-05.
+
+What that does **not** mean is worth stating here, because "Phase 0 complete" is the kind of line a
+later session reads as more than it says. Phase 0 established what the old site *said* and how work is
+done here. It established nothing about what is **true today**: every price and opening hour in the
+repository is a placeholder marked `confirmed: false`, and no image has documented provenance. Those
+belong to Phase 3 and Phase 5 and are recorded there.
