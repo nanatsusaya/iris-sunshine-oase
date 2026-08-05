@@ -50,13 +50,15 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
   forms (#17), labels, CI. Outstanding: `SECURITY.md` (#18) and the contributor files (#19).
-  - **The issue forms have not been seen rendered.** They validate against GitHub's published form
-    schema and are on the default branch, but the "New issue" page requires a signed-in session that
-    no agent here has. **Neither API can stand in for it:** GraphQL `issueTemplates` returns `[]` and
-    `community/profile` reports `issue_template: null` — the same answer a repository with working
-    YAML forms gives (checked against `withastro/astro` on 2026-08-05), because neither surface
-    exposes YAML forms at all. So an empty result there is *not* evidence of breakage, and not
-    evidence of health either. Only the owner opening the page settles it.
+  - **The chooser was checked by the owner on the rendered page** (2026-08-05), not inferred from a
+    passing parse: all four forms appear with their descriptions, the blank box is reduced to
+    *"Maintainers only"* as `blank_issues_enabled: false` is documented to do, and the security
+    contact link is present. Still unverified: whether the required fields actually block submission.
+  - **No API can stand in for looking at that page.** GraphQL `issueTemplates` returns `[]` for this
+    repository and `community/profile` reports `issue_template: null` — but so do both for
+    `withastro/astro`, which demonstrably ships working YAML forms (checked 2026-08-05). Neither
+    surface exposes YAML forms at all, so an empty result there is evidence in *neither* direction.
+    Worth knowing before someone reads `[]` as breakage and repairs something that is not broken.
 - ✅ **The method is declared** (2026-08-05): [`method.json`](../method.json) binds this repository's
   four artefacts to the roles of [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules)
   catalogue 0.5, with **no adaptations** — all 32 rules are in force, which its coherence check
