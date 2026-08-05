@@ -50,6 +50,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
   forms (#17), labels, CI. Outstanding: `SECURITY.md` (#18) and the contributor files (#19).
+  - **The issue forms have not been seen rendered.** They validate against GitHub's published form
+    schema and are on the default branch, but the "New issue" page requires a signed-in session that
+    no agent here has. **Neither API can stand in for it:** GraphQL `issueTemplates` returns `[]` and
+    `community/profile` reports `issue_template: null` — the same answer a repository with working
+    YAML forms gives (checked against `withastro/astro` on 2026-08-05), because neither surface
+    exposes YAML forms at all. So an empty result there is *not* evidence of breakage, and not
+    evidence of health either. Only the owner opening the page settles it.
 - ✅ **The method is declared** (2026-08-05): [`method.json`](../method.json) binds this repository's
   four artefacts to the roles of [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules)
   catalogue 0.5, with **no adaptations** — all 32 rules are in force, which its coherence check
@@ -228,12 +235,21 @@ own.
 
 Decision-free work still available while the preview is blocked, in rough order:
 
-1. **The sun as a vector** (#39), which also unblocks the SVG wordmark ADR 0004 §4 decided — the
-   homepage currently sets the studio's name as text instead.
-2. **Phase 0's remainder** — #17 (issue templates), #18 (`SECURITY.md`, which must **not** copy
-   grimora's five-working-day response promise), #19, #11.
-3. **ADRs 0005, 0007 and 0008**, each as its own two-PR cycle. These are not decision-free: they exist
-   to put questions to the owner.
+1. **`SECURITY.md`** (#18). Its one risky part is settled inside the ticket itself: best-effort
+   wording rather than grimora's five-working-day promise, and Private Vulnerability Reporting rather
+   than an e-mail address — verified enabled on this repository, so the file points somewhere real.
+2. **`docs/` paths renamed to English** (#11) — `analyse` → `analysis`, `inhalte` → `content`.
+
+**Owner-gated, despite the `agent-ready` label** — the label means the ticket is ready to be *worked*,
+not that working it needs no answers:
+
+- **#19** (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`) — the code of conduct needs an enforcement
+  contact, and the studio's own address must not become one without the owner agreeing. The ticket
+  says so plainly: a question for the owner, not a detail to fill in.
+- **#39** (the sun as a vector) — the mark has to be **obtained**, not written; it is the owner's own
+  work, listed under what the owner owes the repository below.
+- **ADRs 0005, 0007 and 0008**, each as its own two-PR cycle. They exist in order to put questions to
+  the owner, so an agent can draft one but never finish it alone.
 
 The pages the homepage cannot yet link to — Leistungen & Preise, Über uns, Kontakt — are Phase 3 and
 wait on the owner's figures.
@@ -270,4 +286,5 @@ the build:
   reused: those rights are undocumented (`docs/analyse/06-medien-inventar.md`). Each new one needs who
   took it, when, and confirmation that the studio holds the rights.
 
-Phase 0's remainder (#11, #12, #17, #18, #19) is low-priority tidying and does not block anything.
+Phase 0's remainder (#11, #18, #19) is low-priority tidying and does not block anything. #12 and #17
+are closed.
