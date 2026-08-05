@@ -29,12 +29,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 | 4 — Defects, accessibility, SEO | [#6](https://github.com/nanatsusaya/iris-sunshine-oase/issues/6) | planned |
 | 5 — Go-live | [#7](https://github.com/nanatsusaya/iris-sunshine-oase/issues/7) | planned |
 
-> **`main` is red, and it is not any one PR's fault (2026-08-05).** `fast-uri@3.1.3` on `main` is
-> subject to a high-severity advisory covering `3.0.0 - 3.1.4`, so the `npm audit --audit-level=high`
-> step fails on **every** branch cut from it — which is why #50 and #51 are red while their own
-> contents are fine. **#52 raises `fast-uri` to 3.1.5 and is the fix**; it is the only green PR of the
-> three. Nothing merges cleanly until it does, so it is the first thing to merge regardless of what
-> else is queued. The remaining `postcss` advisory is *moderate* and the gate deliberately tolerates it.
+> **The audit gate has now fired on a real advisory, and the shape of that failure is worth knowing
+> (2026-08-05).** `fast-uri@3.1.3` on `main` fell under a high-severity advisory, so
+> `npm audit --audit-level=high` failed on **every** branch cut from `main` — five red PRs whose own
+> contents were all fine. The instinct to debug the branch is wrong here: read the failing *step*
+> first, because a vulnerable dependency on `main` reddens everything downstream of it and only the
+> PR that raises the version can clear it. #52 did (`fast-uri` → 3.1.5) and was therefore the merge
+> that had to go first. `main` is green again.
 
 **Phase 0 — analysis and foundation** (#2)**:** ▶ in progress.
 
@@ -183,7 +184,7 @@ protects nothing, so this table tracks the gap explicitly; the ADR's status neve
 | Secret scanning + push protection | 0009 | ✅ in force (pre-existing) |
 | **Apex domain verified with GitHub** (`TXT` at `_github-pages-challenge-nanatsusaya`) | 0009 §5, R3 | ⛔ **owner action — blocks the CNAME, and with it the whole deployment** |
 | netcup: two-factor authentication, automatic renewal | 0009 §5 | ❓ owner action, unverified |
-| `npm ci --ignore-scripts`, `npm audit` gating, Dependabot npm entry | 0009 §2 | ✅ in force (2026-07-19) |
+| `npm ci --ignore-scripts`, `npm audit` gating, Dependabot npm entry | 0009 §2 | ✅ in force (2026-07-19); first stopped a real advisory 2026-08-05 |
 | Explicit `permissions:` block per workflow | 0009 §3 | ✅ in force (2026-07-19) |
 | External-resources fitness function | 0009 §6 | ✅ in force (2026-07-19) |
 | CSP via `<meta http-equiv>` | 0009 §7 | ✅ in force (2026-07-19) |
