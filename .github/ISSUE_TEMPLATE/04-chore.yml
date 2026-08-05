@@ -1,0 +1,77 @@
+# The catch-all, and deliberately still a form rather than a blank box: CLAUDE.md's Definition of
+# Ready is the same for a chore as for anything else, and "add issue templates" with no acceptance
+# criteria is not a ticket, it is a reminder.
+#
+# One form covers both `type:chore` and `type:docs`. GitHub cannot choose a label from an answer, so
+# the two would otherwise need two near-identical forms. Applying `type:chore` and correcting it at
+# triage costs nothing that is not already being paid: no form can set `priority:`, `area:` or
+# `phase:` either, so every filed ticket is labelled by hand regardless.
+name: Chore or documentation
+description: Tooling, maintenance or documentation — anything that is not a defect, a wrong fact, or a decision to record.
+title: '[Chore] '
+labels: ['type:chore']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The `type:` label starts as `type:chore`; it is corrected to `type:docs` at triage if that is
+        what this turns out to be, along with the priority, area and phase labels.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Which is it?
+      options:
+        - Chore — tooling, build, maintenance
+        - Documentation
+        - Both
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: What is the problem or the goal, and why does it exist?
+      description: >-
+        The *why*, not just the *what*. An agent picking this up months from now has this repository
+        and nothing else — no memory of the conversation this came out of.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: What concretely changes?
+      description: Which files, which behaviour. Name anything deliberately left out, so it is not read as forgotten.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: >-
+        Testable statements — how someone else can tell this is finished, rather than how it will
+        feel. A criterion nobody can check is a wish.
+      placeholder: |
+        - [ ] …
+        - [ ] `npm run check` passes
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: Legal, content-correctness, or an ADR this must not contradict. Leave empty if there are none.
+    validations:
+      required: false
+
+  - type: input
+    id: related
+    attributes:
+      label: Related epic, ADRs and issues
+      placeholder: '#2, ADR 0009'
+    validations:
+      required: false
