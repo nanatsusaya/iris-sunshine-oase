@@ -374,3 +374,34 @@ a violation* but **would it fail on a violation somebody else wrote** — so the
 have to be phrased by someone who is not looking at the pattern. Second: a green check is evidence
 only about what it can see. This one was green for three weeks over two documents it could not read,
 and nothing about the output said so.
+
+## 2026-08-05 — `agent-ready` is a label, not a reading
+
+**Trigger:** With the merge queue cleared, the owner asked what to work next. I recommended #17 (issue
+forms) as decision-free — from its labels, `priority:medium` and `agent-ready`, and from its title. The
+owner said yes. The ticket then turned out to carry a section headed **"Decision needed from the
+owner"**: which language the forms are written in, proposing a third exception to `CLAUDE.md`'s
+language rule for the two forms aimed at non-developers.
+
+**Action / method:** The question went to the owner before any file was written, with the ticket's own
+recommendation offered first; the owner chose English throughout, so no exception was added and
+`CLAUDE.md` stayed as it was. Afterwards the two remaining Phase 0 tickets were **read** before being
+characterised again — and both had been described wrongly in the same session. #18 (`SECURITY.md`) had
+been called owner-gated over its response-time promise, which its own constraints already settle:
+state best-effort honestly rather than copying a service-level promise across. #19, never flagged, says
+plainly that the code of conduct's enforcement contact "is a question for the owner, not a detail to
+fill in". Both carry `agent-ready`.
+
+**Impact:** One question to the owner instead of a wrong premise baked into five files, at a cost of
+about a minute. `docs/STATUS.md`'s list of available work now separates decision-free from owner-gated
+per ticket and names the sentence that makes each one so — including #39, which that same file had
+listed as work an agent could pick up and, thirty lines later, as something the owner owes the
+repository.
+
+**Lessons learned:** `agent-ready` records that a ticket is ready to be *worked*, not that working it
+needs no answers — three of the four open Phase 0 tickets carry the label and two of them contain an
+owner question. Labels and titles are an index; the ticket is the content, and this project writes long
+tickets precisely because the constraints do not fit in a title. The asymmetry settles it: reading the
+ticket costs one tool call, whereas recommending it wrongly spends the owner's decision on a premise
+that is not true — and had the work simply started, the language would have surfaced in review, after
+five files were written in the wrong one.
