@@ -462,3 +462,28 @@ four *Amendments* entries about a directory rename would devalue the section whe
 a decision are recorded, which is exactly the C2 dilution the immutability rule exists to prevent. The
 gate was still worth tripping: it cost one question, and the alternative was an agent quietly editing
 four `Accepted` ADRs and calling it a path fix.
+
+## 2026-08-05 — "Merged" is a claim about the remote, not a fact
+
+**Trigger:** The session's rhythm all day was *the owner merges, names the next ticket, work
+continues*. On the fourth of those the message said #68 was merged and asked for #67. It was not:
+`git ls-remote origin refs/heads/main` still pointed at the previous merge commit, the branch still
+existed with both its commits, and `gh pr view 68` reported `OPEN` with `mergeCommit: null`. Both
+sources agreed. A second message came a minute later, and then it really had merged.
+
+**Action / method:** Nothing was started. The evidence was reported as three lines of actual command
+output rather than as "it looks like it did not merge", together with the concrete cost of proceeding
+anyway — #67 edits `.gitignore`, whose line 9 #68 had already rewritten, so branching from the
+unchanged `main` would have either re-fixed the old path or produced a conflict against work already
+finished.
+
+**Impact:** One round trip, and the next task began on the right base.
+
+**Lessons learned:** `weiterimtext` already required re-verifying the external state, and the failure
+this repository had recorded was a **stale API** believed over the git data. This one inverts that:
+the API and git agreed, and the mistaken source was the instruction that started the task. So the
+rule is better stated without naming a culprit — **the shared state has exactly one authority, the
+remote refs, and everything else is a claim about it**, including a tool's cache and including a
+person's report. Checking is not distrust; it is that the costs are asymmetric. One command against
+an afternoon of work built on the wrong base, and a conflict discovered at push time is discovered in
+the worst possible place: after the reasoning has been written down as though it were true.
