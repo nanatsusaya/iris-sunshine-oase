@@ -127,10 +127,16 @@ an assertion.
 - **One concern per PR** — split unrelated changes so each stays reviewable in isolation. Don't fold
   refactors, formatting churn or dependency upgrades into unrelated work.
 - **Commits & PRs:** Conventional Commits (`type(scope): summary`, imperative subject, body explains
-  the *why*); end commit messages with the `Co-Authored-By` trailer and PR bodies with the Claude Code
-  line. A PR body states **what**, **why**, **which issue/ADR it follows**, how it was **verified**,
-  any **merge-order** caveats, and known **follow-ups**. Branch prefixes: `adr/…`, `feat/…`, `fix/…`,
-  `chore/…`, `docs/…`.
+  the *why*). Commit messages carry an **`Assisted-by:`** trailer naming what assisted, beside the
+  `Co-Authored-By` trailer; PR bodies end with the Claude Code line. A trailer survives a squash merge
+  and cannot be edited afterwards, which is why provenance goes there rather than into a description
+  anyone with write access could change. Branch prefixes: `adr/…`, `feat/…`, `fix/…`, `chore/…`,
+  `docs/…`.
+- **Read [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md) before writing a PR
+  body.** The shape lives there and is **deliberately not restated here** — it comes from the method's
+  handbook and is shared with four sibling repositories, so a second copy in this file would be a
+  second answer to a question that has one. Opening it is not automatic: `gh pr create --body-file`
+  never loads the template, so an agent has to go and read it.
 - **Definition of Done (before handing work back):** the local check chain is green; **for anything
   with visible output, verify it in a browser** — look at the rendered page, don't just trust that the
   build passed; the PR's CI is green. **Report outcomes faithfully**, including failures and skipped
@@ -203,8 +209,8 @@ Agents write the tickets too; hold them to the same bar as code.
   ADRs/issues; and any constraints (legal, content-correctness, ADR references).
 - **Definition of Done** (before closing): acceptance criteria met and **verified**; code **and** docs
   updated; CI green; the PR merged; for ADR tickets the ADR is `Accepted` and the index and
-  `STATUS.md` are synced; the ticket closed via a `Closes #NN` line in the PR body — written as
-  **plain text, never inside backticks or a code span**, or GitHub silently will not auto-close it.
+  `STATUS.md` are synced; the ticket closed by the `Closes #NN` line in the PR body — the template
+  says where that line goes and how to write it.
 
 Labels run on four axes — `type:` · `priority:` · `area:` · `phase:` — plus `epic`, `blocked` and
 `agent-ready`.
