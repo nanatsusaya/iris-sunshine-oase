@@ -63,11 +63,13 @@ rather than left to discipline; and the documentation is written to be self-supp
 
 ## Found a wrong price, or something broken?
 
-Please open an [issue](https://github.com/nanatsusaya/iris-sunshine-oase/issues) — a factual
-correction is more useful than almost any other contribution here.
+Please report it — a factual correction is worth more here than almost any other contribution. There
+is an [issue form](https://github.com/nanatsusaya/iris-sunshine-oase/issues/new/choose) for it, and it
+asks where the correct value comes from, because a corrected price without a source only replaces one
+unverified figure with another.
 
-This is a single business's website rather than a community project, so it is not looking for feature
-contributions, and pull requests from outside are unlikely to be merged.
+[`CONTRIBUTING.md`](.github/CONTRIBUTING.md) has the rest — including what this project is *not*
+looking for, and why a pull request from outside is unlikely to be merged.
 
 ## Licence
 
