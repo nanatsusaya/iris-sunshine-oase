@@ -198,37 +198,74 @@ for (const file of markdownFiles(ROOT)) {
 // **Quotations are exempt.** A blockquote is how this repository records superseded wording — ADR
 // 0001's own *Amendments* section quotes the old rule verbatim so the audit trail survives the
 // edit. Preserving history is the opposite of asserting the rule, so `>` lines are skipped.
+// A pattern built from the *wording* a rule happened to have is a pattern that matches itself. This
+// one was, and for its first three weeks it fired on nothing: the only text matching it lived inside
+// the blockquote exemption, while two documents went on teaching the rule in their own words —
+// `.claude/skills/moin/SKILL.md` and this log's own preamble, both since 2026-07-18, both older than
+// the check that was supposed to catch them. So the claim is matched, not the sentence: a phrase
+// asserting that *an* exception exists, near a phrase naming the status flip or a commit to `main`,
+// in either order.
+const EXCEPTION_CLAIMED = String.raw`\b(?:single|sole|only|one)\b[^.]{0,80}\bexceptions?\b`;
+const THE_FLIP = String.raw`(?:status flip|Proposed\s*(?:→|->|to)\s*Accepted|non-PR commit|direct(?:[- ])commit|commit(?:ted)?\s+(?:straight\s+)?to\s+\x60?main)`;
+
 const WITHDRAWN = [
   {
-    pattern:
-      /single documented exception|one workflow-sanctioned non-PR commit|flip\b[^.]*\bas a direct follow-up commit/i,
+    pattern: new RegExp(
+      `${EXCEPTION_CLAIMED}[^.]{0,200}${THE_FLIP}|${THE_FLIP}[^.]{0,200}${EXCEPTION_CLAIMED}` +
+        '|single documented exception|one workflow-sanctioned non-PR commit' +
+        String.raw`|flip\b[^.]*\bas a direct follow-up commit`,
+      'i',
+    ),
     what: 'the ADR status-flip exception to the never-commit-to-`main` rule',
     since: 'withdrawn 2026-07-18 (ADR 0001 Amendments, arising from ADR 0009 §4)',
     instead: 'the flip goes through a pull request; `main` is protected against administrators too',
   },
 ];
 
+// Matched against **paragraphs**, not lines. Prose wraps, and a claim whose two halves land on either
+// side of a wrap is invisible to a line-by-line scan — which is the other half of why this check
+// matched nothing: `moin` asserted the exception across a line break. Blank lines, headings, fences
+// and quoted lines all end a paragraph, so the blockquote exemption stays exact.
 for (const file of markdownFiles(ROOT)) {
   const r = rel(file);
   if (r.startsWith('docs/inhalte/')) continue;
 
   const lines = readFileSync(file, 'utf8').split('\n');
   let fenced = false;
-  for (const [i, line] of lines.entries()) {
-    if (/^\s*```/.test(line)) fenced = !fenced;
-    if (fenced) continue;
-    // A quoted line is a record of what the rule used to say, not a claim that it still holds.
-    if (/^\s*>/.test(line)) continue;
+  let para = [];
+  let paraStart = 0;
 
-    for (const rule of WITHDRAWN) {
-      if (rule.pattern.test(line)) {
-        problems.push(
-          `${r}:${i + 1} still asserts ${rule.what} — ${rule.since}. Instead: ${rule.instead}. ` +
-            '(If this line is quoting the old rule for the record, make it a "> " blockquote.)',
-        );
+  const flush = () => {
+    if (para.length) {
+      const text = para.join(' ');
+      for (const rule of WITHDRAWN) {
+        if (rule.pattern.test(text)) {
+          problems.push(
+            `${r}:${paraStart} still asserts ${rule.what} — ${rule.since}. Instead: ${rule.instead}. ` +
+              '(If this passage is quoting the old rule for the record, make it a "> " blockquote.)',
+          );
+        }
       }
     }
+    para = [];
+  };
+
+  for (const [i, line] of lines.entries()) {
+    if (/^\s*```/.test(line)) {
+      fenced = !fenced;
+      flush();
+      continue;
+    }
+    if (fenced) continue;
+    // A quoted line is a record of what the rule used to say, not a claim that it still holds.
+    if (/^\s*$/.test(line) || /^\s*>/.test(line) || /^\s*#/.test(line)) {
+      flush();
+      continue;
+    }
+    if (!para.length) paraStart = i + 1;
+    para.push(line.trim());
   }
+  flush();
 }
 
 // --- 7: the brand name is spelled one way ----------------------------------

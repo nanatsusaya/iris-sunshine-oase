@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-07-19**.
+> Living handoff note between working sessions. Last updated: **2026-08-05**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -29,6 +29,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 | 4 — Defects, accessibility, SEO | [#6](https://github.com/nanatsusaya/iris-sunshine-oase/issues/6) | planned |
 | 5 — Go-live | [#7](https://github.com/nanatsusaya/iris-sunshine-oase/issues/7) | planned |
 
+> **`main` is red, and it is not any one PR's fault (2026-08-05).** `fast-uri@3.1.3` on `main` is
+> subject to a high-severity advisory covering `3.0.0 - 3.1.4`, so the `npm audit --audit-level=high`
+> step fails on **every** branch cut from it — which is why #50 and #51 are red while their own
+> contents are fine. **#52 raises `fast-uri` to 3.1.5 and is the fix**; it is the only green PR of the
+> three. Nothing merges cleanly until it does, so it is the first thing to merge regardless of what
+> else is queued. The remaining `postcss` advisory is *moderate* and the gate deliberately tolerates it.
+
 **Phase 0 — analysis and foundation** (#2)**:** ▶ in progress.
 
 - ✅ The old WordPress site is analysed and documented (`docs/analyse/`): stack and data situation,
@@ -41,6 +48,12 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 - ✅ `Archive/` cleaned up: 749.7 MB → 594.0 MB, protocol in `Archive/AUFRAEUMPROTOKOLL.md`.
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, labels, CI.
+- ✅ **The method is declared** (2026-08-05): [`method.json`](../method.json) binds this repository's
+  four artefacts to the roles of [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules)
+  catalogue 0.5, with **no adaptations** — all 32 rules are in force, which its coherence check
+  verifies. The way of working had been followed since 2026-07-18 and never written down as a named
+  thing. The five session procedures are adapted copies of that method's plugin; what was changed in
+  them is in [`.claude/skills/README.md`](../.claude/skills/README.md).
 
 **Phase 1 — decisions** (#3)**:** ▶ in progress. ADRs 0002–0008, one PR each (see the
 [ADR index](adr/README.md) for the set and its rationale).
