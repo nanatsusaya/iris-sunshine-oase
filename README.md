@@ -75,6 +75,6 @@ This repository holds two different kinds of material, licensed differently. See
 - **The software** — code, templates, build configuration, the scripts under `tools/`, and the
   project's own process documentation — is © 2026 Daniel Wagner, under the **MIT licence**.
 - **The business content** — page copy, service descriptions, prices, opening hours, the business
-  name, the logo and all image material — is © 2026 Iris Zellner, Kosmetik- & Sonnenstudio Iris'
+  name, the logo and all image material — is © 2026 Iris Zellner, Kosmetik- & Sonnenstudio Iris’
   Sunshine Oase. **All rights reserved.** It is public here because the rebuild is developed in the
   open, not to grant any right of use. [`LICENSE`](LICENSE) says where to write to ask for it.
