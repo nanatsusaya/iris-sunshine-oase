@@ -1,0 +1,26 @@
+{
+  "method": "agent-project-rules",
+  "version": "0.5",
+
+  "artefacts": {
+    "operating-rules": "CLAUDE.md",
+    "decisions": "docs/adr/",
+    "state": "docs/STATUS.md",
+    "method-log": "docs/meta/agent-collaboration-log.md"
+  },
+
+  "authorities": {
+    "gate": "https://github.com/nanatsusaya/iris-sunshine-oase/settings/branches",
+    "tasks": "https://github.com/nanatsusaya/iris-sunshine-oase/issues",
+    "secrets": "https://github.com/nanatsusaya/iris-sunshine-oase/settings/security_analysis"
+  },
+
+  "language": {
+    "spelling": "british",
+    "allow": []
+  },
+
+  "ignore": ["docs/inhalte/", "Archive/"],
+
+  "adaptations": []
+}

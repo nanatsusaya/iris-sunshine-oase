@@ -28,19 +28,39 @@ and the scaffold ships. Until then, **do not assert a tech stack in code or docs
 Astro (owner's decision), everything around it — package manager, styling approach, test tooling — is
 still open and belongs in an ADR, not in a passing commit.
 
-## Session skills
+## The method, and the session procedures that carry it
 
-Four skills in `.claude/skills/` make the recurring session rituals repeatable, so
-that starting, continuing and closing a session is a procedure rather than an improvisation. They are
-adapted from the sibling project *grimora*; the names are German because the owner types them, while
-their contents are English like every other artefact.
+How this project is worked is not improvised per session. It follows
+[**agent-project-rules**](https://github.com/nanatsusaya/agent-project-rules), a catalogue of 32
+rules, and [`method.json`](method.json) at the repository root declares that: which of this
+repository's files answer the method's four questions, where the systems outside it live, and which
+rules are adapted. **None are** — every rule in the catalogue is in force here, which is a claim the
+method's own coherence check verifies (`/passtdas` runs it).
+
+| Role | Here | Answers |
+|---|---|---|
+| `operating-rules` | this file | How is work done here? |
+| `decisions` | [`docs/adr/`](docs/adr/README.md) | What was decided, and why? |
+| `state` | [`docs/STATUS.md`](docs/STATUS.md) | Where do we stand? |
+| `method-log` | [`docs/meta/agent-collaboration-log.md`](docs/meta/agent-collaboration-log.md) | Why does the way we work look like this? |
+
+The rules are **stated in this file, not fetched from that repository.** An instruction an agent must
+go and retrieve before it can work is one that can fail, be blocked or be skipped, and it costs
+something on every task. The link is a citation, not a dependency.
+
+Five procedures in `.claude/skills/` make the session seams repeatable, so that starting, continuing
+and closing a session is a procedure rather than an improvisation. They are **adapted copies** of the
+method's `agent-method` plugin — [`.claude/skills/README.md`](.claude/skills/README.md) records which
+version, what was deliberately changed here and why, and what makes them fall behind. The names are
+German because the owner types them; their contents are English like every other artefact.
 
 | Skill | When |
 |---|---|
 | `moin` | Session bring-up. Orients from the living docs and **ends with a question, never an action**. |
 | `weiterimtext` | Mid-session, after the owner merged a PR: close the unit out, re-verify the world, start the next task only if it is decision-free. |
 | `feierabend` | Session wind-down. Tidy git, finish or park work honestly, bring the living docs current. |
-| `adr-author` | Writing or reworking an ADR. Encodes ADR 0001's workflow and the house style. |
+| `adr` | Writing or reworking an ADR. Encodes ADR 0001's workflow and the house style. |
+| `passtdas` | Reviewing whether `method.json` still describes how work is actually done. |
 
 ## Architecture (read the ADRs before changing structure)
 

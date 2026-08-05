@@ -29,9 +29,9 @@ worse decision without it?*
 **Lessons learned:** what this suggests for next time, if anything.
 ```
 
-Like every other change, an entry goes through a **branch and a PR**. ADR 0001 makes the ADR
-`Proposed → Accepted` status flip the *single* exception to that rule, and a living doc is not worth a
-second one — an entry may simply ride along with the `docs/STATUS.md` sync at the end of a session,
+Like every other change, an entry goes through a **branch and a PR**. There is **no** exception, and
+none has existed since the ADR `Proposed → Accepted` status flip lost its own on 2026-07-18 (ADR 0001
+*Amendments*). An entry may simply ride along with the `docs/STATUS.md` sync at the end of a session,
 since keeping the living docs current is one concern.
 
 ---
@@ -40,27 +40,39 @@ since keeping the living docs current is one concern.
 > at the end of the founding session — this log did not yet exist while the work happened. They are the
 > project's origin methodology moments, reconstructed from that session.
 
-## 2026-07-18 — How this project is worked: adopting a sibling project's method
+## 2026-07-18 — How this project is worked: adopting the agent-project-rules method
+
+> **Revised 2026-08-05, owner-authorised.** The way of working recorded here was first met in another
+> repository and has since been extracted into a method of its own, with a name, a versioned catalogue
+> and a rule identifier per rule. This entry was rewritten to name that method rather than the
+> repository it was first seen in, so that a session reading it looks the working method up where it
+> now lives. The original wording is in the git history.
 
 **Trigger:** After the analysis of the old site was documented and the first commit made, the owner
-pointed at their other project, [grimora](https://github.com/nanatsusaya/grimora), and asked that this
-rebuild be developed the same way — explicitly *how*, not *what*: GitHub issues, ADRs, one concern per
-PR, owner-merged.
+asked that this rebuild be developed the same way as their other project,
+[grimora](https://github.com/nanatsusaya/grimora) — explicitly *how*, not *what*: GitHub issues, ADRs,
+one concern per PR, owner-merged.
 
-**Action / method:** The grimora repository was read as a **method** rather than a template — its ADR
-discipline, its `CLAUDE.md` structure, its label taxonomy, its PR template, its use of machine-enforced
-conventions instead of remembered ones. What transferred was adapted to this project's scale (8 planned
-ADRs against grimora's 29; one CI step against seven). One deliberate difference was set by the owner:
-**early drafts must be viewable via GitHub Pages**, where grimora has no preview.
+**Action / method:** What grimora carried was read as a **method** rather than a template — the ADR
+discipline, the `CLAUDE.md` structure, the label taxonomy, the PR template, the use of machine-enforced
+conventions instead of remembered ones. That method is now
+[**agent-project-rules**](https://github.com/nanatsusaya/agent-project-rules), a catalogue of 32 rules
+in eleven clusters, and it is the authority this project follows; grimora is where it was first seen,
+not what it is. What transferred was adapted to this project's scale (8 planned ADRs against grimora's
+29; one CI step against seven). One deliberate difference was set by the owner: **early drafts must be
+viewable via GitHub Pages**, where grimora has no preview.
 
 **Impact:** `CLAUDE.md`, ADR 0001, the ADR index, `STATUS.md`, the PR template, the label set, CI and
 `tools/check-docs.mjs` all date from this. Two further owner decisions were settled at the same time:
 all repository artefacts in English, and the site itself German by default with English as an
-additional locale.
+additional locale. The adoption was **declared** rather than merely practised on 2026-08-05 — see the
+entry for that date.
 
 **Lessons learned:** Copying a working method is cheap; copying it *unadapted* is not. Half of what
 grimora's artefacts assert would be false here — a different stack, a different risk profile, a
-different scale. The useful unit of transfer was the *rule*, not the file.
+different scale. The useful unit of transfer was the *rule*, not the file — which is the same
+conclusion the method itself later reached by becoming a catalogue of rules rather than a repository to
+copy.
 
 ## 2026-07-18 — A wrong recommendation about publishing the archive
 
@@ -292,3 +304,73 @@ everywhere else: when a rule is reversed, leave behind a check that fails if any
 the old one. Note also which documents were missed — not the ADRs, but the **procedural** files. Those
 are read by an agent that is about to act, which makes them the most expensive place for a stale rule
 to survive and the least likely place to be looked at when the rule changes.
+
+## 2026-08-05 — The way of working gets a name, and a declaration
+
+**Trigger:** The owner reported that the method this project had been worked by now exists as a
+project of its own and is called `agent-project-rules`, and asked that this repository be brought in
+line with it.
+
+**Action / method:** The first finding was that the premise did not hold here: the old name appeared
+**nowhere** in this repository, and there was no `method.json`. Nothing had to be renamed. What was
+actually true is that this project had followed the method for three weeks without ever declaring it —
+so this was a first adoption, not a migration, and saying so changed the work from a search-and-replace
+into a review.
+
+All 32 rules of catalogue 0.5 were read against the repository. Every one of them was already in
+force — the four roles were already bound to real files, `Accepted` already meant decided rather than
+built, the gate was already zero-approvals-on-purpose. So `method.json` declares **no adaptations**,
+which is a claim rather than a shrug: the coherence check verifies that every rule is either in force
+or recorded as changed, and it now passes with 32 in force and 136 references resolved.
+
+Two things had to be told apart carefully. Where the repository names *grimora*, it usually means
+grimora-the-project — a different stack with a different risk profile, cited in ADR 0002 and ADR 0009
+as a comparison. Those references are still true and were left alone. Only the sentence that credited
+grimora with the **method** was rewritten, because the method has an address of its own now.
+
+**Impact:** `method.json` at the root, the five session procedures re-based on the plugin's 0.5.0
+versions under the names the owner types, `.claude/skills/README.md` recording what was deliberately
+changed in them, and `CLAUDE.md` naming the method and the four role bindings.
+
+**Lessons learned:** "Adapt the project to the rename" was a reasonable description of the task and
+the wrong one, and checking it cost one `grep`. An instruction that names the change to make is worth
+one minute of testing against the repository before it is carried out — the answer here turned a
+mechanical edit into the discovery that the project had never declared what it follows.
+
+## 2026-08-05 — A check counter-tested against its own wording
+
+**Trigger:** Reading the entry of 2026-07-19 above while re-basing the session procedures. It records
+that the withdrawn-rule check "was verified in both directions — it passes on the corrected repository
+and fails on a deliberately reintroduced sentence". That is true, and it is not the same as working.
+
+**Action / method:** A search found the retired rule still asserted in **two** live documents:
+`.claude/skills/moin/SKILL.md` and this file's own preamble. Both dated from `b302d25` on 2026-07-18;
+the check arrived in `35e0f3b` on 2026-07-19, **after** them. It had been added to a repository that
+already contained two copies of the rule it existed to catch, and had reported success ever since.
+
+Two independent causes, each sufficient on its own:
+
+1. **The pattern was built from the wording the rule happened to have**, so the counter-test —
+   reintroducing that wording — proved only that the pattern matches itself. Both survivors were
+   *paraphrases*, which is what a document produces when it restates a rule in its own words. Re-run
+   against the old pattern afterwards: the literal wording is caught, all three paraphrases are missed.
+2. **The scan matched line by line**, and `moin` split the claim across a line wrap. No pattern could
+   have matched it, correct or not.
+
+Both are fixed: paragraphs are folded before matching, and the pattern now looks for the *claim* — a
+phrase asserting an exception exists, near a phrase naming the status flip or a commit to `main`, in
+either order. The counter-test this time used four rephrasings including one nobody has written yet,
+plus five legitimate near-misses: the correct statement of the rule, "without exception", the same
+claim inside a blockquote, the same claim inside a fenced block, and `one` as a substring of `none`
+next to the flip. Four caught, five clean, and the check found one real finding in the new text before
+it found nothing.
+
+**Impact:** The check decides something now. `tools/check-docs.mjs` check 6 fires on a rephrasing of a
+withdrawn rule rather than on a recitation of it.
+
+**Lessons learned:** A check written at the same moment as the fix inherits the fix's vocabulary, and a
+counter-test drawn from the same moment inherits it twice. The useful question is not *does it fail on
+a violation* but **would it fail on a violation somebody else wrote** — so the deliberate violations
+have to be phrased by someone who is not looking at the pattern. Second: a green check is evidence
+only about what it can see. This one was green for three weeks over two documents it could not read,
+and nothing about the output said so.
