@@ -49,7 +49,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 - ✅ `Archive/` cleaned up: 749.7 MB → 594.0 MB, protocol in `Archive/AUFRAEUMPROTOKOLL.md`.
   Backup and archival of it are the **owner's** responsibility, deliberately outside this repository.
 - ▶ Process foundation: `CLAUDE.md`, ADR 0001 and the index, this file, the PR template, the issue
-  forms (#17), `SECURITY.md` (#18), labels, CI. Outstanding: the contributor files (#19).
+  forms (#17), `SECURITY.md` (#18), the contributor files (#19), labels, CI. Complete.
   - **The chooser was checked by the owner on the rendered page** (2026-08-05), not inferred from a
     passing parse: all four forms appear with their descriptions, the blank box is reduced to
     *"Maintainers only"* as `blank_issues_enabled: false` is documented to do, and the security
@@ -212,6 +212,7 @@ Recorded here so they are not lost before the owning ADR is written:
 | No contact form — telephone and e-mail only | 2026-07-18 | 0007 |
 | `Archive/` excluded wholesale; no Release upload (public repository) | 2026-07-18 | — (`.gitignore`, `docs/analyse/06`) |
 | Issue forms are English, like every other repository artefact — **no** exception for the two aimed at non-developers | 2026-08-05 | — (`CLAUDE.md` language rule, unchanged) |
+| Code-of-conduct enforcement contact is the owner's **GitHub account** plus GitHub's abuse form — no e-mail address, and never the studio's | 2026-08-05 | — (#19, `.github/CODE_OF_CONDUCT.md`) |
 
 ## Open questions for the owner
 
@@ -239,12 +240,10 @@ Decision-free work still available while the preview is blocked, in rough order:
 
 1. **`docs/` paths renamed to English** (#11) — `analyse` → `analysis`, `inhalte` → `content`.
 
-**Owner-gated, despite the `agent-ready` label** — the label means the ticket is ready to be *worked*,
-not that working it needs no answers:
+**Owner-gated.** Note that `agent-ready` means a ticket is ready to be *worked*, not that working it
+needs no answers — #17 and #19 both carried the label and both contained a question only the owner
+could settle. Read the ticket, not the label.
 
-- **#19** (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`) — the code of conduct needs an enforcement
-  contact, and the studio's own address must not become one without the owner agreeing. The ticket
-  says so plainly: a question for the owner, not a detail to fill in.
 - **#39** (the sun as a vector) — the mark has to be **obtained**, not written; it is the owner's own
   work, listed under what the owner owes the repository below.
 - **ADRs 0005, 0007 and 0008**, each as its own two-PR cycle. They exist in order to put questions to
@@ -285,5 +284,5 @@ the build:
   reused: those rights are undocumented (`docs/analyse/06-medien-inventar.md`). Each new one needs who
   took it, when, and confirmation that the studio holds the rights.
 
-Phase 0's remainder (#11, #19) is low-priority tidying and does not block anything. #12, #17 and #18
-are closed.
+Phase 0's remainder is #11 alone, low-priority tidying that blocks nothing. #12, #17, #18 and #19 are
+closed.
