@@ -13,6 +13,9 @@
  *   4. every relative Markdown link in the repository resolves to an existing file
  *   5. no American spelling in prose (CLAUDE.md fixes British spelling for this repository)
  *   6. no document still asserts a rule that has been withdrawn
+ *   7. the studio's name is spelled with the typographic apostrophe (ADR 0004 R5)
+ *
+ * Checks 6 and 7 read **paragraphs** rather than lines — see `eachParagraph` for why that matters.
  *
  * Run: node tools/check-docs.mjs
  * Exits non-zero on the first failing category, listing every violation found.
@@ -39,6 +42,50 @@ function markdownFiles(dir) {
     else if (entry.name.endsWith('.md')) out.push(p);
   }
   return out;
+}
+
+/**
+ * Walk a Markdown file's prose **paragraphs** instead of its lines, and hand each one to `visit`
+ * along with the line it started on.
+ *
+ * Prose wraps. A claim whose two halves land on either side of a wrap is invisible to a line-by-line
+ * scan, and this is not a hypothetical: check 6 matched nothing for three weeks partly for this
+ * reason, and check 7 went on to miss a straight apostrophe in `README.md` because the brand name
+ * happened to break across lines between "Iris'" and "Sunshine".
+ *
+ * It exists as one function rather than as a loop copied into each check for the same reason: two
+ * copies of a subtle scanner is how one of them gets fixed and the other does not — which is exactly
+ * what happened here.
+ *
+ * Blank lines, headings, fences and quoted lines all end a paragraph, so a `>` blockquote — this
+ * repository's way of recording superseded wording — stays exempt down to the line.
+ */
+function eachParagraph(file, visit) {
+  const lines = readFileSync(file, 'utf8').split('\n');
+  let fenced = false;
+  let para = [];
+  let paraStart = 0;
+
+  const flush = () => {
+    if (para.length) visit(para.join(' '), paraStart);
+    para = [];
+  };
+
+  for (const [i, line] of lines.entries()) {
+    if (/^\s*```/.test(line)) {
+      fenced = !fenced;
+      flush();
+      continue;
+    }
+    if (fenced) continue;
+    if (/^\s*$/.test(line) || /^\s*>/.test(line) || /^\s*#/.test(line)) {
+      flush();
+      continue;
+    }
+    if (!para.length) paraStart = i + 1;
+    para.push(line.trim());
+  }
+  flush();
 }
 
 // --- 1–3: ADR index conformance -------------------------------------------
@@ -222,50 +269,24 @@ const WITHDRAWN = [
   },
 ];
 
-// Matched against **paragraphs**, not lines. Prose wraps, and a claim whose two halves land on either
-// side of a wrap is invisible to a line-by-line scan — which is the other half of why this check
-// matched nothing: `moin` asserted the exception across a line break. Blank lines, headings, fences
-// and quoted lines all end a paragraph, so the blockquote exemption stays exact.
+// Matched against **paragraphs**, not lines — see `eachParagraph`. That is the other half of why this
+// check matched nothing for three weeks: `moin` asserted the exception across a line break, so no
+// pattern could have caught it. A quoted line is a record of what the rule used to say rather than a
+// claim that it still holds, and `eachParagraph` keeps that exemption exact.
 for (const file of markdownFiles(ROOT)) {
   const r = rel(file);
   if (r.startsWith('docs/inhalte/')) continue;
 
-  const lines = readFileSync(file, 'utf8').split('\n');
-  let fenced = false;
-  let para = [];
-  let paraStart = 0;
-
-  const flush = () => {
-    if (para.length) {
-      const text = para.join(' ');
-      for (const rule of WITHDRAWN) {
-        if (rule.pattern.test(text)) {
-          problems.push(
-            `${r}:${paraStart} still asserts ${rule.what} — ${rule.since}. Instead: ${rule.instead}. ` +
-              '(If this passage is quoting the old rule for the record, make it a "> " blockquote.)',
-          );
-        }
+  eachParagraph(file, (text, startLine) => {
+    for (const rule of WITHDRAWN) {
+      if (rule.pattern.test(text)) {
+        problems.push(
+          `${r}:${startLine} still asserts ${rule.what} — ${rule.since}. Instead: ${rule.instead}. ` +
+            '(If this passage is quoting the old rule for the record, make it a "> " blockquote.)',
+        );
       }
     }
-    para = [];
-  };
-
-  for (const [i, line] of lines.entries()) {
-    if (/^\s*```/.test(line)) {
-      fenced = !fenced;
-      flush();
-      continue;
-    }
-    if (fenced) continue;
-    // A quoted line is a record of what the rule used to say, not a claim that it still holds.
-    if (/^\s*$/.test(line) || /^\s*>/.test(line) || /^\s*#/.test(line)) {
-      flush();
-      continue;
-    }
-    if (!para.length) paraStart = i + 1;
-    para.push(line.trim());
-  }
-  flush();
+  });
 }
 
 // --- 7: the brand name is spelled one way ----------------------------------
@@ -280,24 +301,24 @@ for (const file of markdownFiles(ROOT)) {
 // Excluded: docs/inhalte/ and docs/analyse/ are *records of the old site*, where the straight form is
 // the historical fact and correcting it would destroy the evidence. Code spans, fenced blocks and
 // blockquotes are excluded for the same reason everywhere else — they quote rather than assert.
+//
+// Scanned by paragraph, not by line. This check spent its first fortnight unable to see the one
+// violation in the repository: `README.md`'s licence section wrapped between "Iris'" and "Sunshine",
+// and a line-by-line scan cannot match across that break. The rule was correct, the reading was not.
 const STRAIGHT_BRAND = /Iris'\s*Sunshine/;
 
 for (const file of markdownFiles(ROOT)) {
   const r = rel(file);
   if (r.startsWith('docs/inhalte/') || r.startsWith('docs/analyse/')) continue;
 
-  const lines = readFileSync(file, 'utf8').split('\n');
-  let fenced = false;
-  for (const [i, line] of lines.entries()) {
-    if (/^\s*```/.test(line)) fenced = !fenced;
-    if (fenced || /^\s*>/.test(line)) continue;
-    if (STRAIGHT_BRAND.test(line.replace(/`[^`\n]*`/g, ''))) {
+  eachParagraph(file, (text, startLine) => {
+    if (STRAIGHT_BRAND.test(text.replace(/`[^`\n]*`/g, ''))) {
       problems.push(
-        `${r}:${i + 1} spells the brand name with a straight apostrophe — ADR 0004 R5 fixes the ` +
+        `${r}:${startLine} spells the brand name with a straight apostrophe — ADR 0004 R5 fixes the ` +
           'typographic form: Iris’ Sunshine Oase.',
       );
     }
-  }
+  });
 }
 
 // --- report ----------------------------------------------------------------
