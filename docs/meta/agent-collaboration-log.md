@@ -405,3 +405,32 @@ tickets precisely because the constraints do not fit in a title. The asymmetry s
 ticket costs one tool call, whereas recommending it wrongly spends the owner's decision on a premise
 that is not true — and had the work simply started, the language would have surfaced in review, after
 five files were written in the wrong one.
+
+## 2026-08-05 — Where an answered question goes
+
+**Trigger:** #64 proposed adopting the method's consolidated pull-request shape, and was blocked on
+[agent-project-rules#13](https://github.com/nanatsusaya/agent-project-rules/issues/13) with the
+constraint that the shape is not decided here — *"a second answer in this repository is the defect
+this ticket is about"*. The owner asked whether to pull it forward anyway. The answer was no, on those
+grounds, until #13 closed.
+
+**Action / method:** The handbook now fixes five sections — What · Why · Verified · Open questions ·
+Follow-ups — plus **exactly one** project addition, which here is *Content sources*, because a fact
+with no source does not ship. *Which issue / ADR it follows* folds into Why and *Merge-order caveats*
+into Follow-ups; both were argued for in #64 and both were answered upstream, so neither was
+re-litigated here. `CLAUDE.md` stopped enumerating the shape and now points at the template instead.
+
+**Impact:** The part that changes how work is done is not the headings. **An answer to an open
+question arrives as a comment naming its `O`-number, and nothing already written in the description is
+rewritten.** Before this, every answer the owner gave arrived as a chat message and survived only as
+whatever an agent afterwards chose to write down — the code-of-conduct enforcement contact decided on
+2026-08-05 exists as one row in `STATUS.md` and nowhere else, with no permalink and no timestamp but
+the one typed into it.
+
+**Lessons learned:** This repository had the disease the ticket describes, and its own pull requests
+are the evidence: #58 put the language question under an invented heading, #65 invented another for
+two overridable judgements, and #60 records a commit pushed onto #59's branch while the owner was
+merging it — the editing race, already paid once. A shape is not ceremony when the drift is
+measurable in your own last ten descriptions. Worth noting for the next adoption of something from
+upstream: the reason to check the local evidence first is not to decide whether the rule is right, but
+to know whether it is *needed here*, which is what makes an agent apply it rather than perform it.
