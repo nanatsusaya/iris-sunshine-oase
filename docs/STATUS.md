@@ -274,11 +274,20 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**The preview URL** (Phase 2, #4) — and it is the owner's move, not an agent's. The homepage, the
-token layer, the content model and the fonts are all in place; what is missing is the two netcup and
-GitHub Pages actions listed below. Until they happen the epic's Definition of Done — *a URL the owner
-can open* — stays unmet no matter what else ships, which is worth saying plainly rather than letting
-the work drift on around it.
+**The preview URL, tomorrow — #89.** On 2026-09-20 the owner set the priority explicitly: **bring the
+draft online before anything else**, ahead of ADR 0007 and Phase 3, because the studio's proprietor
+wants to see it. The homepage, the token layer, the content model and the fonts are all in place; what
+is missing is three owner actions at GitHub and netcup and one agent PR, in the order #89 lists them
+(the first — verifying the apex with GitHub — is what makes the second safe). The session of
+2026-09-21 opens with this: confirm steps 1–3 from outside (`dig`, the Pages API), then re-enable the
+`push` trigger in `deploy.yml` and verify the deployed page by fetching it. What the proprietor will
+see is the homepage with every price and opening time struck through and badged as invented — that is
+by design (ADR 0003 R1) and the page says so; nobody makes the draft look better by typing a real
+number in.
+
+**After that, in order:** ADR 0007 (legal, privacy, third-party services — the last of Phase 1; its
+questions go to the owner in chat before the PR opens, like 0008's), then Phase 3, whose first paired
+page brings the route map, the dictionaries, the redirect module, the 404 page and their checks.
 
 **The homepage and the fonts shipped on 2026-07-19**, and the ordering note that used to stand here is
 spent: the homepage waited for the content model rather than following the token layer directly,
@@ -287,7 +296,7 @@ it first would have meant typing an opening time into a template — the exact d
 to remove, on day one of the implementation. That worked; nothing on the page carries a figure of its
 own.
 
-**There is no decision-free work left.** That list ran through the whole of Phase 0 and is now empty:
+**Beyond #89 there is no decision-free work left.** That list ran through the whole of Phase 0 and is now empty:
 #67 was the last entry on it. Saying so plainly is the point of this section — an agent arriving here
 should stop and ask rather than go looking for something to pick up, because everything still open
 needs the owner.
