@@ -14,20 +14,20 @@ This folder exists because `Archive/` is not part of the repository. It is there
 
 | Page | Path | Status | File |
 |---|---|---|---|
-| Honig <br><small>under Moments</small> | `/honig` | publish | [honig.md](pages/honig.md) |
-| Impressum | `/impressum` | publish | [impressum.md](pages/impressum.md) |
-| Iris‘ Sunshine Oase | `/iris-sunshine-oase` | publish | [iris-sunshine-oase.md](pages/iris-sunshine-oase.md) |
-| Kontakt | `/kontakt` | publish | [kontakt.md](pages/kontakt.md) |
-| Kosmetik <br><small>under Moments</small> | `/kosmetik` | publish | [kosmetik.md](pages/kosmetik.md) |
-| Leistungen & Preise | `/leistungen-und-preise` | publish | [leistungen-und-preise.md](pages/leistungen-und-preise.md) |
-| Massage <br><small>under Moments</small> | `/massage` | publish | [massage.md](pages/massage.md) |
-| Moments | `/moments` | publish | [moments.md](pages/moments.md) |
-| proWIN | `/prowin` | publish | [prowin.md](pages/prowin.md) |
-| Spielewiese | `/` | draft | [spielewiese.md](pages/spielewiese.md) |
-| Sunshine | `/sunshine` | publish | [sunshine.md](pages/sunshine.md) |
-| Ton Erden <br><small>under Moments</small> | `/ton-erden` | publish | [ton-erden.md](pages/ton-erden.md) |
-| Über uns | `/ueber-uns` | publish | [ueber-uns.md](pages/ueber-uns.md) |
-| Zertifizierung <br><small>under Über uns</small> | `/zertifizierung` | publish | [zertifizierung.md](pages/zertifizierung.md) |
+| Honig <br><small>under Moments</small> | `/moments/honig/` | publish | [honig.md](pages/honig.md) |
+| Impressum | `/impressum/` | publish | [impressum.md](pages/impressum.md) |
+| Iris‘ Sunshine Oase | `/` | publish | [iris-sunshine-oase.md](pages/iris-sunshine-oase.md) |
+| Kontakt | `/kontakt/` | publish | [kontakt.md](pages/kontakt.md) |
+| Kosmetik <br><small>under Moments</small> | `/moments/kosmetik/` | publish | [kosmetik.md](pages/kosmetik.md) |
+| Leistungen & Preise | `/leistungen-und-preise/` | publish | [leistungen-und-preise.md](pages/leistungen-und-preise.md) |
+| Massage <br><small>under Moments</small> | `/moments/massage/` | publish | [massage.md](pages/massage.md) |
+| Moments | `/moments/` | publish | [moments.md](pages/moments.md) |
+| proWIN | `/prowin/` | publish | [prowin.md](pages/prowin.md) |
+| Spielewiese | `/?page_id=429` | draft | [spielewiese.md](pages/spielewiese.md) |
+| Sunshine | `/sunshine/` | publish | [sunshine.md](pages/sunshine.md) |
+| Ton Erden <br><small>under Moments</small> | `/moments/ton-erden/` | publish | [ton-erden.md](pages/ton-erden.md) |
+| Über uns | `/ueber-uns/` | publish | [ueber-uns.md](pages/ueber-uns.md) |
+| Zertifizierung <br><small>under Über uns</small> | `/ueber-uns/zertifizierung/` | publish | [zertifizierung.md](pages/zertifizierung.md) |
 
 ## Other captures
 
