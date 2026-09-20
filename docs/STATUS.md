@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-08-05**.
+> Living handoff note between working sessions. Last updated: **2026-09-20**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -36,6 +36,16 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 > first, because a vulnerable dependency on `main` reddens everything downstream of it and only the
 > PR that raises the version can clear it. #52 did (`fast-uri` → 3.1.5) and was therefore the merge
 > that had to go first. `main` is green again.
+>
+> **The second time it fired, that recipe no longer worked (2026-09-20).** Six weeks without a merge
+> had let **seven** advisories accumulate on `main` at once — `astro` (critical), `fast-uri`,
+> `js-yaml`, `nanoid`, `sharp`, `svgo` (high) and `devalue` (moderate). Dependabot opened one pull
+> request per package, and each stayed red on the *other* six, so no single bot PR could ever go
+> green and there was no "merge this one first". The way out was one hand-made `chore/` PR running
+> `npm audit fix` for the whole set; Dependabot closes its own PRs once `main` carries the newer
+> versions. The general rule: **when more than one advisory is open, the bot's one-package PRs are
+> not mergeable, and someone has to lift them together.** The six-week gap between sessions is what
+> produced the situation — worth knowing when planning the next one.
 
 **Phase 0 — analysis and foundation** (#2)**:** ✅ complete; the epic was closed by the owner on
 2026-08-05, with its Definition of Done checked clause by clause in the
