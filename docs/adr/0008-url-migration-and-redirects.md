@@ -1,6 +1,6 @@
 # ADR 0008 — URL migration and redirects from the old site
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-20
 - **Depends on:** [ADR 0006](0006-deployment-preview-hosting.md) §1 (GitHub Pages serves the live
   site — static files, no server, no response headers) and §6 (the cutover, which is when this ADR
