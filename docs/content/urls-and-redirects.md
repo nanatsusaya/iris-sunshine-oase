@@ -6,27 +6,27 @@ Every publicly reachable address, and the basis for the redirects at relaunch. T
 
 | Old URL | Title | Type | New URL |
 |---|---|---|---|
-| `/honig/` | Honig | Page | _open_ |
+| `/` | Iris‘ Sunshine Oase | Page | _open_ |
 | `/impressum/` | Impressum | Page | _open_ |
-| `/iris-sunshine-oase/` | Iris‘ Sunshine Oase | Page | _open_ |
 | `/kontakt/` | Kontakt | Page | _open_ |
-| `/kosmetik/` | Kosmetik | Page | _open_ |
 | `/leistungen-und-preise/` | Leistungen & Preise | Page | _open_ |
-| `/massage/` | Massage | Page | _open_ |
 | `/moments/` | Moments | Page | _open_ |
+| `/moments/honig/` | Honig | Page | _open_ |
+| `/moments/kosmetik/` | Kosmetik | Page | _open_ |
+| `/moments/massage/` | Massage | Page | _open_ |
+| `/moments/ton-erden/` | Ton Erden | Page | _open_ |
 | `/prowin/` | proWIN | Page | _open_ |
 | `/sunshine/` | Sunshine | Page | _open_ |
-| `/ton-erden/` | Ton Erden | Page | _open_ |
 | `/ueber-uns/` | Über uns | Page | _open_ |
-| `/zertifizierung/` | Zertifizierung | Page | _open_ |
+| `/ueber-uns/zertifizierung/` | Zertifizierung | Page | _open_ |
 | `/5-jahre-jubilaeum-mit-gewinnspiel/` | 5 Jahre Jubiläum mit Gewinnspiel | Post | _open_ |
 | `/hurra-wir-duerfen-wieder-fuer-sie-da-sein/` | Hurra! Wir dürfen wieder für Sie da sein! | Post | _open_ |
 | `/juni-highlight/` | Juni Highlight | Post | _open_ |
 | `/kosmetik-des-monats-april/` | Kosmetik des Monats April | Post | _open_ |
 | `/kosmetik-des-monats-februar/` | Kosmetik des Monats Februar | Post | _open_ |
 | `/kosmetik-des-monats-maerz/` | Kosmetik des Monats März | Post | _open_ |
-| `/kosmetik-des-monats-mai/` | Kosmetik des Monats Mai | Post | _open_ |
 | `/kosmetik-des-monats-mai-2020/` | Kosmetik des Monats Mai | Post | _open_ |
+| `/kosmetik-des-monats-mai/` | Kosmetik des Monats Mai | Post | _open_ |
 | `/neuer-webauftritt/` | Neuer Webauftritt | Post | _open_ |
 | `/rework-von-moments/` | Rework von Moments | Post | _open_ |
 | `/sonderaktion-januar-2018/` | Sonderaktion – Januar 2018 | Post | _open_ |

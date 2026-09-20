@@ -42,6 +42,21 @@ function tag(it, name) {
   return m ? m[1] : '';
 }
 
+/**
+ * The public path of a page or post, taken from the `<link>` WordPress wrote into the export.
+ *
+ * Not built from the slug. A page's URL is hierarchical when it has a parent — `kosmetik` under
+ * `moments` was served and indexed as `/moments/kosmetik/` — and the front page's slug is
+ * `iris-sunshine-oase` while its URL is `/`. The first version of this file derived `/kosmetik/` and
+ * `/iris-sunshine-oase/` from the slug, which put six wrong addresses into the redirect inventory.
+ * Found on 2026-09-20 by comparing the inventory against the live site's sitemap and its
+ * `rel="canonical"` tags; the permalink is the authority, and the export carries it.
+ */
+function publicPath(it) {
+  const link = tag(it, 'link').trim();
+  return link.replace(/^https?:\/\/[^/]+/, '') || '/';
+}
+
 function metaOf(it) {
   const o = {};
   const re =
@@ -348,7 +363,7 @@ for (const it of pages) {
     .join('\n');
 
   write(rel, `${head}\n${body}\n`);
-  pageIndex.push({ title, slug, status, rel, parentTitle, len: body.length });
+  pageIndex.push({ title, slug, path: publicPath(it), status, rel, parentTitle, len: body.length });
 }
 
 // ------------------------------------------------------------------ 2. Posts
@@ -435,12 +450,12 @@ const published = [];
 for (const t of ['page', 'post']) {
   for (const it of byType[t] || []) {
     if (tag(it, 'wp:status') !== 'publish') continue;
-    published.push({ slug: tag(it, 'wp:post_name'), title: decode(tag(it, 'title')), type: t });
+    published.push({ path: publicPath(it), title: decode(tag(it, 'title')), type: t });
   }
 }
-published.sort((a, b) => a.type.localeCompare(b.type) || a.slug.localeCompare(b.slug));
+published.sort((a, b) => a.type.localeCompare(b.type) || a.path.localeCompare(b.path));
 for (const p of published) {
-  urlMd += `| \`/${p.slug}/\` | ${p.title} | ${p.type === 'page' ? 'Page' : 'Post'} | _open_ |\n`;
+  urlMd += `| \`${p.path}\` | ${p.title} | ${p.type === 'page' ? 'Page' : 'Post'} | _open_ |\n`;
 }
 urlMd += `\n**${published.length} published addresses.**\n`;
 write('urls-and-redirects.md', urlMd);
@@ -506,7 +521,7 @@ let idx =
   '## Pages\n\n| Page | Path | Status | File |\n|---|---|---|---|\n';
 
 for (const p of pageIndex.sort((a, b) => a.title.localeCompare(b.title))) {
-  idx += `| ${p.title}${p.parentTitle ? ` <br><small>under ${p.parentTitle}</small>` : ''} | \`/${p.slug}\` | ${p.status} | [${path.basename(p.rel)}](${p.rel}) |\n`;
+  idx += `| ${p.title}${p.parentTitle ? ` <br><small>under ${p.parentTitle}</small>` : ''} | \`${p.path}\` | ${p.status} | [${path.basename(p.rel)}](${p.rel}) |\n`;
 }
 
 idx +=
