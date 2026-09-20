@@ -125,7 +125,22 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   drafts the English in each page's PR and the owner reviews both languages there. State:
   **designed** — the route map, the dictionaries and the two checks of §8 arrive with the first paired
   page, and `src/content/format.ts` still carries its provisional German strings until then.
-- ▶ ADRs 0007 and 0008 outstanding.
+- ✅ [ADR 0008](adr/0008-url-migration-and-redirects.md) — URL migration and redirects — **Accepted**
+  (2026-09-20): every surviving page **keeps its old URL exactly** (hierarchy and trailing slash
+  included — the German slugs in ADR 0005's route map are the old permalinks), so the pages that carry
+  the ranking need no redirect at all; what moves gets Astro's static redirect page (instant meta
+  refresh, measured to carry `noindex` and an absolute canonical — the strongest signal GitHub Pages
+  can send, and one Google documents as permanent); what is gone answers a **real 404** from a
+  bilingual error page, never a soft-404 to the homepage. The mapping lives in one typed module, and
+  a blocking check holds `dist/` to the generated inventory: kept, redirected to a real page, or
+  declared gone — no fourth state, no chain. **R1–R4**: the blog is dropped (promotions redirect to
+  the price page, announcements 404); **proWIN stays** at `/prowin/` with a short introduction; the
+  `/moments/…` and `/sunshine/` paths stay; the Search Console property is created when the domain
+  is re-pointed (a step of #7). The inventory it reads was **wrong for six of the 32 until 2026-09-20**
+  (#86 — the generator derived paths from slugs; the permalink is the authority). State:
+  **designed** — the module, `404.astro` and `tools/check-redirects.mjs` arrive with the first page
+  that needs a redirect.
+- ▶ ADR 0007 outstanding — the last of the set.
 - ✅ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Accepted**
   (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
   display sizes, a 34rem reading measure, mobile-first with two breakpoints, inline-SVG icons and
@@ -283,12 +298,12 @@ could settle. Read the ticket, not the label.
 
 - **#39** (the sun as a vector) — the mark has to be **obtained**, not written; it is the owner's own
   work, listed under what the owner owes the repository below.
-- **ADRs 0007 and 0008**, each as its own two-PR cycle. They exist in order to put questions to the
-  owner, so an agent can draft one but never finish it alone. (0005 went through that cycle on
-  2026-09-20 — with the wrinkle that the owner merged the proposing PR before reading its questions and
-  answered them in conversation instead; the ADR's *Resolved questions* section records that, and the
-  lesson for the next one is to put the O-numbers in the chat message as well as the PR body, which is
-  what happened and what made the answers easy to give.)
+- **ADR 0007** — legal, privacy and third-party services — the last of the Phase 1 set, as its own
+  two-PR cycle. It exists in order to put questions to the owner, so an agent can draft it but never
+  finish it alone; and it is the one ADR whose questions may need the owner's legal review rather than
+  a preference. (0005 and 0008 went through the cycle on 2026-09-20. 0005's questions were merged
+  past unread and answered in conversation; for 0008 the questions were therefore asked **in the chat
+  before the PR opened** and the PR carried the answers already — that is the shape to keep.)
 
 The pages the homepage cannot yet link to — Leistungen & Preise, Über uns, Kontakt — are Phase 3 and
 wait on the owner's figures.
