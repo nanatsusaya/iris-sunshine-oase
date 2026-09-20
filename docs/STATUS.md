@@ -114,7 +114,18 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   status badge but makes it fail in the cheap direction: it shows the closed state while the hours are
   unconfirmed, because a wrong *„geschlossen"* costs a telephone call and a wrong *„geöffnet"* costs a
   journey. State: **designed** — no data files yet.
-- ▶ ADRs 0005, 0007 and 0008 outstanding.
+- ✅ [ADR 0005](adr/0005-internationalisation.md) — internationalisation (#83) — **Accepted**
+  (2026-09-20): `de` at the root and `en` under `/en/` with no automatic language selection;
+  translated English slugs, with the de ↔ en pairing in **one route map** that the language switch,
+  the `hreflang` set and the sitemap all read; **no Astro fallback** — a page is paired or declared
+  `de`-only, and a missing translation is a red check rather than German text under `lang="en"`;
+  three grains of translatable text with one home each (typed dictionaries, locale-keyed fields inside
+  the same content entry, a page component plus two thin route files). **R1–R5**: British English and
+  `en-GB`; full mirror of the surviving pages; Impressum and Datenschutzerklärung `de`-only; the agent
+  drafts the English in each page's PR and the owner reviews both languages there. State:
+  **designed** — the route map, the dictionaries and the two checks of §8 arrive with the first paired
+  page, and `src/content/format.ts` still carries its provisional German strings until then.
+- ▶ ADRs 0007 and 0008 outstanding.
 - ✅ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Accepted**
   (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
   display sizes, a 34rem reading measure, mobile-first with two breakpoints, inline-SVG icons and
@@ -272,8 +283,12 @@ could settle. Read the ticket, not the label.
 
 - **#39** (the sun as a vector) — the mark has to be **obtained**, not written; it is the owner's own
   work, listed under what the owner owes the repository below.
-- **ADRs 0005, 0007 and 0008**, each as its own two-PR cycle. They exist in order to put questions to
-  the owner, so an agent can draft one but never finish it alone.
+- **ADRs 0007 and 0008**, each as its own two-PR cycle. They exist in order to put questions to the
+  owner, so an agent can draft one but never finish it alone. (0005 went through that cycle on
+  2026-09-20 — with the wrinkle that the owner merged the proposing PR before reading its questions and
+  answered them in conversation instead; the ADR's *Resolved questions* section records that, and the
+  lesson for the next one is to put the O-numbers in the chat message as well as the PR body, which is
+  what happened and what made the answers easy to give.)
 
 The pages the homepage cannot yet link to — Leistungen & Preise, Über uns, Kontakt — are Phase 3 and
 wait on the owner's figures.

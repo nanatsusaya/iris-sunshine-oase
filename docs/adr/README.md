@@ -13,7 +13,7 @@ Every ADR file must appear in this table with a status.
 | [0002](0002-tech-stack-and-tooling.md) | Tech stack and tooling | Accepted |
 | [0003](0003-content-model.md) | Content model — structured data and where authority lives | Accepted |
 | [0004](0004-styling-and-design-tokens.md) | Styling and design tokens | Accepted |
-| [0005](0005-internationalisation.md) | Internationalisation — German default, English secondary | Proposed |
+| [0005](0005-internationalisation.md) | Internationalisation — German default, English secondary | Accepted |
 | [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |
 | 0008 | URL migration and redirects from the old site | Planned |
