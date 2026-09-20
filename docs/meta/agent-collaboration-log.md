@@ -487,3 +487,56 @@ remote refs, and everything else is a claim about it**, including a tool's cache
 person's report. Checking is not distrust; it is that the costs are asymmetric. One command against
 an afternoon of work built on the wrong base, and a conflict discovered at push time is discovered in
 the worst possible place: after the reasoning has been written down as though it were true.
+
+## 2026-09-20 — The living docs are updated when they are stale, not when a step ends
+
+**Trigger:** After the second merge of the session the owner wrote: *"sorge in dieser Session dafür,
+dass wir den Method-Log und Status nur wenn es wirklich notwendig ist aktualisieren, und nicht gleich
+nach jedem Schritt."* The session procedures — `weiterimtext` in particular — read as though a
+`STATUS.md` sync belongs at every seam, and the previous session had produced one doc-only PR per
+merge.
+
+**Action / method:** For the rest of the session, `STATUS.md` changed only when a fact in it changed
+— three times in thirteen PRs, each riding in the PR that changed the fact (the audit note in the
+dependency fix, the Phase 1 line in each ADR's accept PR) or, once, as the re-prioritisation the owner
+had just made. No method-log entry until this wind-down. The test applied at each seam was the one
+this file's own header states: *would a session with no memory decide worse without it?*
+
+**Impact:** Every doc-only PR is one the owner has to read and merge; the ones that were not written
+cost nothing and lost nothing, because the facts they would have restated were already in the PRs
+that changed them.
+
+**Lessons learned:** The procedures say *bring the living docs current*, and "current" is a property
+of the documents, not a step in a ritual. A `STATUS.md` that is already true does not become truer by
+being touched. The right cadence is: a note rides along in the PR that changes the fact it records;
+a separate doc-sync PR exists for the wind-down and for a re-prioritisation — not for a seam. This
+is recorded as an owner correction because the procedures will keep suggesting the reflex, and the
+reason to resist it should be readable rather than remembered.
+
+## 2026-09-20 — An inventory is a reconstruction until it has been checked against the thing it inventories
+
+**Trigger:** Reading the ground truth for ADR 0008. `docs/content/urls-and-redirects.md` — generated
+from the WordPress export, described in its own header as *"the basis for the redirects at
+relaunch"*, and untouched since July — listed six of the 32 old addresses wrongly. The generator
+built every path as `/<slug>/`; WordPress page permalinks are hierarchical, and the front page's
+slug is not its URL. It was found only because the live site's `sitemap.xml` and two pages'
+`rel="canonical"` tags were fetched and compared before the ADR was written, on the instinct that a
+redirect table should be checked against the server it is about to replace.
+
+**Action / method:** The generator was corrected to read the `<link>` the export records for each
+item — the permalink WordPress itself wrote — instead of deriving one; re-run; the regenerated list
+diffed against the live sitemap: identical, 32 for 32. Shipped as its own `fix/` PR **before** the
+ADR, under *bugs before features*, and the ADR's context records the episode as its first lesson.
+
+**Impact:** Without the check, ADR 0008 would have decided redirects for `/kosmetik/` and left
+`/moments/kosmetik/` — the URL that actually carries the ranking — to 404 at cutover, in the phase
+the epic calls the only one that can harm the business.
+
+**Lessons learned:** A generated document inherits the authority of its source only for what it
+copies, not for what it *derives*; the derivation is a claim, and it had gone two months unchallenged
+because it looked like data. The general rule joins the one recorded on 2026-08-05 about the remote
+refs: **when a document describes an external system, the system is the authority and the document
+is a claim about it** — and the moment to compare them is before a decision is built on the
+document, not after. For this project that means: anything in `docs/analysis/` or `docs/content/`
+that will be *acted on* at cutover — URLs, the Impressum, opening hours — gets checked against the
+live site or the owner first, however authoritative the file looks.
