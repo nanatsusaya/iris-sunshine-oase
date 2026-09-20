@@ -1,6 +1,6 @@
 # ADR 0005 — Internationalisation: German default, English secondary
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-09-20
 - **Depends on:** [ADR 0002](0002-tech-stack-and-tooling.md) §6 (Astro's built-in i18n routing is the
   mechanism; `hreflang` is left to this ADR), [ADR 0003](0003-content-model.md) §10 (facts are
@@ -68,6 +68,10 @@ flash of the wrong page, and a German customer on a device set to English is the
 the edge case. The default is German because the studio is in Herxheim; a visitor who wants English
 takes the link. `x-default` therefore points at the German page (§4).
 
+**The English is British English** — spelling, and `en-GB` for everything `Intl` formats (R1). It is
+written for visitors in the region who read English more comfortably than German, not for a market
+abroad; the tone follows from that.
+
 ### 2. English slugs are translated, and the pairing is data
 
 An English page has an English address: `/en/services-and-prices/`, not `/en/leistungen-und-preise/`.
@@ -96,8 +100,10 @@ search engines at once; redirect is honest but arrives at a German page unannoun
 translation should be visible in the route map and in the build check (§8), where it can be acted
 on, not papered over at the URL.
 
-Which pages are paired and which stay `de`-only is **O2** and **O3** below — the mechanism is decided
-here, the coverage is the owner's.
+**Coverage (R2, R3):** every page that survives the keep/rework/drop assessment of
+[`02-content-inventory.md`](../analysis/02-content-inventory.md) is **paired**, with two exceptions —
+the Impressum and the Datenschutzerklärung are **`de`-only** (§9). Which pages survive that assessment
+is still the owner's (§10); which of the survivors are paired is not: all of them.
 
 ### 4. `lang`, `hreflang` and `x-default` come from the route map, and the sitemap agrees
 
@@ -212,17 +218,20 @@ page, not after it.
 - **The postal address.** It stays in the German postal form `business.yaml` holds — a street name is
   not translated, and an English rendering would be a second copy of a fact that has one authority
   (ADR 0003 §9).
-- **The legal pages' *content*.** Whether the Impressum and the Datenschutzerklärung get an English
-  version at all is **O3** and belongs with ADR 0007's legal review; if they do, the German text is
-  the binding one and says so.
+- **The legal pages.** The Impressum and the Datenschutzerklärung are **`de`-only** (R3). The English
+  pages carry a one-line notice in the footer that the legal notices are in German — a UI string
+  (§5a), written once. Whether an English *translation* is ever added, and which version would bind
+  if so, is a legal question and belongs with ADR 0007; this ADR only records that today they are not
+  paired.
 
 ### 10. What this ADR does not decide
 
 - **Which pages exist.** The keep/rework/drop assessment in
   [`02-content-inventory.md`](../analysis/02-content-inventory.md) still needs the owner; this ADR
   decides what a page looks like in two locales, not which ones there are.
-- **The English words.** Prose is Phase 3 content and arrives page by page, reviewed in the PR that
-  introduces it (**O4**). Nothing here is a translation.
+- **The English words.** Prose is Phase 3 content and arrives page by page: the agent drafts the
+  English alongside the German in the PR that introduces the page, and the owner reads both in review
+  (R4). Nothing here is a translation.
 - **Redirects.** ADR 0008 owns the old URLs. The English tree is new and has no old URLs; the German
   tree is unchanged by this decision.
 - **Legal obligations of a bilingual site.** ADR 0007. Nothing here introduces a third-party service,
@@ -249,9 +258,9 @@ the dictionaries and the two checks do not exist until the first paired page bri
 
 **Negative / costs**
 
-- **Every page costs two sets of words.** The content work of Phase 3 roughly doubles for whatever the
-  owner puts in scope (**O2**), and the English text has to come from somewhere (**O4**). The
-  mechanism above does nothing to reduce that; it only makes the gap countable.
+- **Every page costs two sets of words.** With the full mirror chosen (R2) the prose work of Phase 3
+  roughly doubles, and the English is agent-drafted and owner-reviewed (R4), which puts the review
+  load on the owner. The mechanism above does nothing to reduce that; it only makes the gap countable.
 - **Locale-keyed prose makes the YAML wider.** `name: { de: …, en: … }` is more to read than
   `name: …`, and every hand-edited service entry now has two places for a typo. Accepted: the
   alternative — a parallel English file — is a second file whose entries can fall out of step with
@@ -302,36 +311,30 @@ the dictionaries and the two checks do not exist until the first paired page bri
 - **A third locale now** — rejected as speculative. The route map and dictionaries are locale-agnostic
   by construction, so a third would be additive; no design work is spent on it before it is asked for.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-09-20)
 
-- **O1 — Who is the English locale for?** The answer sets the tone of the prose and the spelling
-  variety. *Recommended default:* visitors in the region who read English more comfortably than
-  German — tourists, expatriates, people posted to the area — written in **British English**, which
-  is also the repository's own rule (`CLAUDE.md`) and keeps one convention across artefacts and site.
-  Formatting follows with `en-GB`. If the intended audience is predominantly American, `en-US` and
-  American spelling are a one-line change to the dictionary's locale tag and a review of the prose;
-  worth deciding before any prose is written, not after.
-- **O2 — Full mirror, or a reduced English set?** *Recommended default:* every page that survives the
-  keep/rework/drop assessment is paired, **except** the legal pages (O3). A reduced set (say: home,
-  services and prices, contact, about) is legitimate and halves the translation work, but leaves the
-  English visitor a smaller site with visible gaps; if chosen, the omitted pages are `de`-only in the
-  route map and the switch behaves as §6 describes.
-- **O3 — Do Impressum and Datenschutzerklärung get an English version?** *Recommended default:*
-  **German only**, marked as such, with a one-line English notice on the English pages' footer that
-  the legal notices are in German. An English translation of a legal text carries the question of
-  which version binds, which is ADR 0007's territory and needs the owner's legal review rather than an
-  agent's translation. This ADR only has to know whether those two pages are paired or `de`-only.
-- **O4 — Who writes the English text, and how is it reviewed?** *Recommended default:* the agent
-  drafts each page's English prose in the PR that introduces that page, alongside the German, and the
-  owner reads both in review; nothing renders in `live` that the owner has not approved in a PR.
-  Translation is prose, not a fact, so the `confirmed` gate of ADR 0003 §8 does not apply to it — the
-  PR review is the gate. If the owner would rather supply the English text themselves, or have a
-  third party do it, the mechanism does not change; only the author of the PR's words does.
-- **O5 — Translated English slugs, or German slugs under `/en/`?** §2 decides translated slugs and
-  *Alternatives considered* says why; it is listed here because it is outward-facing and hard to reverse once
-  indexed, so it should be a decision the owner has seen. *Recommended default:* translated
-  (`/en/services-and-prices/`). If the owner prefers the German slugs, §2's route map still exists —
-  it simply holds identical slugs and the sitemap integration's own pairing suffices.
+The five questions below were put in the pull request that proposed this ADR (#84). The owner merged
+it before reading them and answered all five in conversation the same day — *"wir folgen bei allem
+deiner Empfehlung"* — which is why the record is here rather than in a PR comment: the file is what a
+later session reads. Each answer is the recommended default of the question it resolves.
+
+- **R1 — The English locale is for visitors in the region who read English more comfortably than
+  German, and it is British English.** Spelling follows the repository's own rule (`CLAUDE.md`), and
+  `Intl` formats with `en-GB`. Folded into §1 and §7. The alternative — American English for a
+  predominantly US audience — was named and not chosen; it would be a one-line locale-tag change plus
+  a prose review if the audience turns out otherwise.
+- **R2 — Full mirror.** Every page that survives the content assessment is paired; there is no
+  reduced English set. Folded into §3. The cost — twice the prose — is accepted and recorded under
+  *Consequences*.
+- **R3 — Impressum and Datenschutzerklärung stay German only**, with a one-line English notice on the
+  English pages. The binding-version question is left to ADR 0007. Folded into §3 and §9.
+- **R4 — The agent drafts the English text in the PR that introduces each page; the owner reviews
+  both languages there.** Translation is prose, so ADR 0003 §8's `confirmed` gate does not apply to
+  it; the PR review is the gate, and nothing renders in `live` that the owner has not read. Folded
+  into §10.
+- **R5 — English slugs are translated** (`/en/services-and-prices/`), with the pairing in the route
+  map. §2 already decided this; it was listed because it is outward-facing and hard to reverse, and
+  the owner has now seen it.
 
 ## References
 
