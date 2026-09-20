@@ -16,7 +16,7 @@ Every ADR file must appear in this table with a status.
 | [0005](0005-internationalisation.md) | Internationalisation — German default, English secondary | Accepted |
 | [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |
-| 0008 | URL migration and redirects from the old site | Planned |
+| [0008](0008-url-migration-and-redirects.md) | URL migration and redirects from the old site | Proposed |
 | [0009](0009-security-by-design.md) | Security by design | Accepted |
 
 Status values: `Proposed` · `Accepted` · `Superseded` · `Planned` (ticketed, not yet written).
