@@ -67,9 +67,9 @@ permalinks carried, which `build.format: 'directory'` produces and GitHub Pages 
 keeps its address needs no redirect, cannot get one wrong, and passes on its ranking without a hop.
 
 This means the German slugs in ADR 0005's route map **are the old permalinks**, hierarchy included.
-Whether the section is still called *Moments* on the new site is a wording question for the owner
-(**O3**); the URL is decided here, and a later rename of the section produces a redirect, not a
-different starting point.
+The paths `/moments/…` and `/sunshine/` stay as they are (R3); what the visible headings say is a
+wording question that does not touch the URL, and a later rename of a section produces a redirect,
+not a different starting point.
 
 ### 2. What changes address is redirected with an instant meta refresh; what is gone gets a real 404
 
@@ -93,7 +93,7 @@ and that state is written down (§3).
 ### 3. The mapping is decided here and lives in one module, and a check holds the build to it
 
 **The decision table.** For the 13 pages, assuming the content assessment's *keep* and *rework*
-verdicts and the recommended defaults of O1–O3 below:
+verdicts and the owner's answers R1–R3 below:
 
 | Old URL | State | Because |
 |---|---|---|
@@ -104,11 +104,11 @@ verdicts and the recommended defaults of O1–O3 below:
 | `/ueber-uns/zertifizierung/` | kept | `M-07`'s unreachable page becomes reachable *and* keeps its address |
 | `/kontakt/` | kept | — |
 | `/impressum/` | kept | `de`-only per ADR 0005 R3; content reworked per ADR 0007 |
-| `/moments/` | kept | O3 |
-| `/moments/kosmetik/` `/moments/massage/` `/moments/ton-erden/` `/moments/honig/` | kept | O3 |
-| `/prowin/` | **O2** | kept if the business is still active; `gone` if not |
+| `/moments/` | kept | R3 |
+| `/moments/kosmetik/` `/moments/massage/` `/moments/ton-erden/` `/moments/honig/` | kept | R3 |
+| `/prowin/` | kept | R2 — the new site carries a short proWIN introduction at this address |
 
-For the 19 posts, under **O1**'s recommended default (the blog is not carried over):
+For the 19 posts, under R1 (the blog is not carried over):
 
 | Old URL | State |
 |---|---|
@@ -175,8 +175,9 @@ A redirect page costs nothing to keep, and the moment it is removed is the momen
 breaks. None is scheduled for removal. At cutover, ADR 0006 §6's verification step fetches every URL
 in the inventory from the live domain and confirms the outcome §3 assigned it — *by request, not by
 inspection*, as #7 requires. After cutover, the owner's Search Console property for the domain
-(**O4**) is where the actually-requested dead URLs surface; anything it reports that the inventory
-did not know about is a new row in the module, not an emergency.
+(R4 — created when the domain is re-pointed, as a step of #7) is where the actually-requested dead
+URLs surface; anything it reports that the inventory did not know about is a new row in the module,
+not an emergency.
 
 ### 7. What this ADR does not decide
 
@@ -240,40 +241,42 @@ needs a redirect, and the full table is verified against the live domain only at
 - **Rename the German paths to a flatter tree now (`/kosmetik/` instead of `/moments/kosmetik/`)
   and redirect the old ones** — rejected because it exchanges "no redirect" for "a redirect" on the
   pages that carry the most ranking, for a tidiness gain nobody asked for. If the owner renames the
-  section (O3), the redirect is the cost of that decision, taken then.
+  section later, the redirect is the cost of that decision, taken then (R3 keeps the paths).
 - **Keep the blog and its 19 URLs as an archive** — rejected on the content inventory's assessment:
   every post is an expired promotion or a dated announcement, two are actively harmful ("Neuer
   Webauftritt", the pandemic statement), and an archive nobody maintains is the old site's defect
-  reproduced. Subject to **O1**.
+  reproduced. Confirmed by R1.
 - **A `New URL` column in the generated inventory** — rejected (it exists today and goes): the
   generator cannot know the new URL, so the column is either hand-edited output — which
   `CLAUDE.md` forbids — or permanently `_open_`.
 - **Removing the redirects after a year** — rejected; the pages are free and the breakage would be
   silent.
 
-## Open questions (for owner review)
+## Resolved questions (owner decisions, 2026-09-20)
 
-- **O1 — Is the blog dropped, as `02-content-inventory.md` recommends?** *Recommended default:*
-  **yes**, no post is carried over, and the 19 post URLs get the outcomes in §3: promotions redirect
-  to `/leistungen-und-preise/`, the winter-hours post to the opening hours, the *Moments* rework
-  post to `/moments/`, and the five announcements answer `404`. If the owner wants a news section in
-  future it starts empty (ADR 0003 ticket #41 raised the same question); nothing here prevents that.
-- **O2 — Is proWIN still active?** `02-content-inventory.md` marks the page *Clarify*: two paragraphs
-  and an external link to a direct-sales business the studio ran on the side. *Recommended default:*
-  if active, `/prowin/` is **kept** at its address with reworked content; if not, it is **gone**
-  (`404`) — not redirected to the homepage, and not redirected to the external proWIN site, which
-  would hand a nine-year-old URL of the studio's domain to a third party.
-- **O3 — Do *Moments* and *Sunshine* stay as section names, so the URLs `/moments/…` and
-  `/sunshine/` stay exactly as they are?** *Recommended default:* **yes** — keep the paths, whatever
-  the visible headings say; a heading can read „Kosmetik & Massage" above a page whose address is
-  `/moments/kosmetik/`, and the ranking stays attached. If the owner wants the paths renamed, §1's
-  redirect covers it, at the cost of one hop on the pages that carry the most weight.
-- **O4 — Does the owner have (or will they create) a Google Search Console property for
-  `iris-sunshine-oase.de` before cutover?** *Recommended default:* **yes, before cutover** — it is
-  the only place the dead URLs that were actually requested after go-live become visible, and it is
-  free. Ownership is verified with a DNS `TXT` record at netcup, the same mechanism as ADR 0009 §5's
-  GitHub verification; no code, no tag on the pages, no third-party request (ADR 0009 §6 stays
-  intact). An owner action for #7, not a repository change.
+The four questions were put to the owner in conversation **before** this pull request was opened —
+the lesson of ADR 0005, whose questions were merged past unread. The owner answered the two that are
+facts about the business (R2, R4) and let the recommended defaults stand for the two that are
+judgement calls (R1, R3). All four are recorded here, with the recommendation each replaced, so
+that a later reader sees what was asked and not only what was decided.
+
+- **R1 — The blog is not carried over.** `02-content-inventory.md`'s assessment stands: every post is
+  an expired promotion or a dated announcement, and two are actively harmful. The 19 post URLs get
+  the outcomes in §3 — promotions to `/leistungen-und-preise/`, the winter-hours post to the opening
+  hours, the *Moments* rework post to `/moments/`, the five announcements `404`. A news section
+  in future starts empty; nothing here prevents it. *(Recommended default, not contradicted.)*
+- **R2 — proWIN stays.** The owner: *"wir werden eine kurze proWIN-Einführung auf der neuen Seite
+  haben."* `/prowin/` is therefore **kept** at its address with a short introduction as its content
+  (Phase 3); the `gone` branch of the question does not apply, and neither does a redirect to the
+  external proWIN site, which the question had ruled out either way. Folded into §3.
+- **R3 — The paths `/moments/…` and `/sunshine/` stay exactly as they are.** Headings may say
+  whatever the content work decides; the addresses carry the ranking and do not move. Folded into
+  §1 and §3. *(Recommended default, not contradicted.)*
+- **R4 — A Search Console property is created when the domain is re-pointed.** The owner: *"den
+  Google-Search-Eintrag werden wir machen, wenn wir hier etwas weiter sind und ich die Domain neu
+  verlinkt habe."* That is the right moment — verification is a DNS `TXT` record at netcup, and the
+  owner is at netcup for the cutover anyway (ADR 0006 §6). It becomes a step of #7, not a repository
+  change; nothing on the pages, no third-party request (ADR 0009 §6 intact). Folded into §6.
 
 ## References
 
