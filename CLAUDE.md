@@ -22,11 +22,13 @@ starting work. This file (`CLAUDE.md`) holds the stable operating rules, not the
 The old site is **still live at netcup** and stays live until an explicit cutover. Nothing in this
 repository touches it. Until then, the rebuild is a draft.
 
-The scaffold does not exist yet — this repository currently contains documentation only. Commands, the
-build chain and the Definition of Done's technical steps land once ADR 0002 (tech stack) is `Accepted`
-and the scaffold ships. Until then, **do not assert a tech stack in code or docs**: the target is
-Astro (owner's decision), everything around it — package manager, styling approach, test tooling — is
-still open and belongs in an ADR, not in a passing commit.
+The scaffold exists (Astro 7, npm, Node 24, TypeScript `strict`, Biome — all per ADR 0002, `Accepted`
+2026-07-18). `npm run check` runs the source-level checks; `check:external` and `check:fonts` read
+`dist/` and follow `npm run build`; `.github/workflows/ci.yml` lists every step in order with the
+reason it exists. **Nothing is deployed** — the deploy workflow is switched off
+until GitHub Pages and the DNS records exist — and every price and opening time in the repository is a
+placeholder marked `confirmed: false` (ADR 0003 R1). What is built, what is decided but not built, and
+what the owner still owes the repository all live in `docs/STATUS.md`, not here.
 
 ## The method, and the session procedures that carry it
 
