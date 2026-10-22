@@ -27,6 +27,12 @@ unbidden. The cost of that choice is exactly this task — the pin ages, and not
 the line stops receiving security fixes. ADR 0002 §2 names it as the project's first genuine
 recurring maintenance and the reason this file exists.
 
+**The patch level is not part of this task.** Both workflows set `check-latest: true`, so every run
+resolves the newest release of the pinned line — security releases such as 24.22.1 (2026-10-20)
+arrive without a commit. Without that flag `setup-node` takes whatever patch the runner image has
+cached, which lagged the security release by days. A **local** Node is the developer's own to keep
+current; `node -v` against [the release index](https://nodejs.org/dist/index.json) says whether it is.
+
 **Do not bump to a line that is not yet active LTS.** A current release is not a place to sit; the
 whole point of the pin is to be on the line that still receives full support.
 

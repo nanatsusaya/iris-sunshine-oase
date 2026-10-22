@@ -30,7 +30,12 @@ jobs:
           # Node 24 is the active LTS line (ADR 0002 §2); Node 22 entered maintenance in October
           # 2025. Pinned to a major, not `latest`, so a Node release cannot change the build
           # unbidden. The pin ages deliberately — see docs/recurring-tasks.md.
+          # The pin is the *line*, never the patch: `check-latest` makes setup-node resolve the newest
+          # 24.x instead of whatever the runner image has cached. Without it CI still ran 24.21.0 on
+          # 2026-10-22, two days after the security release 24.22.1, because the runner's cache, not
+          # the Node project, decided the patch level.
           node-version: '24'
+          check-latest: true
           cache: npm
 
       # `--ignore-scripts` is the supply-chain control that matters most here (ADR 0009 §2):
