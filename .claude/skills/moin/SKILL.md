@@ -29,8 +29,9 @@ stated plainly.
 - **Orient, do not start work.** This ends with a **question**, never an action. If the briefing
   surfaces a task, name it and wait. Opening a session by starting work chooses the session's
   direction on the owner's behalf.
-- **Read-only.** No commits, no branches, no edits to the living docs. The *only* possible write is a
-  due maintenance task, and only after the owner confirms in step 7.
+- **Read-only.** No commits, no branches, no edits to the living docs — not even to repair a
+  `docs/STATUS.md` that step 4 finds stale. Report it; the repair is work. The *only* possible write is
+  a due maintenance task, and only after the owner confirms in step 7.
 - **The living docs are the source of truth for state** — not this file, not memory, not what was true
   last session: `docs/STATUS.md` for state and next steps, `git` and `gh` for work units and open PRs.
 - **Do not invent state you could not read.** If an artefact is missing, say it is missing.
@@ -69,14 +70,18 @@ name it in step 2. Today there are none, which is itself worth knowing.
   a re-read of the whole file. At minimum:
   - content correctness outranks everything; never invent a price, an opening time or an address
   - bugs before features
-  - **every** change goes on a branch through an owner-merged PR; there is no exception, and `main` is
-    branch-protected against administrators too
+  - **every** change goes on a branch through a PR; there is no exception, and `main` is
+    branch-protected against administrators too. The owner merges — or approves a closed plan for one
+    session, inside which the agent merges its own PRs (rule G4, `/autopilot`). No grant from an
+    earlier session carries over
+  - the PR that closes a task brings `docs/STATUS.md` current in the same change — never a PR of its
+    own
   - ADRs are normative; `Accepted` means *decided*, not *built*
   - no image without documented provenance; `Archive/` stays excluded; never commit personal data
   - the preview carries `noindex` until go-live
   - English in the repository, British spelling; German with the owner
 - **Available procedures**: what is in `.claude/skills/` and when to reach for each — currently `moin`,
-  `weiterimtext`, `feierabend`, `adr` and `passtdas`. Where they came from, and what was deliberately
+  `weiterimtext`, `feierabend`, `adr`, `passtdas`, `interview` and `autopilot`. Where they came from, and what was deliberately
   changed in them, is in [the skills README](../README.md).
 
 ## 3. Recent work
@@ -94,6 +99,11 @@ name it in step 2. Today there are none, which is itself worth knowing.
   reflects the shared state rather than a stale local view.
 - **Project state**: `docs/STATUS.md` → *Where we stand* — the honest current-phase snapshot. Condense
   it; do not paste the whole file.
+- **Did the last session end cleanly?** Compare `docs/STATUS.md` with `main`: merged PRs it does not
+  reflect, open PRs or branches it does not name, or an `/autopilot` plan with entries neither closed
+  nor parked. Any of these means the last session ended without a `/feierabend`. Say so plainly, and
+  for whatever is newer than `STATUS.md` trust `main` and `gh`, not the file. A merged dependency bump
+  that changes nothing `STATUS.md` states is not a gap.
 - **Ticket state**: `gh issue list --state open` — in particular anything labelled `agent-ready`, and
   any open `type:bug`, which jumps the queue.
 - **Are the checks green?** A red PR, or a red run on `main`, is part of where we stand. Say so, and
@@ -113,6 +123,8 @@ name it in step 2. Today there are none, which is itself worth knowing.
 - From `docs/STATUS.md` → *Next step*, name the **single clearest next step** for this session — not
   the roadmap — plus any owner-domain decision that must be settled *before* it can start. Do not
   implement ahead of a decision, and surface owner-domain questions rather than resolving them quietly.
+- If step 4 found `docs/STATUS.md` behind, the next step is to bring it current — recording that the
+  last session ended without a wind-down. Name that instead, and the step it would have named after it.
 - If the next step touches a business fact — a price, an opening time, the address, the Impressum — and
   the source for it is not in `docs/content/`, name that as the blocking question here. It is the most
   common way this project can go wrong.

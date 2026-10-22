@@ -58,7 +58,7 @@ that was never written down does not merely get forgotten, it gets re-litigated 
 next session.
 
 Hence: every significant decision is an [ADR](docs/adr/README.md); every change goes through a pull
-request that the owner merges; conventions are enforced by a check (`node tools/check-docs.mjs`)
+request that the owner merges, or that the agent merges inside a plan the owner approved; conventions are enforced by a check (`node tools/check-docs.mjs`)
 rather than left to discipline; and the documentation is written to be self-supporting.
 
 ## Found a wrong price, or something broken?

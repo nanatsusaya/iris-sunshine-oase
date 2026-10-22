@@ -2,14 +2,14 @@
 name: feierabend
 description: >-
   Use at the end of a working session to wind down cleanly: tidy the git and branch state, finish or
-  safely park work in flight at an honest stopping point, bring the living docs current (docs/STATUS.md,
-  the method log, memory), run any due recurring task, then give a hand-off summary and wish the owner a
-  good evening. This is a wind-down, NOT a trigger to start new work. The counterpart to /moin.
+  safely park work in flight at an honest stopping point, bring docs/STATUS.md current for what no PR
+  carried, ask whether the method log needs an entry, update memory, run any due recurring task, then
+  give a hand-off summary and wish the owner a good evening. This is a wind-down, NOT a trigger to start new work. The counterpart to /moin.
 ---
 
 # Feierabend — session wind-down
 
-*Carries out rules S1, S3, W1 and H1 of
+*Carries out rules S1, S3, M1, W1 and H1 of
 [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules/blob/main/method/rules.md).
 The catalogue is the authority for the rules; this file is only the procedure.*
 
@@ -25,7 +25,9 @@ lost.
 
 - **Start no new work.** If a task surfaces, record it — a ticket, the backlog, the next step. Do not
   begin it.
-- **Never merge.** The owner merges every PR. List what is open and report its state.
+- **Never merge.** The owner merges every PR; a plan the owner approved (rule G4) ends with the
+  session, so nothing granted earlier reaches into the wind-down. List what is open and report its
+  state.
 - **Never commit to `main`, without exception.** Everything, including the living docs, goes on a
   branch through a PR. `main` is branch-protected against administrators too, so a direct push is
   refused rather than merely discouraged.
@@ -67,16 +69,17 @@ calling anything done, and two project specifics that decide most cases here:
   metadata or deployment. Removing it is an explicit go-live step, never a side effect — and adding a
   `Disallow` to `robots.txt` is not a safety improvement, it defeats the gate (ADR 0006 §4).
 
-## 3. Bring the living docs current
+## 3. `docs/STATUS.md`, the method log, memory
 
-- **`docs/STATUS.md`** — refresh `Last updated`, *Where we stand* and *Next step* if the session changed
-  them, and make what is open honest: PRs awaiting the owner's merge, parked work, the single clearest
-  next step. A single next step, not a roadmap.
-- **`docs/meta/agent-collaboration-log.md`** — only for a genuinely methodological moment: an owner
+- **`docs/STATUS.md`** — each PR that closed a task this session should already have brought it current
+  (rule S3). What is left is what no PR carried: PRs awaiting the owner's merge, parked work, a next
+  step that moved. If any of it is missing, refresh `Last updated`, *Where we stand* and *Next step* —
+  a single next step, not a roadmap — in one PR. If the last closing PR left it true, write nothing.
+- **`docs/meta/agent-collaboration-log.md` — ask every time, write only on a yes.** The question:
+  *would an agent with no memory of this session decide worse without an entry?* Yes for an owner
   correction and its rationale, a workflow experiment and its outcome, a mistake worth not repeating.
-  Never routine task execution — that is what the commit history and `STATUS.md` are for. The test:
-  *would an agent with no memory of this session decide worse without this entry?* It may ride along
-  with the `STATUS.md` sync, since both are the same concern.
+  No for routine task execution — that is what the commit history and `STATUS.md` are for. An entry
+  goes into the same PR as the `STATUS.md` update, or a PR of its own if `STATUS.md` needed nothing.
 - **Memory**, if the tooling has one — durable user, feedback, project or reference facts worth
   carrying forward, one file per fact plus the pointer in `MEMORY.md`. Not what the repository already
   records, and not what mattered only to this conversation. **Never a customer's data, or any third
@@ -92,7 +95,8 @@ does not happen.
 ## 5. Hand-off and close
 
 - Give a **concise** recap in German: what was accomplished, what is open (PRs awaiting the owner's
-  merge, any parked work), and the single clearest next step for the next session.
+  merge, any parked work), the single clearest next step for the next session, and the answer from
+  step 3 — the method-log entry, or *nothing for the method log*.
 - Include anything that went wrong and how it was resolved. A wind-down that reports only successes
   trains the next session to trust a picture that was never true.
 - Wish the owner a good evening — **"Schönen Feierabend!"**

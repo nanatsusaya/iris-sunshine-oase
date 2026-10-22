@@ -3,15 +3,15 @@ name: weiterimtext
 description: >-
   Use mid-session to move cleanly from a just-merged PR to the next task — the seam between two units
   of work, the counterpart to /moin (session bring-up) and /feierabend (session wind-down). After the
-  owner merges a PR: confirm it actually landed, tidy the git and branch state, bring the living docs
-  current, then re-validate the next task against current reality and start it ONLY if it is genuinely
+  owner merges a PR: confirm it actually landed, tidy the git and branch state, check that
+  docs/STATUS.md says what is now true, then re-validate the next task against current reality and start it ONLY if it is genuinely
   agent-ready and decision-free — otherwise surface the decision and stop. Keeps the session's context;
   re-verifies the external world before writing. Triggered by the owner ("PR gemergt, weiter im Text").
 ---
 
 # Weiter im Text — the seam between two units of work
 
-*Carries out rules S1, S2, G1 and C4 of
+*Carries out rules S1, S2, S3, G1 and C4 of
 [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules/blob/main/method/rules.md).
 The catalogue is the authority for the rules; this file is only the procedure.*
 
@@ -53,10 +53,10 @@ that.
   choice, an external network call, tracking, analytics or a third-party embed, publishing anything
   public, touching netcup or the live site, amending an `Accepted` ADR, or a cutover step. Also stop if
   the ticket is an **epic that must be decomposed with the owner first**, or is simply ambiguous.
-- **The owner merges every PR.** This procedure never merges. It runs *after* a merge the owner already
-  performed — step 1 verifies that; if the PR is not actually merged, it stops.
-- **Never commit to `main`, without exception.** Every change, including the doc-sync in step 3, goes on
-  a branch through a PR. `main` is branch-protected against administrators too, so a direct push is
+- **This procedure never merges.** It runs *after* a merge that already happened — the owner's, as a
+  rule — and step 1 verifies that; if the PR is not actually merged, it stops. Merging its own changes
+  inside a plan the owner approved (rule G4) is `/autopilot`'s business, not this seam's.
+- **Never commit to `main`, without exception.** Every change goes on a branch through a PR. `main` is branch-protected against administrators too, so a direct push is
   refused rather than merely discouraged.
 - **Owner conversation is German**; repository artefacts stay English (`CLAUDE.md`).
 
@@ -77,20 +77,21 @@ Do not tidy up work that is not finished. Read the **current** state fresh; do n
   auto-deleted on merge, so a failing `git push origin --delete` just means it was already gone.
 - `git fetch --prune`. End on `main` with a clean working tree.
 
-## 3. Bring the living docs current — after re-checking external state
+## 3. Does `docs/STATUS.md` say what is now true?
 
-The finished PR may have changed *what is true*; a **parallel** change may have recorded it already. So
-re-verify before writing:
+`docs/STATUS.md` is brought current by the change that moves the position, not by a change of its own
+(rule S3). If the PR that just merged closed a task, it should already have carried the update — and
+with it any other living doc it touched: the ADR index, a README, `docs/analysis/05-defect-list.md` if
+a defect was closed. Check that it did, on the freshly synced `main`:
 
-- Re-read the **current** `docs/STATUS.md` on the freshly synced `main`, plus recent merges
-  (`git log --grep="Merge pull request" -5`) and open PRs, to see whether the state is **already**
-  reflected. If another change got there first, do not duplicate it — note it and move on.
-- Only if genuinely stale, update `docs/STATUS.md` and any other affected living doc: the ADR index, a
-  README, `docs/analysis/05-defect-list.md` if a defect was closed. This is a normal branch-and-PR
-  change, kept to one concern; a doc-sync PR is its own PR.
-- `docs/meta/agent-collaboration-log.md` — only if a genuinely methodological moment occurred: an owner
-  correction and its rationale, a workflow experiment, a mistake worth not repeating. Not routine task
-  execution. It may ride along with the `STATUS.md` sync, since both are the same concern.
+- Re-read the **current** `docs/STATUS.md`, plus recent merges (`git log --grep="Merge pull request"
+  -5`) and open PRs. A **parallel** change may have moved the position again, or overwritten the line
+  this one wrote.
+- If it is current, move on. If it is not, **do not open a PR just for it.** The next PR that closes a
+  task carries the correction, or `/feierabend` does if nothing else will. Note the gap so it is not
+  forgotten.
+- The method log (`docs/meta/agent-collaboration-log.md`) is not written here. `/feierabend` asks its
+  question once for the whole session.
 
 ## 4. Re-validate the next task against current reality
 
@@ -112,10 +113,11 @@ treat the plan you formed earlier as a **hypothesis**, because the world may hav
 
 - **Agent-ready and decision-free:** cut a fresh branch from the up-to-date `main` (`feat/…`, `fix/…`,
   `docs/…`, `chore/…`, `adr/…` per its type) and begin, carrying the full session context forward and
-  working end to end to `CLAUDE.md`'s Definition of Done. This is the "weiter im Text".
+  working end to end to `CLAUDE.md`'s Definition of Done. The PR that closes the task brings
+  `docs/STATUS.md` current in the same change. This is the "weiter im Text".
 - **The gate tripped:** do **not** start. Present the specific decision or planning need **concisely in
   German**, recommend a default, and wait. Starting the next task is never worth undermining the
   owner's review control.
 
-Either way, report the transition briefly: what closed, what the docs now say, and either what you
+Either way, report the transition briefly: what closed, what `docs/STATUS.md` now says, and either what you
 started and on which branch, or the open question that needs the owner.

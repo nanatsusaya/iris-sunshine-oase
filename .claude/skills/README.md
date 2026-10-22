@@ -1,8 +1,9 @@
 # Session procedures
 
-Five procedures, one per directory. They are **adapted copies** of the `agent-method` plugin, version
-`0.5.0`, taken on 2026-08-05 from
-[agent-project-rules](https://github.com/nanatsusaya/agent-project-rules).
+Seven procedures, one per directory. They are **adapted copies** of the `agent-method` plugin, version
+`0.7.2` (catalogue `0.7`), brought up to it on 2026-10-22 from
+[agent-project-rules](https://github.com/nanatsusaya/agent-project-rules). The first five were taken
+from plugin `0.5.0` on 2026-08-05; `interview` and `autopilot` arrived with `0.7` (#99).
 
 Copying rather than installing is what that repository recommends for anyone who wants to change them,
 and it is what makes this project self-supporting: the procedures are here, in the repository, whether
@@ -15,14 +16,21 @@ or not anything is installed. An agent working a ticket has this repository and 
 | `/feierabend` | `session-end` | Stopping. Parks work honestly and brings the living docs current. |
 | `/adr` | `decision-record` | Writing a decision and taking it through to `Accepted`. |
 | `/passtdas` | `adopt` | Checking whether `method.json` still matches how work is actually done. |
+| `/interview` | `interview` | A piece of work needs several owner decisions first. Asks them in rounds, `O1..On`, each with a recommended default. |
+| `/autopilot` | `autopilot` | The owner wants a closed plan worked through, merging within it (rule G4). Only the owner can start it. |
 
 The German names are a deliberate choice the source repository invites: a skill name is typed in
 conversation rather than read in a document, so it does not belong to the one language everything
 committed here is written in. The procedures themselves stay in English, like every other file.
 
+`interview` and `autopilot` keep their plugin names. Other procedures call `interview` by name, which
+is why the plugin's own rename table keeps it in every language; `autopilot` reads the same in German.
+`kickoff`, the plugin's third new procedure, was deliberately **not** taken: it founds a project, and
+this one exists.
+
 ## What was changed
 
-Nine adaptations, each for a reason this project actually ran into.
+Twelve adaptations, each for a reason this project actually ran into.
 
 1. **`/moin` and `/feierabend` brief and close in German**, and `/moin` ends on the coffee question.
    The owner conversation is German (`CLAUDE.md`); only the artefacts are English.
@@ -55,6 +63,21 @@ Nine adaptations, each for a reason this project actually ran into.
    no other authority to point at.
 9. **`/passtdas` leads with the review case.** This project has a `method.json`, so the first-time
    adoption path cannot happen here again.
+10. **`/interview` names the owner's questions and where answers go here.** The plugin says "the
+    person" and "a decision record"; here the owner's questions are the stop-and-ask list in
+    `CLAUDE.md`, a price or an opening time is never given a recommended *value* — only a recommended
+    source — and the answers land in an ADR, `CLAUDE.md`, a ticket or a quoting PR comment.
+11. **`/autopilot` binds the roles and carries this project's hard lines.** The plugin assumes a
+    platform approval may stop a merge; `main` here requires none, by design, so every merge in a run
+    is held by the procedure alone — the guardrails therefore repeat the lines no plan can cross
+    (business facts without a source, unprovenanced images, netcup, the `noindex` gate, external
+    calls, `Accepted` ADRs). It also names what the platform *does* require — the `verify` check and a
+    branch up to date with `main` — because the second one stops a run after its first merge, as it
+    stopped #93 after #98 on 2026-10-22.
+12. **`/moin` does not count a merged dependency bump as a missing wind-down.** The plugin's
+    comparison of the state artefact with the trunk would flag every Dependabot merge, and here those
+    arrive weekly while changing nothing `docs/STATUS.md` states. A check that fires on every routine
+    merge stops being read.
 
 **One thing that was *not* an adaptation.** Copying these files made them documents of this repository,
 so they fall under its spelling regime — and needed no conversion, because both repositories write
@@ -74,8 +97,8 @@ the method log's entry for 2026-08-05 has why.
 These are copies. When the plugin releases a new version they no longer match it, and nothing will
 announce that.
 
-**The trigger is a release of `agent-project-rules`.** Compare these five files against the new
-version, take what applies, and leave what was adapted on purpose — the nine changes above are the list
+**The trigger is a release of `agent-project-rules`.** Compare these seven files against the new
+version, take what applies, and leave what was adapted on purpose — the twelve changes above are the list
 of what not to overwrite. `/passtdas` step 3 carries the same instruction, so the trigger is written
 down where a session will actually meet it.
 

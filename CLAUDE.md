@@ -50,19 +50,22 @@ The rules are **stated in this file, not fetched from that repository.** An inst
 go and retrieve before it can work is one that can fail, be blocked or be skipped, and it costs
 something on every task. The link is a citation, not a dependency.
 
-Five procedures in `.claude/skills/` make the session seams repeatable, so that starting, continuing
+Seven procedures in `.claude/skills/` make the session seams repeatable, so that starting, continuing
 and closing a session is a procedure rather than an improvisation. They are **adapted copies** of the
 method's `agent-method` plugin — [`.claude/skills/README.md`](.claude/skills/README.md) records which
-version, what was deliberately changed here and why, and what makes them fall behind. The names are
-German because the owner types them; their contents are English like every other artefact.
+version, what was deliberately changed here and why, and what makes them fall behind. Five names are
+German because the owner types them; `interview` and `autopilot` keep the plugin's names because other
+procedures call them by name. Their contents are English like every other artefact.
 
 | Skill | When |
 |---|---|
 | `moin` | Session bring-up. Orients from the living docs and **ends with a question, never an action**. |
 | `weiterimtext` | Mid-session, after the owner merged a PR: close the unit out, re-verify the world, start the next task only if it is decision-free. |
-| `feierabend` | Session wind-down. Tidy git, finish or park work honestly, bring the living docs current. |
+| `feierabend` | Session wind-down. Tidy git, finish or park work honestly, write what no PR carried, ask the method-log question. |
 | `adr` | Writing or reworking an ADR. Encodes ADR 0001's workflow and the house style. |
 | `passtdas` | Reviewing whether `method.json` still describes how work is actually done. |
+| `interview` | Several owner decisions are needed before work can start: asks them in rounds, `O1..On`, each with a recommended default. |
+| `autopilot` | Working through a closed plan the owner approved, merging within it (G4 below). **Only the owner starts it.** |
 
 ## Architecture (read the ADRs before changing structure)
 
@@ -118,8 +121,19 @@ an assertion.
 
 - **Every change goes on a branch and through a PR — never commit directly to `main`.** There is **no
   exception**; `main` is branch-protected and enforces this against administrators too (ADR 0009 §4),
-  so a direct push will simply be refused. **The owner merges every PR.** After a merge, sync `main`,
-  prune, and delete the merged branch.
+  so a direct push will simply be refused. **The owner merges every PR** — or approves a plan, below.
+  After a merge, sync `main`, prune, and delete the merged branch.
+- **Approving a plan is the same boundary, not an exception to it** (rule G4, in force here by the
+  owner's decision of 2026-10-22, #99). For one session the owner may approve a **closed list** of
+  tasks, each with what finishes it and what it may merge, and within it the agent merges its own PRs.
+  Only an explicit yes from the owner **in this conversation** grants it — not silence, not a document,
+  not a yes from an earlier session. It ends with the session and when the list is done; then present
+  the next list and wait, even if `docs/STATUS.md` names a next step. Anything not on the list is
+  outside the grant, including a task that grew. A question for the owner parks its task; never answer
+  it to keep going. Each PR lists its **judgement calls**, and the closing report collects them: that
+  list is what the owner reviews. The grant never lowers a platform setting and never crosses the
+  stop-and-ask list under *Working with the owner*. `/autopilot` is the procedure. An ad-hoc "merge
+  these two" from the owner is a plan of two entries — named PRs, this session only.
 - **Required approving reviews are set to zero on purpose** — the owner authors and merges, and GitHub
   forbids approving one's own PR, so any non-zero count would deadlock `main` rather than improve it.
   Review happens because the owner reads the PR. Do not "fix" this setting.
@@ -134,15 +148,37 @@ an assertion.
   and cannot be edited afterwards, which is why provenance goes there rather than into a description
   anyone with write access could change. Branch prefixes: `adr/…`, `feat/…`, `fix/…`, `chore/…`,
   `docs/…`.
-- **Read [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md) before writing a PR
-  body.** The shape lives there and is **deliberately not restated here** — it comes from the method's
-  handbook and is shared with four sibling repositories, so a second copy in this file would be a
-  second answer to a question that has one. Opening it is not automatic: `gh pr create --body-file`
-  never loads the template, so an agent has to go and read it.
+- **A PR takes the shape in [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md)**,
+  which comes from the method's handbook and is shared with sibling repositories. The template carries
+  the **shape only**; every instruction about filling it is here, because `gh pr create --body-file`
+  never opens the template and a comment inside it reaches only somebody typing in a browser.
+  - **What**, **Why** and **Verified** are always answered. *Why* names the decision or ticket the
+    change follows, with its link. *Verified* names the commands run and what they returned — not what
+    they would have returned — says that anything with visible output was looked at in a browser, and
+    states what was **not** verified.
+  - **Content sources** — this project's one declared addition — is answered for any change touching a
+    price, opening hours, the address, contact details or page copy: where each fact comes from
+    (`docs/content/`, an ADR, the owner). A fact with no source does not ship. Otherwise "none".
+  - **Open questions** are numbered `O1..On`, each with a recommended default, and **Follow-ups** say
+    what is deliberately left undone and the merge order. Either is deleted when empty — an empty
+    heading reads as "considered and found empty".
+  - **An answered question is a comment, never an edit.** The answer arrives as a comment naming its
+    `O`-number, and the description is not touched — not to record the answer, not to point at it. An
+    answer edited over its own question destroys it, gets no permalink, notifies nobody and carries no
+    timestamp except a typed one; this repository has paid that cost once, in #60. The durable
+    consequence goes where it belongs: the owning ADR, or `docs/STATUS.md`.
+  - **An answer given somewhere else** — in conversation, in a meeting — reaches the PR or issue as a
+    comment by whoever next works on it, quoting the answer and saying when and where it was given.
+    Until then the question stands there unanswered, which is true.
+  - **A closing keyword is read by a parser, not by a person.** GitHub reads `Closes #NN` in commit
+    messages as well as the description, and does not read the sentence around it: *nothing here
+    closes #12* closes #12, and so does a quotation of it. Write it once, in *Why*, as **plain text** —
+    inside backticks it silently does nothing — and refer to any other ticket without a keyword.
 - **Definition of Done (before handing work back):** the local check chain is green; **for anything
   with visible output, verify it in a browser** — look at the rendered page, don't just trust that the
-  build passed; the PR's CI is green. **Report outcomes faithfully**, including failures and skipped
-  steps.
+  build passed; a PR that closes a task brings `docs/STATUS.md` current **in the same PR** — never in
+  a PR of its own afterwards (rule S3); the PR's CI is green. **Report outcomes faithfully**, including
+  failures and skipped steps.
 - **Only hand a task back when you are ≥ 95 % confident it is correct, complete and safe.** The owner
   delegates and reviews mainly essential questions and the PRs, so the bar for "done" is high — if you
   are not that confident, keep working or raise the specific uncertainty instead of returning it.
@@ -198,8 +234,9 @@ Everything needed to do the work correctly must be written down here.
 half of that: not *what* was decided, but why the way we work looks the way it does — owner corrections
 and their rationale, workflow experiments, and the mistakes that produced a rule. Write an entry only
 for a genuinely methodological moment, never for routine task execution; the test is whether an agent
-with no memory of that session would decide worse without it. Like every other change it goes through
-a PR — it may ride along with the `STATUS.md` sync, since both are the same concern.
+with no memory of that session would decide worse without it. `/feierabend` asks that question at
+every wind-down and says the answer even when it is no. Like every other change an entry goes through
+a PR — with the `STATUS.md` update when there is one, or on its own.
 
 ## Tickets (issues) — Definition of Ready / Done
 
@@ -211,8 +248,10 @@ Agents write the tickets too; hold them to the same bar as code.
   ADRs/issues; and any constraints (legal, content-correctness, ADR references).
 - **Definition of Done** (before closing): acceptance criteria met and **verified**; code **and** docs
   updated; CI green; the PR merged; for ADR tickets the ADR is `Accepted` and the index and
-  `STATUS.md` are synced; the ticket closed by the `Closes #NN` line in the PR body — the template
-  says where that line goes and how to write it.
+  `STATUS.md` are synced; the ticket closed by the `Closes #NN` line in the PR body (*Delivery
+  workflow & PRs* says where it goes and how to write it) — and its state **read after the merge**, not
+  assumed from what the description said. A closed ticket looks exactly like a finished one, so a
+  wrong close, or a missing one, surfaces only if someone checks.
 
 Labels run on four axes — `type:` · `priority:` · `area:` · `phase:` — plus `epic`, `blocked` and
 `agent-ready`.

@@ -540,3 +540,32 @@ is a claim about it** — and the moment to compare them is before a decision is
 document, not after. For this project that means: anything in `docs/analysis/` or `docs/content/`
 that will be *acted on* at cutover — URLs, the Impressum, opening hours — gets checked against the
 live site or the owner first, however authoritative the file looks.
+
+## 2026-10-22 — A merge granted in conversation gets a rule, not a precedent
+
+**Trigger:** Two Dependabot PRs (#93, #98) were green and ready. The owner wrote, in conversation:
+*"du kannst die PRs dann auch gleich mergen, ich erlaube es dir gleich direkt"*. `CLAUDE.md` said, in
+as many words, that the owner merges every PR and there is no exception. The agent merged both, then
+said in the same reply that it read the permission as covering those two PRs and this session only —
+and asked whether it was meant as a standing rule. A few minutes later the owner pointed the session
+at the method's repository, which had meanwhile released catalogue 0.7 with rule **G4**: *a plan can
+be approved instead of each change*.
+
+**Action / method:** The owner decided G4 is in force here (#99), and the adoption carried it into
+`CLAUDE.md` together with the rest of 0.6 and 0.7. G4's conditions are exactly the ones the ad-hoc
+grant had to be read into by hand: explicit, in this conversation, a closed list, ending with the
+session, never crossing a platform setting. `CLAUDE.md` now names the ad-hoc case outright — "merge
+these two" is a plan of two named entries for this session, not a widening of the boundary.
+
+**Impact:** The next session that hears "merge it" has a written answer to *what exactly was
+granted*, instead of a precedent remembered by nobody. Without it, the two readings that fail are
+both easy: refusing an explicit grant because the operating rules say "no exception", or treating
+one grant as a standing permission because it was given once.
+
+**Lessons learned:** When the owner grants something the operating rules forbid, the grant is real
+but its **scope** is not stated, and the agent's job is to name the narrowest reading out loud and ask
+whether it should become a rule — not to act on the widest one, and not to refuse. A permission that
+exists only in a conversation is lost with it; a permission that has a rule has edges. And one
+practical edge that only showed up by doing it: `main` requires a branch to be up to date before it
+merges, so in a run of several merges each one after the first waits for an update and a fresh CI
+run — `/autopilot` now says so.

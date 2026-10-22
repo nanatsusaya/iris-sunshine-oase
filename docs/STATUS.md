@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-09-20**.
+> Living handoff note between working sessions. Last updated: **2026-10-22**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -72,11 +72,13 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
     surface exposes YAML forms at all, so an empty result there is evidence in *neither* direction.
     Worth knowing before someone reads `[]` as breakage and repairs something that is not broken.
 - ✅ **The method is declared** (2026-08-05): [`method.json`](../method.json) binds this repository's
-  four artefacts to the roles of [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules)
-  catalogue 0.5, with **no adaptations** — all 32 rules are in force, which its coherence check
-  verifies. The way of working had been followed since 2026-07-18 and never written down as a named
-  thing. The five session procedures are adapted copies of that method's plugin; what was changed in
-  them is in [`.claude/skills/README.md`](../.claude/skills/README.md).
+  four artefacts to the roles of [agent-project-rules](https://github.com/nanatsusaya/agent-project-rules),
+  with **no adaptations**, which its coherence check verifies. The way of working had been followed
+  since 2026-07-18 and never written down as a named thing. **Brought up to catalogue 0.7 on
+  2026-10-22** (#99): all 33 rules are in force, including **G4** — the owner may approve a closed plan
+  for one session, inside which the agent merges its own PRs (`CLAUDE.md` → *Delivery workflow &
+  PRs*). The seven session procedures are adapted copies of that method's plugin 0.7.2; what was
+  changed in them is in [`.claude/skills/README.md`](../.claude/skills/README.md).
 - ✅ **The `docs/` paths are English** (#11, 2026-08-05): `analyse/` → `analysis/`, `inhalte/` →
   `content/`, `seiten/` → `pages/`, and the German file names with them. The **page slugs under
   [`content/pages/`](content/README.md) deliberately stay German** — they are identifiers of old-site
@@ -274,13 +276,15 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**The preview URL, tomorrow — #89.** On 2026-09-20 the owner set the priority explicitly: **bring the
+**The preview URL — #89.** On 2026-09-20 the owner set the priority explicitly: **bring the
 draft online before anything else**, ahead of ADR 0007 and Phase 3, because the studio's proprietor
 wants to see it. The homepage, the token layer, the content model and the fonts are all in place; what
 is missing is three owner actions at GitHub and netcup and one agent PR, in the order #89 lists them
-(the first — verifying the apex with GitHub — is what makes the second safe). The session of
-2026-09-21 opens with this: confirm steps 1–3 from outside (`dig`, the Pages API), then re-enable the
-`push` trigger in `deploy.yml` and verify the deployed page by fetching it. What the proprietor will
+(the first — verifying the apex with GitHub — is what makes the second safe). **As of 2026-10-22 the
+owner's steps 1–3 are not yet done**, checked from outside: no `preview` `CNAME`, no
+`_github-pages-challenge-nanatsusaya` `TXT`, and the Pages API answers 404. Once they are, confirm them
+the same way, then re-enable the `push` trigger in `deploy.yml` and verify the deployed page by
+fetching it. What the proprietor will
 see is the homepage with every price and opening time struck through and badged as invented — that is
 by design (ADR 0003 R1) and the page says so; nobody makes the draft look better by typing a real
 number in.
