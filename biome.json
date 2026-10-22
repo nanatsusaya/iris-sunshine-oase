@@ -8,11 +8,11 @@
   "files": {
     "includes": [
       "**",
-      "!dist/",
-      "!.astro/",
-      "!node_modules/",
-      "!Archive/",
-      "!docs/content/",
+      "!dist",
+      "!.astro",
+      "!node_modules",
+      "!Archive",
+      "!docs/content",
       "!package-lock.json"
     ]
   },
@@ -26,6 +26,16 @@
     "enabled": true,
     "rules": {
       "preset": "recommended"
+    }
+  },
+  "markdown": {
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "yaml": {
+    "formatter": {
+      "enabled": false
     }
   },
   "javascript": {
