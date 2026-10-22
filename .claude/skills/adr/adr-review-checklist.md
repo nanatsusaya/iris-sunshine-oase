@@ -23,8 +23,9 @@ Run this before opening the ADR PR, and when reviewing one.
 - [ ] **Phase gate** stated: what this unblocks, and whether it depends on a still-`Planned` decision.
       It does not implement ahead of one.
 - [ ] `docs/adr/README.md` index updated — status **and** link; **`node tools/check-docs.mjs` green**.
-- [ ] `docs/STATUS.md` updated if the roadmap or phase state changes — `Accepted` means **designed**,
-      not built.
+- [ ] `docs/STATUS.md` updated **in the same PR as the flip** if the decision changes what happens
+      next — the roadmap, the phase state, a question it names — never in a PR of its own afterwards
+      (rule S3). `Accepted` means **designed**, not built.
 - [ ] Cross-references use `ADR 000X §Y`, old-site defects use `M-NN`, and all links resolve.
 - [ ] **English, British spelling**; header (`Status` / `Date`, plus `Depends on` / `Supersedes` where
       real) and section order: Context → Decision → Consequences → Alternatives → Open questions →

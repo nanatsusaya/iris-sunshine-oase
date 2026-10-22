@@ -79,10 +79,10 @@ exists to make visible.
 
 ## 3. Compare the procedures against their source
 
-The five procedures in `.claude/skills/` are **adapted copies** of the `agent-method` plugin, not the
+The seven procedures in `.claude/skills/` are **adapted copies** of the `agent-method` plugin, not the
 plugin itself. Copies do not update, and nothing announces that they have fallen behind.
 
-**The trigger is a release of `agent-project-rules`.** Compare the five files against the new version,
+**The trigger is a release of `agent-project-rules`.** Compare the seven files against the new version,
 take what applies, and leave what was adapted on purpose. [The skills README](../README.md) lists what
 was deliberately changed here and why — that list is what must **not** be overwritten by a later
 comparison.

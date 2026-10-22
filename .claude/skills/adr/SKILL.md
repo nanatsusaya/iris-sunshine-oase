@@ -101,8 +101,9 @@ is not silently lost.
 
 ## 4. Open the PR
 
-- Use `.github/PULL_REQUEST_TEMPLATE.md`. The body states **what** · **why** · **which issue and ADR** ·
-  **how it was verified** · **merge-order caveats** · **follow-ups**, and ends with the Claude Code
+- Use the shape in `.github/PULL_REQUEST_TEMPLATE.md`, filled as `CLAUDE.md` → *Delivery workflow &
+  PRs* says: What, Why (with the issue and the ADR) and Verified always answered; Open questions
+  carrying `O1..On`; Follow-ups for merge order and what is left undone. It ends with the Claude Code
   line.
 - **Surface `O1..On` prominently** — the open questions are the reason the owner is reading this PR at
   all, and a numbered list buried in prose gets answered partially with nobody noticing which ones were
@@ -117,6 +118,11 @@ is not silently lost.
 Fold the answers into the *Decision* sections, then convert **Open questions** into **Resolved
 questions (owner decisions, YYYY-MM-DD)**, recording `R1..Rn`: what was decided, and why. The answers
 belong in the ADR, not only in the PR thread — a future agent reads the file, not the conversation.
+
+On the PR itself the description is **not** touched: an answer arrives as a comment naming its
+`O`-number. An answer the owner gave in conversation is posted there as a comment by whoever works on
+it next, quoting it and saying when and where it was given — the record is rewritten into `R1..Rn`,
+the PR is not (rule G2).
 
 ## 6. The status flip is a second PR
 
@@ -137,10 +143,17 @@ the index.
 > *Amendments*, arising from ADR 0009 §4). `main` is branch-protected against administrators too, so a
 > direct push is refused rather than merely discouraged.
 
+**`docs/STATUS.md` travels with the flip.** If accepting the ADR changes what happens next — it
+unblocks a task, closes a question `STATUS.md` names, or moves the next step or the phase state —
+bring `STATUS.md` current **in this same PR** (rule S3), not in a PR of its own after the merge. Keep
+the wording honest: an `Accepted` ADR moves a capability to **designed**, never to **built**. If it
+changes nothing there, leave the file alone.
+
 ## 7. After it merges
 
-Update `docs/STATUS.md` if this changed the roadmap or the phase state — and keep the wording honest:
-an `Accepted` ADR moves a capability to **designed**, never to **built**.
+Sync `main` and delete the branch. Nothing is left to update: the record, the index and
+`docs/STATUS.md` all arrived with the merge. The seam to the next task is `/weiterimtext`, which checks
+that they did.
 
 ## Quality bar
 
