@@ -18,6 +18,7 @@ Every ADR file must appear in this table with a status.
 | 0007 | Legal, privacy and third-party services | Planned |
 | [0008](0008-url-migration-and-redirects.md) | URL migration and redirects from the old site | Accepted |
 | [0009](0009-security-by-design.md) | Security by design | Accepted |
+| [0010](0010-visual-design-refresh.md) | Visual design refresh (direction K) | Proposed |
 
 Status values: `Proposed` · `Accepted` · `Superseded` · `Planned` (ticketed, not yet written).
 
@@ -60,3 +61,11 @@ applies to a static site with no server, no login and no user data. The threats 
 mostly sit **around** the site rather than in it: the npm supply chain, the CI workflow's privileges,
 the DNS records the site's identity rests on, and a maintenance pipeline in which an AI agent acts on
 publicly filed issues. Same rigour, different subject.
+
+## 0010, and why it supersedes rather than adds
+
+**0010 — visual design refresh** does not extend the list. It replaces one entry. The owner rejected
+the look ADR 0004 had produced (2026-10-22) and chose a new direction. A changed palette, typeface set
+and mark make up most of what 0004 decided, so ADR 0001 requires a superseding record rather than an
+edit. 0010 names exactly which parts of 0004 still bind (its §9), so the topic still has a single
+current authority, and 0004's reasoning stays readable as it stood.
