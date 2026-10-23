@@ -1,24 +1,78 @@
-# ⚠️  EVERY TIME IN THIS FILE IS INVENTED. THESE ARE NOT THE STUDIO'S OPENING HOURS.
+# Opening hours — the studio's real hours, confirmed by the owner on 2026-10-23.
 #
-# The owner does not yet have the current hours and will supply them (2026-07-19). Under ADR 0003 R1
-# these are placeholders: `confirmed: false`, so the `live` build refuses them, and the times are
-# implausible clock values on purpose. A tidy `10:00 – 18:00` would survive a screenshot as though it
-# were real; 11:11 – 22:22 cannot.
+# Source: the winter and summer opening-hours cards, transcribed verbatim in
+# docs/sources/2026-10-23-flyer-and-hours-cards.md, plus the owner's answers there. The printed cards
+# overlapped and left a gap at the season boundaries. The owner settled them: winter runs 1 November –
+# 31 March, summer 1 April – 31 October, and Sunday in winter is 09:00 – 16:00 (the card's handwritten
+# correction).
 #
-# Why sets carry a validity rather than there being one list: docs/analysis/02-content-inventory.md records
-# that the WordPress export holds **two conflicting summer sets with differing Sunday hours**. A model
-# that can hold only one gets resolved by somebody deleting the other, and the wrong one is exactly as
-# likely as the right one. So both can exist and the build selects.
+# Why there are several sets rather than one list: the hours change twice a year, and the build selects
+# the set valid at build time (`currentHours()` in src/content/query.ts). `validUntil` is inclusive —
+# the whole of that day. A build that falls where two sets overlap, or where none applies, fails.
 #
-# An absent `validUntil` means "until replaced", not "forever".
+# The seasons recur every year, but the schema holds dated sets. **A new season's set has to be added
+# before the last one here expires** — see docs/recurring-tasks.md. A build after the last `validUntil`
+# fails loudly rather than showing stale hours.
+#
+# Holidays are not here: the cards say „Bitte schauen Sie auf die aktuelle Vorankündigung", which is
+# closures.yaml's job (ADR 0003 §4).
 
-- id: placeholder-standard
-  label: Platzhalter — Regelzeiten
+- id: sommer-2026
+  label: Sommer-Öffnungszeiten (1. April – 31. Oktober)
+  validFrom: 2026-04-01
+  validUntil: 2026-10-31
   intervals:
-    - days: [1, 2, 3, 4, 5]
-      opens: "11:11"
-      closes: "22:22"
+    - days: [1, 2, 3]
+      opens: "15:00"
+      closes: "19:00"
+    - days: [4, 5]
+      opens: "09:00"
+      closes: "12:30"
+    - days: [4, 5]
+      opens: "15:00"
+      closes: "19:00"
     - days: [6, 7]
-      opens: "09:09"
-      closes: "12:12"
-  confirmed: false
+      opens: "09:00"
+      closes: "12:30"
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+- id: winter-2026-27
+  label: Winter-Öffnungszeiten (1. November – 31. März)
+  validFrom: 2026-11-01
+  validUntil: 2027-03-31
+  intervals:
+    - days: [1, 2, 3]
+      opens: "15:00"
+      closes: "19:00"
+    - days: [4, 5]
+      opens: "09:00"
+      closes: "12:30"
+    - days: [4, 5]
+      opens: "15:00"
+      closes: "19:00"
+    - days: [6]
+      opens: "09:00"
+      closes: "12:30"
+    - days: [7]
+      opens: "09:00"
+      closes: "16:00"
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+- id: sommer-2027
+  label: Sommer-Öffnungszeiten (1. April – 31. Oktober)
+  validFrom: 2027-04-01
+  validUntil: 2027-10-31
+  intervals:
+    - days: [1, 2, 3]
+      opens: "15:00"
+      closes: "19:00"
+    - days: [4, 5]
+      opens: "09:00"
+      closes: "12:30"
+    - days: [4, 5]
+      opens: "15:00"
+      closes: "19:00"
+    - days: [6, 7]
+      opens: "09:00"
+      closes: "12:30"
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }

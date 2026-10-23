@@ -100,6 +100,27 @@ const DAY_NAMES = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'S
  * Derived rather than stored, so a day range cannot disagree with the days it is built from — which is
  * the same class of defect as a price existing twice, at a smaller scale.
  */
+/**
+ * Intervals grouped into one row per set of days, in their original order.
+ *
+ * A split day — Thursday and Friday 09:00 – 12:30 and 15:00 – 19:00 — is two intervals in the data,
+ * because each has its own opening and closing time. Rendered one interval per row, it shows the same
+ * days twice, which reads like a contradiction. Grouping by the exact day set keeps the data honest and
+ * the table readable: one row, two spans.
+ */
+export function groupIntervals<T extends { days: number[]; opens: string; closes: string }>(
+  intervals: T[],
+): { days: number[]; spans: { opens: string; closes: string }[] }[] {
+  const rows: { key: string; days: number[]; spans: { opens: string; closes: string }[] }[] = [];
+  for (const { days, opens, closes } of intervals) {
+    const key = [...new Set(days)].sort((a, b) => a - b).join(',');
+    const row = rows.find((candidate) => candidate.key === key);
+    if (row) row.spans.push({ opens, closes });
+    else rows.push({ key, days, spans: [{ opens, closes }] });
+  }
+  return rows.map(({ days, spans }) => ({ days, spans }));
+}
+
 export function formatDays(days: number[]): string {
   const sorted = [...new Set(days)].sort((a, b) => a - b);
   const name = (d: number) => DAY_NAMES[d - 1];
