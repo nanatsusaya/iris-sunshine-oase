@@ -1,6 +1,7 @@
 # ADR 0004 — Styling and design tokens
 
-- **Status:** Accepted
+- **Status:** Superseded by [ADR 0010](0010-visual-design-refresh.md) (2026-10-23), which carries §5–§10
+  forward
 - **Date:** 2026-07-19
 - **Depends on:** [ADR 0002](0002-tech-stack-and-tooling.md) §4 (plain CSS with custom properties — the
   mechanism, which explicitly hands the *values* to this ADR) and §5 (the precedent that a check blocks

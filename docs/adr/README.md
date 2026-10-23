@@ -12,13 +12,13 @@ Every ADR file must appear in this table with a status.
 | [0001](0001-record-architecture-decisions.md) | Record architecture decisions | Accepted |
 | [0002](0002-tech-stack-and-tooling.md) | Tech stack and tooling | Accepted |
 | [0003](0003-content-model.md) | Content model — structured data and where authority lives | Accepted |
-| [0004](0004-styling-and-design-tokens.md) | Styling and design tokens | Accepted |
+| [0004](0004-styling-and-design-tokens.md) | Styling and design tokens (superseded by [0010](0010-visual-design-refresh.md)) | Superseded |
 | [0005](0005-internationalisation.md) | Internationalisation — German default, English secondary | Accepted |
 | [0006](0006-deployment-preview-hosting.md) | Deployment, preview and hosting | Accepted |
 | 0007 | Legal, privacy and third-party services | Planned |
 | [0008](0008-url-migration-and-redirects.md) | URL migration and redirects from the old site | Accepted |
 | [0009](0009-security-by-design.md) | Security by design | Accepted |
-| [0010](0010-visual-design-refresh.md) | Visual design refresh (direction K) | Proposed |
+| [0010](0010-visual-design-refresh.md) | Visual design refresh (direction K) | Accepted |
 
 Status values: `Proposed` · `Accepted` · `Superseded` · `Planned` (ticketed, not yet written).
 
