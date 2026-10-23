@@ -27,6 +27,13 @@ Architecture Decision Records, numbered and normative. An `Accepted` ADR is bind
 immutable except with logged owner authorisation. **`Accepted` means decided, not built** —
 implementation progress lives in [`STATUS.md`](STATUS.md).
 
+### [`design/`](design/direction-k/README.md) — the look, as drawn
+
+The artboards of direction K, the look [ADR 0010](adr/0010-visual-design-refresh.md) decided, with a
+screenshot of each. They are reference: the ADR states the values and governs where the two disagree,
+and their content is placeholder. They are in the repository because the design canvas they came from
+is private and an agent working a ticket cannot open it.
+
 ### [`meta/`](meta/agent-collaboration-log.md) — how we work, and why
 
 The ADRs record *what* was decided. The collaboration log records *why the way we work looks the way it
