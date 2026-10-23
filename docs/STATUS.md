@@ -156,7 +156,9 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   with Lato and a Sacramento script accent, orange `#FFC000` as accent only and blue `#C2D1ED` as calm
   bands. The bordeaux is retired, body copy is `1rem` in weight 400, and a line-drawn sun is the mark.
   It also fixes the rules for real versus AI photographs, consented anonymous reviews and plain social
-  links. State: **designed** — the repository still shows the ADR 0004 look.
+  links. State: **designed** — the repository still shows the ADR 0004 look. The artboards, with
+  screenshots, are in [`docs/design/direction-k/`](design/direction-k/README.md) (#108), so the
+  implementation tickets (#109–#111) do not depend on the private canvas.
 - ✅ [ADR 0009](adr/0009-security-by-design.md) — security by design (#28) — **Accepted** (2026-07-18):
   an addition to the reserved eight, taken **before** the scaffold because it decides workflow
   permissions, dependency policy and the no-external-resources invariant — all cheaper to build in than

@@ -13,6 +13,7 @@
       "!node_modules",
       "!Archive",
       "!docs/content",
+      "!docs/design",
       "!package-lock.json"
     ]
   },
