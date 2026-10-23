@@ -1,6 +1,6 @@
 # ADR 0010 — Visual design refresh (direction K)
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-10-23
 - **Supersedes:** [ADR 0004](0004-styling-and-design-tokens.md) — in full, with §5–§10 of it carried
   forward by this ADR (§9 below)
@@ -219,7 +219,18 @@ ChatGPT and places it in a folder, and an agent records its provenance and integ
 API key, no additional service and no runtime call. A move to OpenAI's image API is a later decision,
 taken if the number of images makes the manual route a burden.
 
-**No photograph from the old site is reused** — unchanged from ADR 0004 §9 and `CLAUDE.md`.
+**A photograph from the old site is reused only with its own provenance record** — never on the
+strength of having been there (ADR 0004 §9, `CLAUDE.md`). The two groups differ, and
+`docs/analysis/06-media-inventory.md` already says so: the **studio's own photographs** were taken by
+Iris around 2016 and their rights lie with the studio (**R13**), so they qualify once each has its
+record. The **stock motifs** from Pixabay, 2013–2017, do not: their licence cannot be proven after
+Pixabay's 2019 change, and none of them is reused.
+
+Each studio photograph that is taken over must also **show the studio as it is today** — the same
+sunbed, the same room — confirmed by the owner photo by photo when they are chosen (#106). One that
+shows a sunbed or room that no longer exists would mislead in exactly the way §7 forbids for AI
+images. Third-party artwork that dominates a frame — the pop-art portrait in one of the gallery
+shots — is cropped out or the photograph is not used.
 
 **Where text may sit on a photograph:** only on the ground colour. A hero photograph is placed against
 one edge and fades into `--surface-ground`; text sits on the faded, flat part, never on picture detail.
@@ -303,8 +314,9 @@ replaces it.
   Its tokens, fonts and wordmark are replaced, which is a substantial implementation PR.
 - **Three font families instead of two.** The script is about 30–40 kB more to load, for a purely
   decorative role. It is subset and swapped, but it is weight that carries no information.
-- **The look depends on photographs that do not exist yet.** Without them the cream-and-serif design
-  reads as unfinished. That moves "obtain photographs" from a nice-to-have onto the critical path, and
+- **The look depends on photographs that largely do not exist yet.** The studio's own shots from about
+  2016 cover the sunbeds and rooms (**R13**), but they are snapshots — small, mixed light — and do not
+  carry a full-width hero. Without new photographs the cream-and-serif design reads as unfinished. That moves "obtain photographs" from a nice-to-have onto the critical path, and
   it is the owner's work, not an agent's.
 - **The contrast check has to be rewritten**, not merely re-pointed: from gradient stops to a matrix of
   token-surface pairs.
@@ -362,6 +374,12 @@ the PR with date and place.
   chose this form.
 - **R12 — The ADR fixes the rule for social links, and the accounts come from the owner as a ticket**
   (#104), rather than from a guess.
+- **R13 — The studio photographs on the old site are the studio's own** (owner, 2026-10-23: *„iris hat
+  die bilder selbst gemacht vor etwa 10 jahren"*). This corrects the draft of §7, which had barred every
+  photograph from the old site and so contradicted `docs/analysis/06-media-inventory.md`. The owner
+  pointed out the real photographs, and the rule is now the one ADR 0004 §9 actually stated: reuse with
+  a record, never by default. Whether each photo still shows the studio as it is today is confirmed per
+  photo in #106 rather than here.
 
 ## References
 

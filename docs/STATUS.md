@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-10-22**.
+> Living handoff note between working sessions. Last updated: **2026-10-23**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -143,13 +143,20 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   **designed** — the module, `404.astro` and `tools/check-redirects.mjs` arrive with the first page
   that needs a redirect.
 - ▶ ADR 0007 outstanding — the last of the set.
-- ✅ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Accepted**
-  (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
+- ⤷ [ADR 0004](adr/0004-styling-and-design-tokens.md) — styling and design tokens (#35) — **Superseded**
+  by ADR 0010 on 2026-10-23; its §5–§10 still bind through 0010. As it stood (2026-07-19): one semantic token tier, a 4 px spacing scale, a stepped type scale with `clamp()` at
   display sizes, a 34rem reading measure, mobile-first with two breakpoints, inline-SVG icons and
   wordmark, and self-hosted fonts. Derived by measurement from the owner's Claude Design draft, which
   already carried a stable 14-token layer and preserves `#FFC000` — the only colour the old site
   documented exactly. Three inherited defects close structurally: `M-09` becomes unexpressible under
-  mobile-first, and spacing and maximum width get a system. State: **designed** — no CSS yet.
+  mobile-first, and spacing and maximum width get a system.
+- ✅ [ADR 0010](adr/0010-visual-design-refresh.md) — visual design refresh, direction K (#103) —
+  **Accepted** (2026-10-23). The owner rejected the ADR 0004 look and chose direction K from several
+  rounds on a private design canvas. It uses a cream ground and warm photography, Libre Caslon Display
+  with Lato and a Sacramento script accent, orange `#FFC000` as accent only and blue `#C2D1ED` as calm
+  bands. The bordeaux is retired, body copy is `1rem` in weight 400, and a line-drawn sun is the mark.
+  It also fixes the rules for real versus AI photographs, consented anonymous reviews and plain social
+  links. State: **designed** — the repository still shows the ADR 0004 look.
 - ✅ [ADR 0009](adr/0009-security-by-design.md) — security by design (#28) — **Accepted** (2026-07-18):
   an addition to the reserved eight, taken **before** the scaffold because it decides workflow
   permissions, dependency policy and the no-external-resources invariant — all cheaper to build in than
@@ -169,7 +176,8 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   ratio ADR 0004 decided, and `tools/check-tokens.mjs` asserts the rules around them — no raw colour,
   no off-scale spacing, contrast holds, `--colour-accent` is never text, and `@media` uses only the two
   sanctioned breakpoints with no `max-width`. State: **draft** — the tokens exist and the holding page
-  uses them; the designed homepage does not exist yet.
+  uses them. **Their values are ADR 0004's and are replaced by ADR 0010's**, together with a rewritten
+  contrast check (no gradient any more; a matrix of token-surface pairs).
   - ✅ **The fonts are self-hosted** (2026-07-19). Cormorant Garamond 500 and the Mulish variable
     font, `latin` subset, 52 kB together, under the SIL Open Font License with its text shipped
     beside them. Provenance, checksums and how to reproduce the download:
@@ -181,7 +189,7 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
   accessor module and the five checks of ADR 0003 §7. `docs/business-facts.md` folded into
   `src/content/business.yaml` and became a pointer; `src/config/business.ts` and its regex parsing of a
   Markdown table are gone. State: **draft** — the shape is complete, the values are placeholders.
-- ✅ **The homepage** (2026-07-19): built from the design draft's turn 6, mobile-first, out of the
+- ✅ **The homepage** (2026-07-19), **in the superseded ADR 0004 look**: built from the design draft's turn 6, mobile-first, out of the
   tokens (#40) and the content model (#41). Header, hero, four service teasers, opening hours, contact
   and footer. Every figure on it is read from the model — `tools/check-content.mjs` rejects a price or
   a clock time typed into a template — and every invented one is struck through and labelled.
@@ -197,7 +205,8 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
     only come from the two script fonts the ADR deliberately does not ship. Recorded in
     `src/components/Wordmark.astro`; a smaller wrong than a raster mark that does not scale.
   - **No photographs.** The frames are drawn at their aspect ratio and marked „Foto folgt", so
-    arriving images cannot reflow the page (ADR 0004 §9). None of the old site's may be reused.
+    arriving images cannot reflow the page (ADR 0004 §9). The studio's own photographs from the old site
+    may be reused with a provenance record (ADR 0010 R13, #106); the old stock motifs may not.
   - **No Impressum, and that is a go-live gate.** § 5 TMG attaches at cutover, not to a `noindex`
     preview that is not the studio's live site. Listed under Phase 5 below.
 - ✅ **The indexing gate**, as one build-time flag defaulting to `preview` (ADR 0006 §5). Verified in
@@ -288,6 +297,16 @@ fetching it. What the proprietor will
 see is the homepage with every price and opening time struck through and badged as invented — that is
 by design (ADR 0003 R1) and the page says so; nobody makes the draft look better by typing a real
 number in.
+
+**While #89 waits on the owner, the agent work is ADR 0010.** The owner spent 2026-10-22/23 on the
+new look and accepted it. It is one implementation PR per concern, in this order:
+
+1. tokens, fonts and the rewritten contrast check;
+2. the line-sun mark and the header and footer;
+3. the homepage in direction K.
+
+The preview #89 then shows the new look rather than the superseded one. Photographs follow #106: the
+owner confirms which of the studio's own shots still show the studio as it is.
 
 **After that, in order:** ADR 0007 (legal, privacy, third-party services — the last of Phase 1; its
 questions go to the owner in chat before the PR opens, like 0008's), then Phase 3, whose first paired
