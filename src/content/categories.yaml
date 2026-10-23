@@ -1,8 +1,9 @@
 # Service categories — the spine services hang from (ADR 0003 §6).
 #
-# The names and groupings come from the old site's price list
-# (docs/analysis/03-services-and-prices.md). They are recorded, not confirmed: that document's own
-# header says its contents are "to be confirmed by the owner before being carried over".
+# Confirmed by the owner on 2026-10-23 against the studio's current offer: the Moments flyer, the
+# opening-hours cards and the owner's answers, transcribed in
+# docs/sources/2026-10-23-flyer-and-hours-cards.md. The Wellness- and Freundinnen-Pakete are no longer
+# offered, so the fourth category is now the vouchers and cards.
 #
 # Teasers are prose written for the rebuild, not extracted. They contain no facts on purpose — a teaser
 # that names a price is a second copy of that price.
@@ -11,22 +12,24 @@
   name: Solarium
   teaser: Fünf Sonnenbänke, abgestimmt auf den Hauttyp.
   order: 1
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
 - id: naturkosmetik
   name: Naturkosmetik
-  teaser: Gesichtsbehandlung und Anti-Aging in Ruhe.
+  teaser: Gesichtsbehandlung, Augenpflege und Problemhaut in Ruhe.
   order: 2
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
 - id: massagen
   name: Massagen
-  teaser: Vom Alltag weg — Relax und Hotstone.
+  teaser: Vom Alltag weg — mit Spezialöl oder Honig.
   order: 3
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
-- id: pakete
-  name: Wellness-Pakete
-  teaser: Zeit für sich, oder zu zweit.
+# Unconfirmed because the Wert-Gutschein in it has not been confirmed as still offered — the owner listed
+# the Stammkundenkarte and the 10er-Karten, not the voucher (2026-10-23).
+- id: angebote
+  name: Gutscheine & Karten
+  teaser: Wert-Gutscheine, 10er-Karten und Stammkundenkarte.
   order: 4
   confirmed: false

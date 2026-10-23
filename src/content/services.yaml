@@ -1,123 +1,212 @@
-# ⚠️  EVERY PRICE IN THIS FILE IS INVENTED. NONE OF THEM IS A PRICE OF THE STUDIO.
+# The studio's services and prices — the one authority for what is offered and what it costs.
 #
-# The owner does not yet have the current figures and will supply them (2026-07-19). Under ADR 0003 R1
-# the repository holds placeholders until then, and three things make that safe rather than reckless:
+# Confirmed entries come from the owner on 2026-10-23 (ADR 0003 §8):
 #
-#   1. every entry is `confirmed: false`;
-#   2. the `live` build FAILS on any unconfirmed entry — the gate is on the `confirmed` field in
-#      src/content.config.ts, so it runs for every entry whether or not a page renders it. It fails
-#      rather than hides: a price list that silently drops three services looks finished and is wrong;
-#   3. the amounts are repdigits — 11,11 € / 22,22 € / 33,33 € — so they are false on sight. A plausible
-#      invented figure is the most dangerous object in this repository, because it survives a screenshot
-#      as though it were real.
+#   - **Naturkosmetik and Massagen** — the current Moments flyer, whose prices „gelten ab 01.12.2021"
+#     and which the owner confirmed as current. Verbatim transcription:
+#     docs/sources/2026-10-23-flyer-and-hours-cards.md. Where the flyer and the old website disagree,
+#     the flyer wins; the differences are tabulated there.
+#   - **Solarium** — the old website's prices (docs/analysis/03-services-and-prices.md), on the owner's
+#     instruction to use them provisionally: „nimm erstmal die preise von der webseite". Their `source`
+#     says so, so a later correction knows where to look.
 #
-# The service NAMES are not invented: they are the old site's, extracted verbatim to
-# docs/content/ and listed in docs/analysis/03-services-and-prices.md. They are recorded there, not
-# confirmed — that document's own header says so.
+# Still `confirmed: false`, with repdigit placeholders that are false on sight (ADR 0003 R1):
+# the services the owner confirmed as still offered but whose price was not given — Fußreflexzonen-
+# Massage, Kombipaket mit straffender Maske, Stammkundenkarte and 10er-Karten — and the Wert-Gutschein,
+# which nobody has confirmed yet. The `live` build refuses all of them until they are confirmed.
 #
-# This is a representative set, not the full ~40 items. It exists to exercise every price shape the
-# schema must survive; transcribing the rest is Phase 3 content work and waits for the owner's figures
-# (#41), since transcribing 2019 prices the owner is about to replace would be waste.
+# No longer offered, and so removed (owner, 2026-10-23): Aufbaubehandlung Hyaluron/Ceramide,
+# Hotstone-Rückenmassage, Wellness-Pakete and Freundinnen-Wellness-Pakete.
 #
-# NOTE — `id` must be the first key of every entry (see business.yaml).
+# Amounts are integer cents. NOTE — `id` must be the first key of every entry (see business.yaml).
 
 # --- Solarium ---------------------------------------------------------------
+# „ab" because the price depends on the minutes booked; the old website gives only the floor.
 - id: einsteiger
   category: sunshine
   name: Einsteiger
-  description: Einsteiger- und Tiefenbräuner für die sonnenentwöhnte Haut, Mittelmeer-Kabine.
-  price: { kind: from, cents: 1111 } # PLACEHOLDER
+  description: Einsteiger- und Tiefenbräuner für die sonnenentwöhnte Haut, in der Mittelmeer-Kabine.
+  price: { kind: from, cents: 300 }
   order: 1
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: "old website, provisionally — docs/sources/2026-10-23-flyer-and-hours-cards.md" }
 
 - id: tiefenbraeuner
   category: sunshine
   name: Tiefenbräuner
-  description: Zum Erhalt der Bräune, mit OxyTAN-Röhren in der Ostsee-Kabine.
-  price: { kind: from, cents: 1111 } # PLACEHOLDER
+  description: Zum Einstieg oder zum Erhalt der Bräune, mit OxyTAN-Röhren in der Ostsee-Kabine.
+  price: { kind: from, cents: 300 }
   order: 2
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: "old website, provisionally — docs/sources/2026-10-23-flyer-and-hours-cards.md" }
+
+- id: super
+  category: sunshine
+  name: Super
+  description: Für die vorgebräunte Haut, mit Power-Gesichtsbräuner, in der Kabine mit ägyptischem Flair.
+  price: { kind: from, cents: 400 }
+  order: 3
+  confirmed: { by: owner, on: 2026-10-23, source: "old website, provisionally — docs/sources/2026-10-23-flyer-and-hours-cards.md" }
+
+- id: power
+  category: sunshine
+  name: Power
+  description: Powerbank mit leichterem Gesichtsbräuner für den gebräunten Hauttyp, in der Asia-Kabine.
+  price: { kind: from, cents: 500 }
+  order: 4
+  confirmed: { by: owner, on: 2026-10-23, source: "old website, provisionally — docs/sources/2026-10-23-flyer-and-hours-cards.md" }
 
 - id: super-power
   category: sunshine
   name: Super Power
-  description: Die Powerbank in der Afrika-Kabine, für die bereits gebräunte Haut.
-  price: { kind: from, cents: 2222 } # PLACEHOLDER
-  order: 3
-  confirmed: false
+  description: Powerbank für die gebräunte Haut, in der Afrika-Kabine.
+  price: { kind: from, cents: 500 }
+  order: 5
+  confirmed: { by: owner, on: 2026-10-23, source: "old website, provisionally — docs/sources/2026-10-23-flyer-and-hours-cards.md" }
 
 # --- Naturkosmetik ----------------------------------------------------------
 - id: anti-aging-gesichtsbehandlung
   category: naturkosmetik
   name: Anti-Aging-Gesichtsbehandlung
-  description: Reinigung mit Peeling, Tonerde- und Königs-Honig-Maske, Finish mit Gesichtsmassage.
-  price: { kind: fixed, cents: 3333 } # PLACEHOLDER
+  description: Inklusive Hals und Dekolleté — Reinigung mit Peeling, Anti-Age-Tonerde-Maske, Honigmaske, Gesichtsmassage mit Finish-Öl. Bis 75 Minuten.
+  price: { kind: fixed, cents: 6900 }
   order: 1
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
-# The range exists because the cosmetics page distinguishes Jugend- from Erwachsenen-Problemhaut.
+- id: regenerations-gesichtsbehandlung
+  category: naturkosmetik
+  name: Regenerations-Gesichtsbehandlung
+  description: Inklusive Hals und Dekolleté — Reinigung mit Peeling, Honigmaske, Gesichtsmassage mit Finish-Öl. Bis 75 Minuten.
+  price: { kind: fixed, cents: 5200 }
+  order: 2
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+# Two prices by age, not a range: the flyer names exactly two, and a range would invite reading any
+# figure in between as possible.
 - id: problemhaut
   category: naturkosmetik
-  name: Problemhaut
-  description: Reinigung mit Peeling, bis zu zwei Tonerde-Masken, Finish mit Gesichtsmassage.
-  price: { kind: range, from: 2222, to: 4444 } # PLACEHOLDER
-  order: 2
-  confirmed: false
+  name: Problemhaut-Behandlung
+  description: Bei Akne, Mitessern und Ähnlichem — Reinigung mit Peeling, Tonerde-Maske passend zum Hauttyp, Honigmaske, Gesichtsmassage mit Finish-Öl. Bis 75 Minuten.
+  price:
+    kind: variants
+    variants:
+      - { label: bis 25 Jahre, cents: 3900 }
+      - { label: ab 26 Jahre, cents: 4400 }
+  order: 3
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+- id: problemhaut-ruecken
+  category: naturkosmetik
+  name: Problemhaut Rücken
+  description: Kosmetische Bodybehandlung — intensive Reinigung mit Dampfpeeling, Peeling, Reinigungsmaske, Finish mit Aloe-Vera-Lotion. Bis 70 Minuten.
+  price: { kind: fixed, cents: 6500 }
+  order: 4
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
 - id: wimpern-faerben
   category: naturkosmetik
   name: Wimpern färben
-  price: { kind: fixed, cents: 1111 } # PLACEHOLDER
-  order: 3
+  price: { kind: fixed, cents: 850 }
+  order: 5
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+- id: augenbrauen-korrektur
+  category: naturkosmetik
+  name: Augenbrauen-Korrektur
+  price: { kind: fixed, cents: 1000 }
+  order: 6
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+- id: augenbrauen-faerben
+  category: naturkosmetik
+  name: Augenbrauen färben
+  price: { kind: fixed, cents: 850 }
+  order: 7
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+- id: kombipaket
+  category: naturkosmetik
+  name: Kombipaket
+  description: Korrektur und Färben von Augenbrauen und Wimpern.
+  price: { kind: fixed, cents: 1700 }
+  order: 8
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+# Still offered (owner, 2026-10-23), not on the flyer; its price was not given.
+- id: kombipaket-straffende-maske
+  category: naturkosmetik
+  name: Kombipaket mit straffender Maske
+  price: { kind: fixed, cents: 2222 } # PLACEHOLDER
+  order: 9
   confirmed: false
 
 # --- Massagen ---------------------------------------------------------------
-# Two durations, one item — the reason `variants` exists rather than two separate services.
 - id: relax-massage
   category: massagen
-  name: Relax-Massage
-  description: Körpermassage mit ägyptischem Spezialöl.
+  name: Relaxmassage
+  description: Mit einem Spezialöl.
   price:
-    kind: variants # PLACEHOLDER
+    kind: variants
     variants:
-      - { label: bis 30 min, cents: 3333 }
-      - { label: bis 60 min, cents: 5555 }
+      - { label: Oberkörper, bis 30 Minuten, cents: 3000 }
+      - { label: Ganzkörper, bis 60 Minuten, cents: 5700 }
   order: 1
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
-- id: hotstone-rueckenmassage
+- id: koerperteilmassage
   category: massagen
-  name: Hotstone-Rückenmassage
-  description: Behandlung mit warmen Basaltsteinen.
-  price: { kind: fixed, cents: 5555 } # PLACEHOLDER
+  name: Körperteilmassage
+  description: Nacken und Schultern, mit einem Spezialöl. Bis 20 Minuten.
+  price: { kind: fixed, cents: 1800 }
   order: 2
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
-# No price, and not a missing one. The old site lists this with the status „zZ. vergriffen" instead of
-# an amount — which is why the schema has a `status` variant at all rather than an optional price field.
-# Whether it returns is an open question for the owner (#41).
+- id: honigmassage
+  category: massagen
+  name: Honigmassage
+  description: Nacken und Schultern. Bis 30 Minuten.
+  price: { kind: from, cents: 3500 }
+  order: 3
+  confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
+
+# Still offered (owner, 2026-10-23) — the old website's „zZ. vergriffen" no longer applies — but its
+# price was not given.
 - id: fussreflexzonen-massage
   category: massagen
   name: Fußreflexzonen-Massage
-  description: Grifftechniken an den Reflexzonen des Fußes, mit vorbereitendem Gespräch und Fußbad.
-  price: { kind: status, status: zZ. vergriffen }
-  order: 3
+  description: Grifftechniken an den Reflexzonen des Fußes, mit vorbereitendem Gespräch und belebendem Fußbad.
+  price: { kind: fixed, cents: 3333 } # PLACEHOLDER
+  order: 4
   confirmed: false
 
-# --- Wellness-Pakete --------------------------------------------------------
-- id: wellness-paket-1
-  category: pakete
-  name: Wellness-Paket 1
-  description: Sonnenbank nach Wahl mit Solarkosmetik, Kosmetikbehandlung nach Hauttyp, ägyptischer Tee.
-  price: { kind: fixed, cents: 4444 } # PLACEHOLDER
+# --- Gutscheine & Karten ------------------------------------------------------
+# Still offered (owner, 2026-10-23); the discount tiers were not confirmed, so the description names no
+# figure.
+- id: stammkundenkarte
+  category: angebote
+  name: Stammkundenkarte
+  description: Guthaben aufladen und bei jedem Besuch sparen — je höher der Betrag, desto höher der Bonus.
+  price: { kind: none }
   order: 1
   confirmed: false
 
+# Still offered (owner, 2026-10-23); prices not given.
+- id: zehnerkarten
+  category: angebote
+  name: 10er-Karten
+  price:
+    kind: variants # PLACEHOLDER
+    variants:
+      - { label: Karte 1, cents: 1111 }
+      - { label: Karte 2, cents: 2222 }
+      - { label: Karte 3, cents: 3333 }
+  order: 2
+  confirmed: false
+
 # Genuinely priceless rather than unpriced: a voucher is bought at whatever value the buyer chooses.
+# Not yet confirmed as still offered.
 - id: gutschein
-  category: pakete
+  category: angebote
   name: Wert-Gutschein
   description: Ein liebevoll verpackter Gutschein, im Wert frei wählbar.
   price: { kind: none }
-  order: 2
+  order: 3
   confirmed: false
