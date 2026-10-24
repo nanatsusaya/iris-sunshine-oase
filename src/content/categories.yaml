@@ -26,10 +26,8 @@
   order: 3
   confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
-# Unconfirmed because the Wert-Gutschein in it has not been confirmed as still offered — the owner listed
-# the Stammkundenkarte and the 10er-Karten, not the voucher (2026-10-23).
 - id: angebote
   name: Gutscheine & Karten
   teaser: Wert-Gutscheine, 10er-Karten und Stammkundenkarte.
   order: 4
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-24, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }

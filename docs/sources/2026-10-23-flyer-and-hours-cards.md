@@ -115,3 +115,13 @@ The owner settled the two printed periods, which overlapped and left a gap (2026
 | Problemhaut | bis 75 min, price not split | bis 25 Jahre 39,00 € · ab 26 Jahre 44,00 € |
 | Happy Hour, mornings | „Di. – Sa." | „Mo – Sa" (cards) |
 | Happy Hour, all day | „Sonn-/Feiertag" | „Feiertags" (cards; the Sunday line is blacked out) |
+
+## Owner answers, 2026-10-24
+
+- *„die preise stimmen noch sowie die gutscheine"* — the old website's values still apply to the items
+  not on the flyer: Kombipaket mit straffender Maske 22,00 €; the Stammkundenkarte tiers (10 % at
+  1,00 – 29,00 €, 15 % at 30,00 – 49,00 €, 20 % at 50,00 – 74,00 €, 25 % at 75,00 – 99,00 €, 30 % from
+  100,00 €); 10er-Karten 27,00 € (Ersparnis 3,00 €), 36,00 € (4,00 €), 45,00 € (5,00 €). The
+  Wert-Gutschein is still offered.
+- The Fußreflexzonen-Massage had no price on the old website („zZ. vergriffen"), so this answer does
+  not price it. It remains open.

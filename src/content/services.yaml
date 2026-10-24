@@ -9,11 +9,13 @@
 #   - **Solarium** — the old website's prices (docs/analysis/03-services-and-prices.md), on the owner's
 #     instruction to use them provisionally: „nimm erstmal die preise von der webseite". Their `source`
 #     says so, so a later correction knows where to look.
+#   - **Kombipaket mit straffender Maske, Stammkundenkarte, 10er-Karten, Wert-Gutschein** — not on the
+#     flyer; the old website's values, which the owner confirmed as current on 2026-10-24: „die preise
+#     stimmen noch sowie die gutscheine".
 #
-# Still `confirmed: false`, with repdigit placeholders that are false on sight (ADR 0003 R1):
-# the services the owner confirmed as still offered but whose price was not given — Fußreflexzonen-
-# Massage, Kombipaket mit straffender Maske, Stammkundenkarte and 10er-Karten — and the Wert-Gutschein,
-# which nobody has confirmed yet. The `live` build refuses all of them until they are confirmed.
+# Still `confirmed: false`, with a repdigit placeholder that is false on sight (ADR 0003 R1): the
+# Fußreflexzonen-Massage. The owner confirmed it as still offered, but the old website showed no price
+# for it („zZ. vergriffen"), so there is nothing to confirm yet. The `live` build refuses it.
 #
 # No longer offered, and so removed (owner, 2026-10-23): Aufbaubehandlung Hyaluron/Ceramide,
 # Hotstone-Rückenmassage, Wellness-Pakete and Freundinnen-Wellness-Pakete.
@@ -130,13 +132,12 @@
   order: 8
   confirmed: { by: owner, on: 2026-10-23, source: docs/sources/2026-10-23-flyer-and-hours-cards.md }
 
-# Still offered (owner, 2026-10-23), not on the flyer; its price was not given.
 - id: kombipaket-straffende-maske
   category: naturkosmetik
   name: Kombipaket mit straffender Maske
-  price: { kind: fixed, cents: 2222 } # PLACEHOLDER
+  price: { kind: fixed, cents: 2200 }
   order: 9
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-24, source: "old website (docs/analysis/03-services-and-prices.md), confirmed current by the owner" }
 
 # --- Massagen ---------------------------------------------------------------
 - id: relax-massage
@@ -178,35 +179,35 @@
   confirmed: false
 
 # --- Gutscheine & Karten ------------------------------------------------------
-# Still offered (owner, 2026-10-23); the discount tiers were not confirmed, so the description names no
-# figure.
+# A bonus, not a price: the tiers are percentages of the amount loaded, so they live in the description
+# rather than in `price`, which holds amounts only.
 - id: stammkundenkarte
   category: angebote
   name: Stammkundenkarte
-  description: Guthaben aufladen und bei jedem Besuch sparen — je höher der Betrag, desto höher der Bonus.
+  description: "Guthaben aufladen und sparen — Sie erhalten Ihre Prozente als zusätzlichen Bonus: 10 % bei 1,00 – 29,00 €, 15 % bei 30,00 – 49,00 €, 20 % bei 50,00 – 74,00 €, 25 % bei 75,00 – 99,00 €, 30 % ab 100,00 €."
   price: { kind: none }
   order: 1
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-24, source: "old website (docs/analysis/03-services-and-prices.md), confirmed current by the owner" }
 
-# Still offered (owner, 2026-10-23); prices not given.
+# The old website lists three cards by price and saving only; labelled by their saving, which is what
+# it states, rather than by a sunbed tier it does not name.
 - id: zehnerkarten
   category: angebote
   name: 10er-Karten
   price:
-    kind: variants # PLACEHOLDER
+    kind: variants
     variants:
-      - { label: Karte 1, cents: 1111 }
-      - { label: Karte 2, cents: 2222 }
-      - { label: Karte 3, cents: 3333 }
+      - { label: "Ersparnis 3,00 €", cents: 2700 }
+      - { label: "Ersparnis 4,00 €", cents: 3600 }
+      - { label: "Ersparnis 5,00 €", cents: 4500 }
   order: 2
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-24, source: "old website (docs/analysis/03-services-and-prices.md), confirmed current by the owner" }
 
 # Genuinely priceless rather than unpriced: a voucher is bought at whatever value the buyer chooses.
-# Not yet confirmed as still offered.
 - id: gutschein
   category: angebote
   name: Wert-Gutschein
   description: Ein liebevoll verpackter Gutschein, im Wert frei wählbar.
   price: { kind: none }
   order: 3
-  confirmed: false
+  confirmed: { by: owner, on: 2026-10-24, source: "old website (docs/analysis/03-services-and-prices.md), confirmed current by the owner" }

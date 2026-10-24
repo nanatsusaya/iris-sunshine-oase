@@ -354,10 +354,11 @@ every confirmed entry names it.
 - **Confirmed:** both seasonal hour sets; every Naturkosmetik and massage item on the flyer (prices
   „gelten ab 01.12.2021", confirmed as current); and the five solarium tiers. The solarium tiers use the
   old website's prices, **provisionally**, on the owner's instruction, and their `source` says so.
-- **Still placeholders** (`confirmed: false`, repdigits): Kombipaket mit straffender Maske,
-  Fußreflexzonen-Massage, Stammkundenkarte, 10er-Karten and the Wert-Gutschein. The owner confirmed the
-  first four as still offered but gave no price; the voucher is unconfirmed altogether. These keep the
-  `live` build red until they are confirmed — which is the gate working, not a defect.
+- **Confirmed on 2026-10-24:** Kombipaket mit straffender Maske, Stammkundenkarte, 10er-Karten and the
+  Wert-Gutschein, with the old website's values, which the owner confirmed as current.
+- **Still a placeholder** (`confirmed: false`, repdigit): only the Fußreflexzonen-Massage. It is still
+  offered, but no price exists for it anywhere yet. It keeps the `live` build red until it has one —
+  which is the gate working, not a defect.
 - **No longer offered, removed:** Aufbaubehandlung Hyaluron/Ceramide, Hotstone-Rückenmassage,
   Wellness- and Freundinnen-Pakete.
 - **Not modelled yet:** the Happy Hour (Mo – Sa 09:00 – 11:00 and ab 17:00, feiertags ganztags). It has no
