@@ -100,6 +100,18 @@ export async function servicesIn(categoryId: string) {
 // --- opening hours ----------------------------------------------------------
 
 /**
+ * The first instant after `date`'s calendar day.
+ *
+ * `validUntil: 2026-10-31` means the whole of 31 October, as a person writing the file means it. Zod
+ * coerces it to 31 October **00:00**, though, so comparing against it directly ends the set at the
+ * first minute of its last day: a build on the 31st found no valid set and failed, and one season's
+ * last day silently belonged to neither. Ending at the start of the following day makes `validUntil`
+ * inclusive, and a set ending on the 31st and one starting on the 1st meet without a gap or an
+ * overlap.
+ */
+const dayAfter = (date: Date): Date => new Date(date.getTime() + 24 * 60 * 60 * 1000);
+
+/**
  * The hour set in force, selected by validity.
  *
  * **Ambiguity is an error, not a coin toss.** The WordPress export holds two conflicting summer sets
@@ -117,7 +129,8 @@ export async function currentHours() {
   const now = new Date();
   const valid = entries.filter(
     ({ data }) =>
-      (!data.validFrom || data.validFrom <= now) && (!data.validUntil || data.validUntil >= now),
+      (!data.validFrom || data.validFrom <= now) &&
+      (!data.validUntil || now < dayAfter(data.validUntil)),
   );
 
   if (valid.length === 0) {
