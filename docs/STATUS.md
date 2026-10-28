@@ -190,7 +190,8 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 - ✅ **The content model** (2026-07-19): five collections, the discriminated-union price schema, the
   accessor module and the five checks of ADR 0003 §7. `docs/business-facts.md` folded into
   `src/content/business.yaml` and became a pointer; `src/config/business.ts` and its regex parsing of a
-  Markdown table are gone. State: **draft** — the shape is complete, the values are placeholders.
+  Markdown table are gone. State: **draft** — the shape is complete. **Most values are now real**
+  (2026-10-23, #114): see the next section.
 - ✅ **The homepage** (2026-07-19), **in the superseded ADR 0004 look**: built from the design draft's turn 6, mobile-first, out of the
   tokens (#40) and the content model (#41). Header, hero, four service teasers, opening hours, contact
   and footer. Every figure on it is read from the model — `tools/check-content.mjs` rejects a price or
@@ -342,11 +343,29 @@ could settle. Read the ticket, not the label.
 The pages the homepage cannot yet link to — Leistungen & Preise, Über uns, Kontakt — are Phase 3 and
 wait on the owner's figures.
 
-### The repository currently contains invented prices and opening hours, on purpose
+### Real prices and opening hours — and the few placeholders left
 
-The owner does not yet have the current values and will supply them (2026-07-19). Under ADR 0003 **R1**
-the repository holds placeholders until then, and the arrangement that makes this safe rather than
-reckless is:
+**Since 2026-10-23 the opening hours and most prices are the studio's own** (#114). The owner supplied
+the current Moments flyer and the winter and summer opening-hours cards, and answered the open points.
+The source is transcribed verbatim in
+[`docs/sources/2026-10-23-flyer-and-hours-cards.md`](sources/2026-10-23-flyer-and-hours-cards.md), and
+every confirmed entry names it.
+
+- **Confirmed:** both seasonal hour sets; every Naturkosmetik and massage item on the flyer (prices
+  „gelten ab 01.12.2021", confirmed as current); and the five solarium tiers. The solarium tiers use the
+  old website's prices, **provisionally**, on the owner's instruction, and their `source` says so.
+- **Confirmed on 2026-10-24:** Kombipaket mit straffender Maske, Stammkundenkarte, 10er-Karten and the
+  Wert-Gutschein, with the old website's values, which the owner confirmed as current.
+- **Still a placeholder** (`confirmed: false`, repdigit): only the Fußreflexzonen-Massage. It is still
+  offered, but no price exists for it anywhere yet. It keeps the `live` build red until it has one —
+  which is the gate working, not a defect.
+- **No longer offered, removed:** Aufbaubehandlung Hyaluron/Ceramide, Hotstone-Rückenmassage,
+  Wellness- and Freundinnen-Pakete.
+- **Not modelled yet:** the Happy Hour (Mo – Sa 09:00 – 11:00 and ab 17:00, feiertags ganztags). It has no
+  place in the schema; it belongs on the Studio page in Phase 3.
+
+The original arrangement, still in force for what remains, was set out on 2026-07-19 under ADR 0003
+**R1**. It is what makes holding placeholders safe rather than reckless:
 
 - every placeholder entry is `confirmed: false`;
 - the **`live` build fails** if any rendered entry is unconfirmed — so no placeholder can reach the
@@ -354,8 +373,9 @@ reckless is:
 - placeholders are **false on sight** — repdigit amounts (11,11 €) and implausible clock times, never a
   tidy `10:00 – 18:00` that would survive a screenshot as though it were real.
 
-**Nothing here may be read as a price or an opening time of the studio.** `docs/analysis/` remains the
-record of the *old* site, itself undated and unconfirmed.
+**No entry marked `confirmed: false` may be read as a price of the studio.** `docs/analysis/` remains the
+record of the *old* site, itself undated and unconfirmed. Where it and the flyer disagree, the flyer
+wins, and the differences are tabulated in the source file.
 
 **Two owner actions still gate the preview URL** and neither blocks the work above:
 

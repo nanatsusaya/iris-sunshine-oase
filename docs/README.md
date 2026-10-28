@@ -27,6 +27,12 @@ Architecture Decision Records, numbered and normative. An `Accepted` ADR is bind
 immutable except with logged owner authorisation. **`Accepted` means decided, not built** —
 implementation progress lives in [`STATUS.md`](STATUS.md).
 
+### [`sources/`](sources/2026-10-23-flyer-and-hours-cards.md) — owner-supplied sources
+
+Verbatim transcriptions of documents the owner supplied, such as the current flyer and the
+opening-hours cards. Confirmed entries in `src/content/` name these files as their source. Unlike
+`content/`, they describe the studio as it is today.
+
 ### [`design/`](design/direction-k/README.md) — the look, as drawn
 
 The artboards of direction K, the look [ADR 0010](adr/0010-visual-design-refresh.md) decided, with a
