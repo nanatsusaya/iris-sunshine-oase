@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-10-23**.
+> Living handoff note between working sessions. Last updated: **2026-10-28**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -288,28 +288,35 @@ Recorded here so they are not lost before the owning ADR is written:
 
 ## Next step
 
-**The preview URL — #89.** On 2026-09-20 the owner set the priority explicitly: **bring the
-draft online before anything else**, ahead of ADR 0007 and Phase 3, because the studio's proprietor
-wants to see it. The homepage, the token layer, the content model and the fonts are all in place; what
-is missing is three owner actions at GitHub and netcup and one agent PR, in the order #89 lists them
-(the first — verifying the apex with GitHub — is what makes the second safe). **As of 2026-10-22 the
-owner's steps 1–3 are not yet done**, checked from outside: no `preview` `CNAME`, no
-`_github-pages-challenge-nanatsusaya` `TXT`, and the Pages API answers 404. Once they are, confirm them
-the same way, then re-enable the `push` trigger in `deploy.yml` and verify the deployed page by
-fetching it. What the proprietor will
-see is the homepage with every price and opening time struck through and badged as invented — that is
-by design (ADR 0003 R1) and the page says so; nobody makes the draft look better by typing a real
-number in.
+**Session of 2026-10-28 — ADR 0010 built locally, for the owner to look at before anything is
+committed.** The owner merged nothing past unread: #113, #115, #116 and #117 were reviewed by the owner
+and merged on their explicit instruction, and this file was brought current in its own PR on the same
+instruction. For the rest of the session the owner asked for the work to be done **in the working tree
+only**: the owner looks at the result in the local preview (`npm run build`, then the `astro-preview`
+configuration at `http://127.0.0.1:4321`) and then decides what is committed, and how it is split into
+PRs. Nothing of that work is on `main` until then. The local list, in order:
 
-**While #89 waits on the owner, the agent work is ADR 0010.** The owner spent 2026-10-22/23 on the
-new look and accepted it. It is one implementation PR per concern, in this order:
+1. the Node pin moves to 26 — Node 24 left active LTS on 2026-10-20, 26 entered it on 2026-10-28
+   (`docs/recurring-tasks.md`);
+2. ADR 0010 tokens, fonts and the rewritten contrast check (#109);
+3. the line-sun mark and the header and footer (#110);
+4. the homepage in direction K (#111);
+5. AI-generated mood motifs for the photo frames, **as a trial**. ADR 0010 §7 allows AI images for
+   mood motifs only and, to start with, has the owner generate them in ChatGPT (R10); the owner asked
+   for them to be generated with the Codex CLI instead. Whether that route is kept is a decision to
+   record before any such image is committed.
 
-1. tokens, fonts and the rewritten contrast check;
-2. the line-sun mark and the header and footer;
-3. the homepage in direction K.
+**The preview URL — #89 — is deferred by the owner** (2026-10-28): a local preview is enough for now.
+The ticket and its procedure stand unchanged. **As of 2026-10-27 the owner's steps 1–3 are not yet
+done**, checked from outside: no `preview` `CNAME`, no `_github-pages-challenge-nanatsusaya` `TXT`, and
+the Pages API answers 404. Once they are, confirm them the same way, then re-enable the `push` trigger
+in `deploy.yml` and verify the deployed page by fetching it. The page shows the studio's real hours
+and nearly all real prices since #115; the one remaining placeholder (the Fußreflexzonen-Massage) is
+struck through and badged as invented, by design (ADR 0003 R1) — nobody makes the draft look better by
+typing a number in.
 
-The preview #89 then shows the new look rather than the superseded one. Photographs follow #106: the
-owner confirms which of the studio's own shots still show the studio as it is.
+Real photographs follow #106: the owner confirms which of the studio's own shots still show the studio
+as it is.
 
 **After that, in order:** ADR 0007 (legal, privacy, third-party services — the last of Phase 1; its
 questions go to the owner in chat before the PR opens, like 0008's), then Phase 3, whose first paired
@@ -390,15 +397,16 @@ the build:
 - **The sun as a vector.** R4 records it as the owner's own work, which clears the provenance gate, but
   the draft ships a PNG. §4 puts an inline-SVG wordmark beside it and the old site's `Logo-Sun.svg` was a
   PNG in an SVG wrapper — repeating that would be the same defect twice.
-- **Photographs and their provenance.** R3 confirms photographs are coming. None of the old site's may be
-  reused: those rights are undocumented (`docs/analysis/06-media-inventory.md`). Each new one needs who
-  took it, when, and confirmation that the studio holds the rights.
+- **Photographs and their provenance.** R3 confirms photographs are coming. Of the old site's, only the
+  studio's own photographs may be reused, each with its provenance record and the owner's confirmation
+  that it shows the studio as it is today (ADR 0010 §7, R13, #106); the stock motifs may not. Each new
+  one needs who took it, when, and confirmation that the studio holds the rights.
 
 **Phase 0 is finished and its epic is closed** — #1, #9, #11, #12, #17, #18, #19 and #67, and #2 with
 them on 2026-08-05.
 
 What that does **not** mean is worth stating here, because "Phase 0 complete" is the kind of line a
 later session reads as more than it says. Phase 0 established what the old site *said* and how work is
-done here. It established nothing about what is **true today**: every price and opening hour in the
-repository is a placeholder marked `confirmed: false`, and no image has documented provenance. Those
-belong to Phase 3 and Phase 5 and are recorded there.
+done here. It established nothing about what is **true today**: that came later, from the owner
+(#114, above), and no image has documented provenance yet. The rest belongs to Phase 3 and Phase 5 and
+is recorded there.
