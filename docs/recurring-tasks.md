@@ -68,3 +68,21 @@ refusal is not re-litigated every week.
 An expired domain is a total loss of the business's identity, and it is the failure nobody monitors
 because it is silent until it is complete. It is listed here rather than assumed because ADR 0009
 §5 names it as the owner's responsibility and unverified.
+
+## Opening-hour seasons
+
+| | |
+|---|---|
+| **What** | Add the next season's set to `src/content/hours.yaml`: a winter set (1 November – 31 March) or a summer set (1 April – 31 October), with the owner's confirmation. |
+| **When** | Before the last set's `validUntil`. Today that is **2027-10-31** (`sommer-2027`), so add `winter-2027-28` by October 2027. Re-ask the owner whether the times are unchanged; do not copy last year's set unconfirmed. |
+| **Who** | An agent prepares the entry; the **owner** confirms the times. |
+| **Owning decision** | [ADR 0003](adr/0003-content-model.md) §4 — hours are dated sets selected at build time |
+
+The hours recur every year, but the schema holds dated sets rather than a recurring rule, so the data
+runs out. That is deliberate in one respect: a set that is never re-confirmed should not stay published
+forever. When the last set expires, `currentHours()` fails the build — loudly, rather than showing old
+hours — so a missed date is noticed at the next build, not by a customer at a locked door.
+
+A seasonal changeover also needs a **rebuild**, since a static page is generated once. With the deploy
+running on every merge to `main`, the first merge after 31 March or 31 October brings the new hours;
+if nothing merges for weeks around a boundary, trigger a deploy by hand.

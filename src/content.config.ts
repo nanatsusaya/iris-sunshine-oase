@@ -167,7 +167,9 @@ const services = defineCollection({
  * and the wrong one is exactly as likely as the right one. So sets coexist and carry their own validity;
  * the build selects.
  *
- * An open `validUntil` means "until replaced", not "forever".
+ * An open `validUntil` means "until replaced", not "forever". A set `validUntil` is **inclusive** — the
+ * whole of that day — which `currentHours()` in `query.ts` implements, because the coerced date is that
+ * day at 00:00.
  */
 const hours = defineCollection({
   loader: file('src/content/hours.yaml'),

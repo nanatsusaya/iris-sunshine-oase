@@ -9,7 +9,8 @@
  * (`docs/analysis/05-defect-list.md`). `tools/check-content.mjs` rejects a price or a clock time
  * written into a template, so this cannot quietly stop being true.
  *
- * **The prices and opening hours are placeholders and are marked as such.** See `PlaceholderMark`.
+ * **Any value still unconfirmed is marked as a placeholder.** Since 2026-10-23 the opening hours and
+ * most prices are the studio's own (#114). Whatever remains `confirmed: false` carries `PlaceholderMark`.
  *
  * What the draft has and this page does not, each for a stated reason:
  *
@@ -26,7 +27,14 @@ import Icon from '../components/Icon.astro';
 import PlaceholderMark from '../components/PlaceholderMark.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import { badgeState, formatDays, formatPrice, lowestCents, telHref } from '../content/format';
+import {
+  badgeState,
+  formatDays,
+  formatPrice,
+  groupIntervals,
+  lowestCents,
+  telHref,
+} from '../content/format';
 import {
   businessFact,
   categories,
@@ -55,13 +63,27 @@ const [telephone, email, street, postcodeTown] = await Promise.all([
 const teasers = await Promise.all(
   (await categories()).map(async (category) => {
     const services = await servicesIn(category.id);
-    const amounts = services
-      .map((service) => lowestCents(service.data.price))
-      .filter((c) => c !== null);
+    const priced = services
+      .map((service) => ({ service, cents: lowestCents(service.data.price) }))
+      .filter(
+        (entry): entry is { service: (typeof services)[number]; cents: number } =>
+          entry.cents !== null,
+      );
+    const cheapest = priced.reduce<(typeof priced)[number] | null>(
+      (min, entry) => (min === null || entry.cents < min.cents ? entry : min),
+      null,
+    );
+    /*
+     * Marked invented only when the figure shown is: when the cheapest amount belongs to a placeholder,
+     * or the category itself is one. A real „ab 8,50 €" is not flagged because a placeholder sits
+     * elsewhere in the category — it was, and the mark then claimed a confirmed price was invented. The
+     * live build refuses any placeholder anyway, so an unconfirmed entry can never undercut a published
+     * „ab".
+     */
     return {
       category,
-      from: amounts.length > 0 ? Math.min(...amounts) : null,
-      invented: services.some(isPlaceholder) || isPlaceholder(category),
+      from: cheapest?.cents ?? null,
+      invented: isPlaceholder(category) || (cheapest !== null && isPlaceholder(cheapest.service)),
     };
   }),
 );
@@ -94,9 +116,8 @@ const state = badgeState(!hoursAreInvented);
     SHOWS_PLACEHOLDERS && (
       <div class="notice-wrap">
         <p class="preview-notice">
-          <strong>Vorschau.</strong> Preise und Öffnungszeiten auf dieser Seite sind{' '}
-          <strong>erfunden</strong> und keine Angaben des Studios. Die aktuellen Werte liegen noch nicht
-          vor; bis dahin verweigert der Live-Build diese Seite.
+          <strong>Vorschau.</strong> Werte mit dem Hinweis „Platzhalter“ sind <strong>erfunden</strong>{' '}
+          und keine Angaben des Studios. Solange es sie gibt, verweigert der Live-Build diese Seite.
         </p>
       </div>
     )
@@ -203,11 +224,23 @@ const state = badgeState(!hoursAreInvented);
 
         <dl class:list={['hours', hoursAreInvented && 'invented']}>
           {
-            hours.data.intervals.map((interval) => (
+            groupIntervals(hours.data.intervals).map((row) => (
               <div class="row">
-                <dt>{formatDays(interval.days)}</dt>
+                <dt>{formatDays(row.days)}</dt>
                 <dd>
-                  {interval.opens} – {interval.closes} Uhr
+                  {/*
+                    Each span is unbreakable, the gap between spans is not: a split day wraps at „und"
+                    on a narrow screen instead of overflowing the panel, which it did at 320 px.
+                  */}
+                  {row.spans.map((span, i) => (
+                    <>
+                      {i > 0 && ' und '}
+                      <span class="span">
+                        {span.opens} – {span.closes}
+                        {i === row.spans.length - 1 && ' Uhr'}
+                      </span>
+                    </>
+                  ))}
                 </dd>
               </div>
             ))
@@ -571,6 +604,9 @@ const state = badgeState(!hoursAreInvented);
     margin: 0;
     font-weight: var(--weight-heading);
     color: var(--colour-brand);
+  }
+
+  .hours .span {
     white-space: nowrap;
   }
 
