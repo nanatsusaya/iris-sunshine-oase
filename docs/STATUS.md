@@ -1,6 +1,6 @@
 # Status & next steps
 
-> Living handoff note between working sessions. Last updated: **2026-10-28**.
+> Living handoff note between working sessions. Last updated: **2026-11-01**.
 > Binding decisions live in the ADRs ([`docs/adr/`](adr/README.md)); this file is only the progress
 > and handoff overview. Stable working rules live in [`CLAUDE.md`](../CLAUDE.md).
 
@@ -233,7 +233,9 @@ Each phase is tracked as an epic; this section is the summary, the epic is the d
 keep them from recurring.
 
 **Phase 5 — go-live** (#7)**:** planned. Domain cutover from netcup, redirects for the 32 old URLs, removal of
-the `noindex` gate. Every step here is owner-approved.
+the `noindex` gate. Every step here is owner-approved. **Since 2026-11-01 the old site no longer
+serves its pages** — it is in maintenance mode (see *Next step*), so the cutover now replaces a
+maintenance page, not a working site.
 
 > **Two legal gates belong to this phase and are named here so they are not discovered on the day.**
 > § 5 TMG requires a German commercial site to carry an **Impressum**, and § 13 TMG / Art. 13 DSGVO a
@@ -287,6 +289,43 @@ Recorded here so they are not lost before the owning ADR is written:
   drop. The drops need confirmation.
 
 ## Next step
+
+**2026-11-01 — the old site is in maintenance mode, and the new one is wanted next week.** Read this
+before anything below, because it changes what the rest of this section is racing against.
+
+- **What happened.** The owner switched the WordPress site at netcup to maintenance mode, because of
+  a bug in the old PHP version it runs on. `iris-sunshine-oase.de` now answers **HTTP 503** with
+  `Retry-After: 600` and a single maintenance page (checked from outside on 2026-11-01 for `/` and
+  `/kontakt/`; other paths were not tried). WordPress, its database and the files are untouched at
+  netcup; the mode is reversible from the hosting panel. E-mail and DNS are not affected.
+- **What the public sees.** The maintenance page carries the studio's name, address, telephone,
+  e-mail and the **winter** opening hours, under the old site's orange → blue gradient. All of it was
+  checked against this repository's authorities on 2026-11-01 and matches: the contact rows in
+  `src/content/business.yaml`, the hours in
+  [`sources/2026-10-23-flyer-and-hours-cards.md`](sources/2026-10-23-flyer-and-hours-cards.md)
+  (winter set, Sunday 09:00 – 16:00 per owner). The page is hand-written at netcup and **is not
+  generated from this repository** — it is a second copy of those facts, outside the one-definition
+  rule. **It goes stale on 1 April 2027**, when the summer hours apply (Sunday 09:00 – 12:30); if the
+  new site is not live by then, the maintenance page needs editing by hand.
+- **What it does not do.** Maintenance mode hides the site; it deletes nothing. The ~2,216 old
+  contact-form submissions (third parties' e-mail and IP addresses, see Phase 0) are still in the live
+  WordPress database at netcup. Google Analytics and the Google Maps embed (`M-13`, `M-14`) no longer
+  load, because nothing of the old site renders. Whether to delete the old submissions before or at
+  cutover is an owner decision for ADR 0007 or #7, not something to do as a side effect.
+- **Processing agreement.** The owner concluded netcup's data-processing agreement (Art. 28 DSGVO) on
+  2026-11-01, covering customers, prospects, website visitors and staff; names, contact data, traffic
+  and login data and the contents of contact requests; no special categories. The document is the
+  owner's and is deliberately not in this repository (public, and it carries a personal address).
+  ADR 0007 should know it exists.
+- **What it changes.** The owner intends to bring the new site to a usable state **in the week of
+  2026-11-02**. That pulls Phase 5 (#7) forward: the old site is no longer a working fallback, so the
+  gap between "draft" and "live" now costs the studio its web presence rather than nothing. **A
+  503 is the right signal for days or a few weeks; held much longer, search engines begin to drop the
+  pages**, which matters less than usual here because ADR 0008's redirects replace those URLs anyway.
+  The go-live gates still stand as written — the `noindex` removal, the Impressum and
+  Datenschutzerklärung (above, under Phase 5), the Fußreflexzonen placeholder that keeps the `live`
+  build red, and the DNS steps of #89 — and the next session should put that list in front of the owner
+  as a plan rather than discover it piece by piece.
 
 **Session of 2026-10-28 — ADR 0010 built locally, for the owner to look at before anything is
 committed.** The owner merged nothing past unread: #113, #115, #116 and #117 were reviewed by the owner
