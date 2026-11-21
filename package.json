@@ -21,12 +21,12 @@
     "format": "biome check --write ."
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.4.1"
+    "@astrojs/sitemap": "^3.7.6",
+    "astro": "^7.4.13"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.11",
-    "@biomejs/biome": "^2.5.15",
+    "@biomejs/biome": "^2.6.8",
     "typescript": "~6.0.3"
   }
 }
